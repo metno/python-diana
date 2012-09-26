@@ -27,9 +27,19 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module diana
+%Import metlibs.sip
 
-%Include Controller.sip
-%Include FieldManager.sip
-%Include LocalSetupParser.sip
+class LocalSetupParser
+{
+%TypeHeaderCode
+#include "diLocalSetupParser.h"
+%End
 
+public:
+  LocalSetupParser();
+
+  static bool parse( miutil::miString& mainfilename );
+  static miutil::miString basicValue(const miutil::miString& key);
+  static miutil::miString getSetupFileName();
+  static void setSetupFileName(const miutil::miString& sf);
+};

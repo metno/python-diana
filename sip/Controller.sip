@@ -27,9 +27,33 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module diana
+class Controller
+{
+%TypeHeaderCode
+#include "diController.h"
+%End
 
-%Include Controller.sip
-%Include FieldManager.sip
-%Include LocalSetupParser.sip
+public:
+  Controller();
+  ~Controller();
+
+  FieldManager* getFieldManager();
+
+  bool parseSetup();
+/*  void plotCommands(const vector<miutil::miString>&);
+  void plot(bool over =true, bool under =true);
+  vector<AnnotationPlot*> getAnnotations();
+  vector<Rectangle> plotAnnotations();
+  void setPlotWindow(const int, const int);
+  void getPlotTimes(vector<miutil::miTime>& fieldtimes,vector<miutil::miTime>& sattimes,
+                    vector<miutil::miTime>& obstimes,vector<miutil::miTime>& objtimes,
+                    vector<miutil::miTime>& ptimes);
+  void getCapabilitiesTime(set<miutil::miTime>& okTimes,
+                           set<miutil::miTime>& constTimes,
+                           const vector<miutil::miString>& pinfos,
+                           bool allTimes=true);
+
+  bool setPlotTime(miutil::miTime&);*/
+  bool updatePlots();
+};
 

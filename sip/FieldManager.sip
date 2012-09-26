@@ -27,9 +27,14 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module diana
+class FieldManager
+{
+%TypeHeaderCode
+#include "diField/diFieldManager.h"
+%End
 
-%Include Controller.sip
-%Include FieldManager.sip
-%Include LocalSetupParser.sip
+public:
+  FieldManager();
+  ~FieldManager();
+};
 
