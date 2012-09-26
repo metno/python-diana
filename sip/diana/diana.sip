@@ -32,4 +32,5 @@
 %Include Controller.sip
 %Include FieldManager.sip
 %Include LocalSetupParser.sip
+%Include PaintGL.sip
 

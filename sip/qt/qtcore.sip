@@ -27,39 +27,10 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module metlibs
-
-%Import std.sip
-
-namespace milogger
+%MappedType QString
 {
     %TypeHeaderCode
-    #include <miLogger/LogHandler.h>
-    %End
-
-    class LogHandler
-    {
-        %TypeHeaderCode
-        #include <miLogger/LogHandler.h>
-        %End
-
-    public:
-	    virtual ~LogHandler();
-	    void setLogLevel( int logLevel );
-        void setObjectName( const std::string & on );
-        static milogger::LogHandler * initLogHandler(const std::string& propertiesfilename) /Factory/;
-        static milogger::LogHandler * initLogHandler( int loglevel, const std::string & fileName) /Factory/;
-        static milogger::LogHandler * getInstance();
-
-    private:
-        LogHandler();
-    };
-};
-
-%MappedType miutil::miString
-{
-    %TypeHeaderCode
-    #include <puTools/miString.h>
+    #include <QtCore/QString>
     %End
 
     %ConvertToTypeCode
@@ -71,15 +42,16 @@ namespace milogger
             return 1;
     }
 
-    miutil::miString *s = new miutil::miString(PyString_AsString(sipPy));
+    QString *s = new QString(PyString_AsString(sipPy));
     *sipCppPtr = s;
 
     return sipGetState(sipTransferObj);
     %End
 
     %ConvertFromTypeCode
-    PyObject *s = PyString_FromString(sipCpp->c_str());
+    PyObject *s = PyString_FromString(sipCpp->toLocal8Bit());
 
     return s;
     %End
 };
+

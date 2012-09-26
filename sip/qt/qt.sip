@@ -27,32 +27,8 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module std
+%Module qt
 
-%MappedType std::string
-{
-    %TypeHeaderCode
-    #include <string>
-    %End
+%Include qtcore.sip
+%Include qtgui.sip
 
-    %ConvertToTypeCode
-    if (sipIsErr == NULL)
-    {
-        if (!PyString_Check(sipPy))
-            return 0;
-        else
-            return 1;
-    }
-
-    std::string *s = new std::string(PyString_AsString(sipPy));
-    *sipCppPtr = s;
-
-    return sipGetState(sipTransferObj);
-    %End
-
-    %ConvertFromTypeCode
-    PyObject *s = PyString_FromString(sipCpp->c_str());
-
-    return s;
-    %End
-};

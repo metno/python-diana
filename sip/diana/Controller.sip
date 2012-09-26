@@ -40,8 +40,8 @@ public:
   FieldManager* getFieldManager();
 
   bool parseSetup();
-/*  void plotCommands(const vector<miutil::miString>&);
-  void plot(bool over =true, bool under =true);
+  void plotCommands(const std::vector<miutil::miString>&);
+/*  void plot(bool over =true, bool under =true);
   vector<AnnotationPlot*> getAnnotations();
   vector<Rectangle> plotAnnotations();
   void setPlotWindow(const int, const int);

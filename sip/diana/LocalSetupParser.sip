@@ -27,7 +27,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Import metlibs.sip
+%Import metlibs/metlibs.sip
 
 class LocalSetupParser
 {
@@ -43,3 +43,4 @@ public:
   static miutil::miString getSetupFileName();
   static void setSetupFileName(const miutil::miString& sf);
 };
+
