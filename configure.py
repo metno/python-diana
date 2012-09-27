@@ -53,6 +53,7 @@ for module in modules:
         makefile.extra_include_dirs.append("/opt/qt4-qws/include")
         makefile.extra_include_dirs.append("/opt/qt4-qws/include/QtCore")
         makefile.extra_include_dirs.append("/opt/qt4-qws/include/QtGui")
+        makefile.extra_lflags.append("-Wl,-rpath=/opt/qt4-qws/lib")
         makefile.extra_lib_dirs.append("/opt/qt4-qws/lib")
         makefile.extra_libs.append("QtGui")
     

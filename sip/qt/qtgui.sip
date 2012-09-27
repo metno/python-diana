@@ -88,5 +88,8 @@ public:
     QImage(int width, int height, QImage::Format format);
     ~QImage();
     bool save(const QString &fileName, const char* format=0, int quality=-1) const;
+
+private:
+    QImage(const QImage &);
 };
 

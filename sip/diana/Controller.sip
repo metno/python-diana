@@ -27,6 +27,8 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+%Import std/std.sip
+
 class Controller
 {
 %TypeHeaderCode
@@ -41,19 +43,42 @@ public:
 
   bool parseSetup();
   void plotCommands(const std::vector<miutil::miString>&);
-/*  void plot(bool over =true, bool under =true);
-  vector<AnnotationPlot*> getAnnotations();
-  vector<Rectangle> plotAnnotations();
   void setPlotWindow(const int, const int);
-  void getPlotTimes(vector<miutil::miTime>& fieldtimes,vector<miutil::miTime>& sattimes,
-                    vector<miutil::miTime>& obstimes,vector<miutil::miTime>& objtimes,
-                    vector<miutil::miTime>& ptimes);
+  void plot(bool over =true, bool under =true);
+  Area getMapArea();
+  void getPlotTimes(std::vector<miutil::miTime>& /GetWrapper/,std::vector<miutil::miTime>& /GetWrapper/,
+                    std::vector<miutil::miTime>& /GetWrapper/,std::vector<miutil::miTime>& /GetWrapper/,
+                    std::vector<miutil::miTime>& /GetWrapper/);
+  %MethodCode
+  sipCpp->getPlotTimes(*a0, *a1, *a2, *a3, *a4);
+  #define getPlotTimes_REPLACE_VALUES(arg, wrapper) \
+    PyList_SetSlice(wrapper, 0, PyList_GET_SIZE(wrapper), NULL); \
+    for (unsigned int i = 0; i < arg->size(); ++i) { \
+      miutil::miTime *t = new miutil::miTime(arg->at(i)); \
+      PyObject *tobj; \
+      if ((tobj = sipConvertFromNewType(t, sipType_miutil_miTime, NULL)) == NULL) \
+          delete t; \
+      else \
+          PyList_Append(wrapper, tobj); \
+  }
+  
+  getPlotTimes_REPLACE_VALUES(a0, a0Wrapper)
+  getPlotTimes_REPLACE_VALUES(a1, a1Wrapper)
+  getPlotTimes_REPLACE_VALUES(a2, a2Wrapper)
+  getPlotTimes_REPLACE_VALUES(a3, a3Wrapper)
+  getPlotTimes_REPLACE_VALUES(a4, a4Wrapper)
+  %End
+/*  vector<AnnotationPlot*> getAnnotations();
+  vector<Rectangle> plotAnnotations();
   void getCapabilitiesTime(set<miutil::miTime>& okTimes,
                            set<miutil::miTime>& constTimes,
                            const vector<miutil::miString>& pinfos,
                            bool allTimes=true);
-
-  bool setPlotTime(miutil::miTime&);*/
+*/
+  bool setPlotTime(miutil::miTime&);
   bool updatePlots();
+  void keepCurrentArea(bool);
+
+  void archiveMode( bool );
 };
 

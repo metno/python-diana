@@ -84,3 +84,61 @@ namespace milogger
     %End
 };
 
+%MappedType miutil::miTime
+{
+    %TypeHeaderCode
+    #include <puTools/miTime.h>
+    #include <datetime.h>
+    %End
+
+    %ConvertToTypeCode
+    if (sipIsErr == NULL)
+    {
+        if (!PyDateTimeAPI)
+            PyDateTime_IMPORT;
+
+        if (!PyDateTime_Check(sipPy))
+            return 0;
+        else
+            return 1;
+    }
+
+    miutil::miTime *t = new miutil::miTime();
+    t->setTime(int(PyDateTime_GET_YEAR(sipPy)),
+               int(PyDateTime_GET_MONTH(sipPy)),
+               int(PyDateTime_GET_DAY(sipPy)),
+               int(PyDateTime_DATE_GET_HOUR(sipPy)),
+               int(PyDateTime_DATE_GET_MINUTE(sipPy)),
+               int(PyDateTime_DATE_GET_SECOND(sipPy)));
+    *sipCppPtr = t;
+
+    return sipGetState(sipTransferObj);
+    %End
+
+    %ConvertFromTypeCode
+    if (!PyDateTimeAPI)
+        PyDateTime_IMPORT;
+
+    PyObject *t = PyDateTime_FromDateAndTime(sipCpp->year(), sipCpp->month(),
+                                             sipCpp->day(), sipCpp->hour(),
+                                             sipCpp->min(), sipCpp->sec(), 0);
+
+    return t;
+    %End
+};
+
+class Area
+{
+    %TypeHeaderCode
+    #include <diField/diArea.h>
+    %End
+
+public:
+    Area();
+    ~Area();
+
+    miutil::miString toString() const;
+    miutil::miString toLogString() const;
+    miutil::miString getAreaString() const;
+};
+

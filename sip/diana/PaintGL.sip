@@ -56,5 +56,6 @@ public:
     ~PaintGL();
 
     static PaintGL *instance() /Factory/;
+    PaintGLContext *currentContext;
 };
 

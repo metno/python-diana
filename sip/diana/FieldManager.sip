@@ -36,5 +36,8 @@ class FieldManager
 public:
   FieldManager();
   ~FieldManager();
+
+  void updateSources();
+  void updateSource(const std::string & modelName);
 };
 
