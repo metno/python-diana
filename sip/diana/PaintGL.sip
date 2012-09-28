@@ -43,6 +43,8 @@ public:
     void begin(QPainter *painter);
     bool isPainting() const;
     void end();
+
+    QRect viewport;
 };
 
 class PaintGL

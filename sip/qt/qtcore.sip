@@ -55,3 +55,14 @@
     %End
 };
 
+class QRect
+{
+    %TypeHeaderCode
+    #include <QtCore/QRect>
+    %End
+
+public:
+    QRect();
+    QRect(int, int, int, int);
+    ~QRect();
+};
