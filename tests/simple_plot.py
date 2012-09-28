@@ -7,6 +7,24 @@ from metlibs import milogger
 from diana import Controller, LocalSetupParser, PaintGL, PaintGLContext
 from qt import QImage, QPainter, QRect
 
+def read_input_parameters(lines):
+
+    d = {}
+    
+    for line in lines:
+        line = line.strip()
+        if line.startswith("#"):
+            continue
+        elif line.startswith("PLOT"):
+            break
+        
+        pieces = line.split("=")
+        if len(pieces) > 1:
+            key, value = pieces[0], "=".join(pieces[1:])
+            d[key] = value
+    
+    return d
+
 def read_plot_commands(lines):
 
     plot_lines = []
@@ -51,6 +69,21 @@ if __name__ == "__main__":
         print "Controller failed to parse", setup_path
         sys.exit(1)
     
+    lines = open(input_path).readlines()
+    parameters = read_input_parameters(lines)
+    plot_lines = read_plot_commands(lines)
+    
+    try:
+        width, height = map(int, parameters.get("buffersize", "400x400").split("x"))
+    except IndexError:
+        sys.stderr.write("%s: Incorrect number of values assigned to buffersize.\n" % input_path)
+        sys.exit(1)
+    except ValueError:
+        sys.stderr.write("%s: Invalid value assigned to buffersize.\n" % input_path)
+        sys.exit(1)
+    
+    # Perform the plot.
+    
     c.getFieldManager().updateSources()
     c.archiveMode(False)
     
@@ -58,19 +91,17 @@ if __name__ == "__main__":
     context = PaintGLContext()
     context.makeCurrent()
     
-    image = QImage(400, 400, QImage.Format_ARGB32_Premultiplied)
+    image = QImage(width, height, QImage.Format_ARGB32_Premultiplied)
     painter = QPainter()
     painter.begin(image)
     context.begin(painter)
-    context.viewport = QRect(0, 0, 400, 400)
+    context.viewport = QRect(0, 0, width, height)
     
-    c.setPlotWindow(400, 400)
+    c.setPlotWindow(width, height)
     #c.keepCurrentArea(True)
     dt = datetime.now()
     c.setPlotTime(dt)
     
-    lines = open(input_path).readlines()
-    plot_lines = read_plot_commands(lines)
     c.plotCommands(plot_lines)
     
     fieldtimes = []
@@ -79,20 +110,20 @@ if __name__ == "__main__":
     objtimes = []
     ptimes = []
     c.getPlotTimes(fieldtimes, sattimes, obstimes, objtimes, ptimes)
-    print "Plotting for time", fieldtimes[-1]
-    c.setPlotTime(fieldtimes[-1])
+    times = fieldtimes + sattimes + obstimes + objtimes + ptimes
+    times.sort()
+    if times:
+        print "Plotting for time", times[-1]
+        c.setPlotTime(times[-1])
     
-    print "Update plots:", c.updatePlots()
-    print c.getMapArea().toLogString()
+    c.updatePlots()
+    #c.getMapArea().toLogString()
     c.plot();
     
-    print "Plotted"
     context.end()
     painter.end()
     
-    print "Saving"
     image.save("temp.png")
     
-    print "Exiting"
     sys.exit()
 
