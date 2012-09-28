@@ -43,10 +43,12 @@ for module in modules:
         config, build_file, dir=output_dir,
         install_dir=".."
         )
-    makefile.extra_include_dirs.append(diana_src_dir)
-    makefile.extra_include_dirs.append("/usr/include/metlibs")
-    makefile.extra_lib_dirs.append(diana_src_dir)
-    makefile.extra_libs.append("diana")
+    
+    if module in ("diana", "metlibs"):
+        makefile.extra_include_dirs.append(diana_src_dir)
+        makefile.extra_include_dirs.append("/usr/include/metlibs")
+        makefile.extra_lib_dirs.append(diana_src_dir)
+        makefile.extra_libs.append("diana")
     
     if module in ("diana", "qt"):
         makefile.extra_include_dirs.append(os.path.join(diana_src_dir, "PaintGL"))
