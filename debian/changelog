@@ -1,0 +1,6 @@
+python-diana (0.1.0-0) unstable; urgency=low
+
+  * Created a package containing Python language bindings to Diana.
+
+ -- David Boddie <david.boddie@met.no>  Wed, 03 Oct 2012 12:46:41 +0200
+
