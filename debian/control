@@ -2,7 +2,7 @@ Source: python-diana
 Section: libs
 Priority: low
 Maintainer: David Boddie <david.boddie@met.no>
-Build-Depends: diana-headless-3.29, diana-headless-dev, libqt4-qws-dev, python-sip, metlibs-difield-dev,
+Build-Depends: diana-headless-dev, libqt4-qws-dev, python-sip, metlibs-difield-dev,
   metlibs-milogger-dev, metlibs-putools-dev
 Standards-Version: 3.8.3
 Homepage: http://diana.met.no
