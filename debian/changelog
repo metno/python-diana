@@ -1,6 +1,11 @@
+python-diana (0.1.0-1) unstable; urgency=low
+
+  * Updated the dependencies to include the python-sip package.
+
+ -- David Boddie <david.boddie@met.no>  Wed, 03 Oct 2012 17:49:00 +0200
+
 python-diana (0.1.0-0) unstable; urgency=low
 
   * Created a package containing Python language bindings to Diana.
 
  -- David Boddie <david.boddie@met.no>  Wed, 03 Oct 2012 12:46:41 +0200
-

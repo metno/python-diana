@@ -2,14 +2,15 @@ Source: python-diana
 Section: libs
 Priority: low
 Maintainer: David Boddie <david.boddie@met.no>
-Build-Depends: diana-headless-dev, libqt4-qws-dev, python-sip, metlibs-difield-dev,
+Build-Depends: diana-headless-dev, libqt4-qws-dev, python-sip-dev, metlibs-difield-dev,
   metlibs-milogger-dev, metlibs-putools-dev
 Standards-Version: 3.8.3
 Homepage: http://diana.met.no
 
 Package: python-diana
 Architecture: any
-Depends: diana-headless-3.29, libqtcore4-qws, libqtgui4-qws, libqt4-svg-qws, qt4-qws-dummy-screen-plugin
+Depends: python-sip, diana-headless-3.29, libqtcore4-qws, libqtgui4-qws, libqt4-svg-qws,
+  qt4-qws-dummy-screen-plugin
 Description: Python language bindings to Diana
   A set of Python language bindings to Diana, exposing an API that
   can be used for batched generation of products.
