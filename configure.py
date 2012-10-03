@@ -5,13 +5,17 @@ import sipconfig
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 3:
+    if not 1 <= len(sys.argv) <= 3:
     
-        sys.stderr.write("Usage: %s <directory containing diana headers> <directory containing libdiana>\n" % sys.argv[0])
+        sys.stderr.write("Usage: %s [<directory containing diana headers> <directory containing libdiana>]\n" % sys.argv[0])
         sys.exit(1)
     
-    diana_inc_dir = sys.argv[1]
-    diana_lib_dir = sys.argv[2]
+    if len(sys.argv) == 3:
+        diana_inc_dir = sys.argv[1]
+        diana_lib_dir = sys.argv[2]
+    else:
+        diana_inc_dir = "/usr/include/diana"
+        diana_lib_dir = "/usr/lib"
     
     config = sipconfig.Configuration()
     
