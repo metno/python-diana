@@ -3,28 +3,23 @@
 version = $(shell dpkg-parsechangelog | awk '/^Version/{print $$2}')
 
 build:
-	echo "*** build ***"
 	mkdir $(CURDIR)/debian/tmp
-	INSTALL_DIR=$(CURDIR)/debian/tmp python configure.py
+	python configure.py
 	$(MAKE)
 
 clean:
-	echo "*** clean ***"
-	if [ ! -f Makefile ]; then INSTALL_DIR=$(CURDIR)/debian/tmp python configure.py; fi
+	if [ ! -f Makefile ]; then python configure.py; fi
 	$(MAKE) clean
 	rm -rf debian/tmp debian/files modules $(CURDIR)/debian/tmp Makefile
 
 install:
-	echo "*** install ***"
-	$(MAKE) install
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
 
 binary: binary-arch binary-indep
 
 binary-indep:
-	echo "*** binary-indep ***"
 
 binary-arch: install
-	echo "*** binary-arch ***"
 	mkdir $(CURDIR)/debian/tmp/DEBIAN
 	dpkg-gencontrol
 	dpkg --build debian/tmp ..

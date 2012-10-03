@@ -54,8 +54,7 @@ if __name__ == "__main__":
         
         # Create the Makefile (within the diana directory).
         makefile = sipconfig.SIPModuleMakefile(
-            config, build_file, dir=output_dir,
-            install_dir=os.getenv("INSTALL_DIR", "..")
+            config, build_file, dir=output_dir
             )
         
         if module in ("diana", "metlibs"):
