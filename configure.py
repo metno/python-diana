@@ -60,7 +60,8 @@ if __name__ == "__main__":
         
         # Create the Makefile (within the diana directory).
         makefile = pyqtconfig.QtGuiModuleMakefile(
-            config, build_file, dir=output_dir
+            config, build_file, dir=output_dir,
+            install_dir="/opt/qt4-qws/lib/python2.7/site-packages"
             )
         
         if module in ("diana", "metlibs"):
