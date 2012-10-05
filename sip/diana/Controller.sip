@@ -42,13 +42,57 @@ public:
   FieldManager* getFieldManager();
 
   bool parseSetup();
+  %Docstring
+  Controller.parseSetup() -> bool
+
+  Asks each of the manager components to parse the setup file, returning True
+  if successful or False if an error occurred. The setup file must have previously
+  been parsed by LocalSetupParser.parse().
+  %End
+
   void plotCommands(const std::vector<miutil::miString>&);
+  %Docstring
+  Controller.plotCommands(list commands)
+
+  Prepares the plot for creation using the list of command strings, but does not
+  actually create the plot.
+  %End
+
   void setPlotWindow(const int, const int);
+  %Docstring
+  Controller.setPlotWindow(int width, int height)
+
+  Defines the size in pixels of the plot window to be painted on. This is usually
+  the same size as the output device later used to record the plot.
+  %End
+
   void plot(bool over =true, bool under =true);
+  %Docstring
+  Controller.plot(bool over=True, bool under=True)
+
+  Paints the plot onto the current output device. The over and under arguments
+  determine whether or not the overlay and underlay will be plotted. Typically,
+  the default values should be used.
+  %End
+
   Area getMapArea();
-  void getPlotTimes(std::vector<miutil::miTime>& /GetWrapper/,std::vector<miutil::miTime>& /GetWrapper/,
-                    std::vector<miutil::miTime>& /GetWrapper/,std::vector<miutil::miTime>& /GetWrapper/,
-                    std::vector<miutil::miTime>& /GetWrapper/);
+  %Docstring
+  Controller.getMapArea() -> Area
+
+  Returns the map area defined in map units.
+  %End
+
+  void getPlotTimes(std::vector<miutil::miTime>& fieldtimes /GetWrapper/,
+                    std::vector<miutil::miTime>& sattimes /GetWrapper/,
+                    std::vector<miutil::miTime>& obstimes /GetWrapper/,
+                    std::vector<miutil::miTime>& objtimes /GetWrapper/,
+                    std::vector<miutil::miTime>& ptimes /GetWrapper/);
+  %Docstring
+  Controller.getPlotTimes(list fieldtimes, list sattimes, list obstimes, list objtimes, list ptimes)
+
+  Replaces the items in the lists supplied to contain the available times for fields,
+  satellite images, observations, objects and products.
+  %End
   %MethodCode
   sipCpp->getPlotTimes(*a0, *a1, *a2, *a3, *a4);
   #define getPlotTimes_REPLACE_VALUES(arg, wrapper) \
@@ -68,6 +112,7 @@ public:
   getPlotTimes_REPLACE_VALUES(a3, a3Wrapper)
   getPlotTimes_REPLACE_VALUES(a4, a4Wrapper)
   %End
+
 /*  vector<AnnotationPlot*> getAnnotations();
   vector<Rectangle> plotAnnotations();
   void getCapabilitiesTime(set<miutil::miTime>& okTimes,
@@ -76,8 +121,30 @@ public:
                            bool allTimes=true);
 */
   bool setPlotTime(miutil::miTime&);
+  %Docstring
+  Controller.setPlotTime(miTime time) -> bool
+
+  Sets the time information for the current plot, returning True if successful
+  or False if not.
+  %End
+
   bool updatePlots();
+  %Docstring
+  Controller.updatePlots() -> bool
+
+  Updates the information for the plot, ensuring that the latest information is
+  used and unused resources are released. Returns True if successful or False if
+  an error occurred.
+  %End
+
   void keepCurrentArea(bool);
+  %Docstring
+  Controller.keepCurrentArea(bool keep)
+
+  If the keep argument is True, the controller should keep the current area for
+  subsequent plots. If it is False, an appropriate area for the extent of the
+  data will be used instead.
+  %End
 
   void archiveMode( bool );
 };

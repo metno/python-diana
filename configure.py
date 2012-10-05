@@ -53,6 +53,7 @@ if __name__ == "__main__":
                             "-I/opt/qt4-qws/include",
                             "-Isip",
                             config.pyqt_sip_flags,
+                            "-o", # generate docstrings for signatures
                             sip_file])
         print command
         if os.system(command) != 0:

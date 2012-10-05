@@ -1,3 +1,9 @@
+python-diana (0.2.1-0) unstable; urgency=low
+
+  * Added docstrings.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 05 Oct 2012 18:53:29 +0200
+
 python-diana (0.2.0-0) unstable; urgency=low
 
   * Modified the bindings to use the python-qt4-qws package for Qt bindings.
