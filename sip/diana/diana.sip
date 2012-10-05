@@ -29,6 +29,8 @@
 
 %Module diana
 
+%Import QtGui/QtGuimod.sip
+
 %Include Controller.sip
 %Include FieldManager.sip
 %Include LocalSetupParser.sip

@@ -1,3 +1,9 @@
+python-diana (0.2.0-0) unstable; urgency=low
+
+  * Modified the bindings to use the python-qt4-qws package for Qt bindings.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 05 Oct 2012 17:03:12 +0200
+
 python-diana (0.1.0-1) unstable; urgency=low
 
   * Updated the dependencies to include the python-sip package.

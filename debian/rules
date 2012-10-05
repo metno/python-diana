@@ -4,7 +4,7 @@ version = $(shell dpkg-parsechangelog | awk '/^Version/{print $$2}')
 
 build:
 	mkdir $(CURDIR)/debian/tmp
-	python configure.py
+	PYTHONPATH=/opt/qt4-qws/lib/python2.7/site-packages python configure.py
 	$(MAKE)
 
 clean:
