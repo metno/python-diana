@@ -51,6 +51,7 @@ if __name__ == "__main__":
                             "-I/usr/include",
                             "-I/usr/include/metlibs",
                             "-I/opt/qt4-qws/include",
+                            "-I/opt/qt4-qws/share/sip/PyQt4",
                             "-Isip",
                             config.pyqt_sip_flags,
                             "-o", # generate docstrings for signatures

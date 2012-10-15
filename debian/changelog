@@ -1,3 +1,11 @@
+python-diana (0.2.2-0) unstable; urgency=low
+
+  * Moved the FieldManager into the metlibs module.
+  * Added Controller::getAllFieldNames() and tidied up argument handling.
+  * Added std::set support.
+
+ -- David Boddie <david.boddie@met.no>  Mon, 15 Oct 2012 19:00:38 +0200
+
 python-diana (0.2.1-0) unstable; urgency=low
 
   * Added docstrings.

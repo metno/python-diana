@@ -30,9 +30,9 @@
 %Module diana
 
 %Import QtGui/QtGuimod.sip
+%Import metlibs/metlibs.sip
 
 %Include Controller.sip
-%Include FieldManager.sip
 %Include LocalSetupParser.sip
 %Include PaintGL.sip
 

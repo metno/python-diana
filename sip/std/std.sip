@@ -127,3 +127,96 @@ template<TYPE>
     return sipGetState(sipTransferObj);
     %End
 };
+
+template<TYPE>
+%MappedType std::set<TYPE>
+{
+    %TypeHeaderCode
+    #include <set>
+    %End
+
+    %ConvertFromTypeCode
+    PyObject *l;
+
+    if ((l = PySet_New(NULL)) == NULL)
+        return NULL;
+
+    std::set<TYPE>::iterator it;
+    for (it = sipCpp->begin(); it != sipCpp->end(); ++it)
+    {
+        TYPE *t = new TYPE(*it);
+        PyObject *tobj;
+
+        if ((tobj = sipConvertFromNewType(t, sipType_TYPE, sipTransferObj)) == NULL)
+        {
+            Py_DECREF(l);
+            delete t;
+            return NULL;
+        }
+
+        PySet_Add(l, tobj);
+    }
+
+    return l;
+    %End
+
+    %ConvertToTypeCode
+    if (sipIsErr == NULL)
+    {
+        if (!PySet_Check(sipPy))
+            return 0;
+
+        PyObject *iter = PyObject_GetIter(sipPy);
+        if (!iter)
+            return 0;
+
+        PyObject *item;
+        while ((item = PyIter_Next(iter)))
+        {
+            int ok = sipCanConvertToType(item, sipType_TYPE, 0);
+
+            Py_DECREF(item);
+
+            if (!ok) {
+                Py_DECREF(iter);
+                return 0;
+            }
+        }
+
+        Py_DECREF(iter);
+        return 1;
+    }
+
+    std::set<TYPE> *v = new std::set<TYPE>();
+
+    PyObject *iter = PyObject_GetIter(sipPy);
+    if (!iter)
+        return 0;
+
+    PyObject *item;
+    while ((item = PyIter_Next(iter)))
+    {
+        int state;
+        TYPE *t = reinterpret_cast<TYPE *>(sipConvertToType(item, sipType_TYPE,
+                                           sipTransferObj, SIP_NOT_NONE,
+                                           &state, sipIsErr));
+        Py_DECREF(item);
+
+        if (*sipIsErr)
+        {
+            sipReleaseType(t, sipType_TYPE, state);
+            delete v;
+            Py_DECREF(iter);
+            return 0;
+        }
+
+        v->insert(*t);
+        sipReleaseType(t, sipType_TYPE, state);
+    }
+
+    Py_DECREF(iter);
+    *sipCppPtr = v;
+
+    return sipGetState(sipTransferObj);
+    %End
+};

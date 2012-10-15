@@ -29,6 +29,33 @@
 
 %Import std/std.sip
 
+%ModuleHeaderCode
+  #define REPLACE_LIST_VALUES(arg, wrapper, TYPE, SIP_TYPE) \
+    PyList_SetSlice(wrapper, 0, PyList_GET_SIZE(wrapper), NULL); \
+    for (unsigned int i = 0; i < arg->size(); ++i) { \
+      TYPE *t = new TYPE(arg->at(i)); \
+      PyObject *tobj; \
+      if ((tobj = sipConvertFromNewType(t, SIP_TYPE, NULL)) == NULL) \
+          delete t; \
+      else \
+          PyList_Append(wrapper, tobj); \
+  }
+
+  #define REPLACE_SET_VALUES(arg, wrapper, TYPE, SIP_TYPE) \
+    PySet_Clear(wrapper); \
+    { \
+      std::set<TYPE>::iterator it; \
+      for (it = arg->begin(); it != arg->end(); ++it) { \
+        TYPE *t = new TYPE(*it); \
+        PyObject *tobj; \
+        if ((tobj = sipConvertFromNewType(t, SIP_TYPE, NULL)) == NULL) \
+          delete t; \
+        else \
+          PySet_Add(wrapper, tobj); \
+    } \
+  }
+%End
+
 class Controller
 {
 %TypeHeaderCode
@@ -95,22 +122,11 @@ public:
   %End
   %MethodCode
   sipCpp->getPlotTimes(*a0, *a1, *a2, *a3, *a4);
-  #define getPlotTimes_REPLACE_VALUES(arg, wrapper) \
-    PyList_SetSlice(wrapper, 0, PyList_GET_SIZE(wrapper), NULL); \
-    for (unsigned int i = 0; i < arg->size(); ++i) { \
-      miutil::miTime *t = new miutil::miTime(arg->at(i)); \
-      PyObject *tobj; \
-      if ((tobj = sipConvertFromNewType(t, sipType_miutil_miTime, NULL)) == NULL) \
-          delete t; \
-      else \
-          PyList_Append(wrapper, tobj); \
-  }
-  
-  getPlotTimes_REPLACE_VALUES(a0, a0Wrapper)
-  getPlotTimes_REPLACE_VALUES(a1, a1Wrapper)
-  getPlotTimes_REPLACE_VALUES(a2, a2Wrapper)
-  getPlotTimes_REPLACE_VALUES(a3, a3Wrapper)
-  getPlotTimes_REPLACE_VALUES(a4, a4Wrapper)
+  REPLACE_LIST_VALUES(a0, a0Wrapper, miutil::miTime, sipType_miutil_miTime)
+  REPLACE_LIST_VALUES(a1, a1Wrapper, miutil::miTime, sipType_miutil_miTime)
+  REPLACE_LIST_VALUES(a2, a2Wrapper, miutil::miTime, sipType_miutil_miTime)
+  REPLACE_LIST_VALUES(a3, a3Wrapper, miutil::miTime, sipType_miutil_miTime)
+  REPLACE_LIST_VALUES(a4, a4Wrapper, miutil::miTime, sipType_miutil_miTime)
   %End
 
 /*  vector<AnnotationPlot*> getAnnotations();
@@ -147,5 +163,15 @@ public:
   %End
 
   void archiveMode( bool );
+
+  void getAllFieldNames(std::vector<miutil::miString>& fieldNames /GetWrapper/,
+                        std::set<std::string>& fieldprefixes /GetWrapper/,
+                        std::set<std::string>& fieldsuffixes /GetWrapper/);
+  %MethodCode
+  sipCpp->getAllFieldNames(*a0, *a1, *a2);
+  REPLACE_LIST_VALUES(a0, a0Wrapper, miutil::miString, sipType_miutil_miString)
+  REPLACE_SET_VALUES(a1, a1Wrapper, std::string, sipType_std_string)
+  REPLACE_SET_VALUES(a2, a2Wrapper, std::string, sipType_std_string)
+  %End
 };
 

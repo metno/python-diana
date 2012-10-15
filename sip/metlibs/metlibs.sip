@@ -30,6 +30,7 @@
 %Module metlibs
 
 %Import std/std.sip
+%Include FieldManager.sip
 
 namespace milogger
 {
