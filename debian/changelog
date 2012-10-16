@@ -1,3 +1,9 @@
+python-diana (0.2.2-1) unstable; urgency=low
+
+  * Rebuilt after upgrading PyQt4 to version 4.9.4.
+
+ -- David Boddie <david.boddie@met.no>  Tue, 16 Oct 2012 13:20:55 +0200
+
 python-diana (0.2.2-0) unstable; urgency=low
 
   * Moved the FieldManager into the metlibs module.
