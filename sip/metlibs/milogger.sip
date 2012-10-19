@@ -27,10 +27,28 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module metlibs
+namespace milogger
+{
+    %TypeHeaderCode
+    #include <miLogger/LogHandler.h>
+    %End
 
-%Import std/std.sip
-%Include diField.sip
-%Include milogger.sip
-%Include miutil.sip
+    class LogHandler
+    {
+        %TypeHeaderCode
+        #include <miLogger/LogHandler.h>
+        %End
+
+    public:
+	    virtual ~LogHandler();
+	    void setLogLevel( int logLevel );
+        void setObjectName( const std::string & on );
+        static milogger::LogHandler * initLogHandler(const std::string& propertiesfilename) /Factory/;
+        static milogger::LogHandler * initLogHandler( int loglevel, const std::string & fileName) /Factory/;
+        static milogger::LogHandler * getInstance();
+
+    private:
+        LogHandler();
+    };
+};
 

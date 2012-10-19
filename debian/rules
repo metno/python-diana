@@ -4,11 +4,11 @@ version = $(shell dpkg-parsechangelog | awk '/^Version/{print $$2}')
 
 build:
 	mkdir $(CURDIR)/debian/tmp
-	PYTHONPATH=/opt/qt4-qws/lib/python2.7/site-packages python configure.py
+	PYTHONPATH=/opt/qt4-headless/lib/python2.7/site-packages python configure.py
 	$(MAKE)
 
 clean:
-	if [ ! -f Makefile ]; then PYTHONPATH=/opt/qt4-qws/lib/python2.7/site-packages python configure.py; fi
+	if [ ! -f Makefile ]; then PYTHONPATH=/opt/qt4-headless/lib/python2.7/site-packages python configure.py; fi
 	$(MAKE) clean
 	rm -rf debian/tmp debian/files modules $(CURDIR)/debian/tmp Makefile
 

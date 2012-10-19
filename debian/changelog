@@ -1,3 +1,9 @@
+python-diana (0.3.0-0) unstable; urgency=low
+
+  * Rebuilt after reconfiguring Qt and PyQt to use QPA instead of QWS.
+
+ -- David Boddie <david.boddie@met.no>  Thu, 18 Oct 2012 18:00:37 +0200
+
 python-diana (0.2.2-1) unstable; urgency=low
 
   * Rebuilt after upgrading PyQt4 to version 4.9.4.
