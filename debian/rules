@@ -14,6 +14,7 @@ clean:
 
 install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
+	cp -a /usr/lib/libdiana.so* $(CURDIR)/debian/tmp/opt/qt4-headless/lib
 
 binary: binary-arch binary-indep
 
