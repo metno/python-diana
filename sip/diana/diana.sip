@@ -27,7 +27,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module diana
+%Module(name=metno.diana, keyword_arguments="Optional")
 
 %Import QtGui/QtGuimod.sip
 %Import metlibs/metlibs.sip

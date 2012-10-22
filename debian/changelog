@@ -3,7 +3,7 @@ python-diana (0.3.1-0) unstable; urgency=low
   * Moved the modules into a package directory.
   * Included a bdiana module for convenience.
 
- -- David Boddie <david.boddie@met.no>  Mon, 22 Oct 2012 17:25:15 +0200
+ -- David Boddie <david.boddie@met.no>  Mon, 22 Oct 2012 18:26:50 +0200
 
 python-diana (0.3.0-0) unstable; urgency=low
 

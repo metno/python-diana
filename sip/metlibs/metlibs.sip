@@ -27,7 +27,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module metlibs
+%Module(name=metno.metlibs, keyword_arguments="Optional")
 
 %Import std/std.sip
 %Include diField.sip

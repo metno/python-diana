@@ -27,7 +27,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module std
+%Module(name=metno.std, keyword_arguments="Optional")
 
 %MappedType std::string
 {
