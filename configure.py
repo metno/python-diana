@@ -60,10 +60,13 @@ if __name__ == "__main__":
         if os.system(command) != 0:
             sys.exit(1)
         
+        dest_pkg_dir = "/opt/qt4-headless/lib/python%i.%i/site-packages/metno" % \
+                       (sys.version_info.major, sys.version_info.minor)
+        
         # Create the Makefile (within the diana directory).
         makefile = pyqtconfig.QtGuiModuleMakefile(
             config, build_file, dir=output_dir,
-            install_dir="/opt/qt4-headless/lib/python2.7/site-packages"
+            install_dir=dest_pkg_dir
             )
         
         if module == "diana":
@@ -97,9 +100,12 @@ if __name__ == "__main__":
         output_dirs.append(output_dir)
     
     # Generate the top-level Makefile.
+    python_files = glob.glob(os.path.join("python", "metno", "*.py"))
+
     sipconfig.ParentMakefile(
         configuration = config,
-        subdirs = output_dirs
+        subdirs = output_dirs,
+        installs = [(python_files, dest_pkg_dir)]
         ).generate()
     
     sys.exit()
