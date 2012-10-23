@@ -98,18 +98,3 @@
     %End
 };
 
-class Area
-{
-    %TypeHeaderCode
-    #include <diField/diArea.h>
-    %End
-
-public:
-    Area();
-    ~Area();
-
-    miutil::miString toString() const;
-    miutil::miString toLogString() const;
-    miutil::miString getAreaString() const;
-};
-

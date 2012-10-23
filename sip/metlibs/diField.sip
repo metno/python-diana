@@ -41,3 +41,38 @@ public:
   void updateSource(const std::string & modelName);
 };
 
+class Area
+{
+    %TypeHeaderCode
+    #include <diField/diArea.h>
+    %End
+
+public:
+    Area();
+    ~Area();
+
+    miutil::miString toString() const;
+    miutil::miString toLogString() const;
+    miutil::miString getAreaString() const;
+};
+
+class Rectangle
+{
+    %TypeHeaderCode
+    #include <diField/diRectangle.h>
+    %End
+
+public:
+    Rectangle();
+    Rectangle(const float x1, const float y1, const float x2, const float y2);
+
+    float width() const;
+    float height() const;
+
+    float x1;
+    float y1;
+    float x2;
+    float y2;
+
+    miutil::miString toString(bool fortranStyle=true) const;
+};

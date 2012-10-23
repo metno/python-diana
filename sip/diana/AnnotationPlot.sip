@@ -27,36 +27,47 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class PaintGLContext
+class AnnotationPlot
 {
-    %TypeHeaderCode
-    #include "PaintGL/paintgl.h"
-    %End
-
+%TypeHeaderCode
+#include "diAnnotationPlot.h"
+%End
 public:
-    PaintGLContext();
-    virtual ~PaintGLContext();
+  enum elementType {
+    text, symbol, image, input, table, arrow, box
+  };
 
-    void makeCurrent();
-    void begin(QPainter *painter);
-    bool isPainting() const;
-    void end();
+  struct element {
+    std::vector<AnnotationPlot::element> subelement;
+    AnnotationPlot::elementType eType;
+    miutil::miString eText;
+    int eCharacter;
+    miutil::miString eFont;
+    miutil::miString eFace;
+    miutil::miString textcolour;
+    miutil::miString eImage;
+    miutil::miString eName;
+    Alignment eHalign;
+    bool horizontal;
+  };
 
-    QTransform transform;
-    QRect viewport;
-};
 
-class PaintGL
-{
-    %TypeHeaderCode
-    #include "PaintGL/paintgl.h"
-    %End
+  struct Annotation {
+    miutil::miString str;
+    std::vector<miutil::miString> vstr;
+    Alignment hAlign;
+    Colour bordercolour;
+    std::vector<AnnotationPlot::element> annoElements;
+  };
 
-public:
-    PaintGL();
-    ~PaintGL();
+  AnnotationPlot();
+  AnnotationPlot(const miutil::miString&);
+  ~AnnotationPlot();
 
-    static PaintGL *instance() /Factory/;
-    PaintGLContext *currentContext;
+  bool plot();
+  bool prepare(const miutil::miString&);
+  const std::vector<AnnotationPlot::Annotation>& getAnnotations();
+
+  Rectangle getBoundingBox() const;
 };
 

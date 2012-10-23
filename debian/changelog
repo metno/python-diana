@@ -1,3 +1,9 @@
+python-diana (0.3.2-0) unstable; urgency=low
+
+  * Added more Controller API.
+
+ -- David Boddie <david.boddie@met.no>  Mon, 22 Oct 2012 18:54:26 +0200
+
 python-diana (0.3.1-0) unstable; urgency=low
 
   * Moved the modules into a package directory.

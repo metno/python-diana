@@ -27,36 +27,9 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class PaintGLContext
+class Plot
 {
-    %TypeHeaderCode
-    #include "PaintGL/paintgl.h"
-    %End
-
 public:
-    PaintGLContext();
-    virtual ~PaintGLContext();
-
-    void makeCurrent();
-    void begin(QPainter *painter);
-    bool isPainting() const;
-    void end();
-
-    QTransform transform;
-    QRect viewport;
+  Plot();
+  virtual ~Plot() {}
 };
-
-class PaintGL
-{
-    %TypeHeaderCode
-    #include "PaintGL/paintgl.h"
-    %End
-
-public:
-    PaintGL();
-    ~PaintGL();
-
-    static PaintGL *instance() /Factory/;
-    PaintGLContext *currentContext;
-};
-

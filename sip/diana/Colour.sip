@@ -27,36 +27,28 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class PaintGLContext
+class Colour
 {
-    %TypeHeaderCode
-    #include "PaintGL/paintgl.h"
-    %End
+%TypeHeaderCode
+#include "diColour.h"
+%End
 
 public:
-    PaintGLContext();
-    virtual ~PaintGLContext();
+  enum {maxv= 255};
 
-    void makeCurrent();
-    void begin(QPainter *painter);
-    bool isPainting() const;
-    void end();
+  Colour(const miutil::miString);
+  Colour(const int, const int,
+         const int, const int =maxv);
+  Colour(const Colour &rhs);
+  ~Colour();
 
-    QTransform transform;
-    QRect viewport;
+  int R() const;
+  int G() const;
+  int B() const;
+  int A() const;
+
+  float fR() const;
+  float fG() const;
+  float fB() const;
+  float fA() const;
 };
-
-class PaintGL
-{
-    %TypeHeaderCode
-    #include "PaintGL/paintgl.h"
-    %End
-
-public:
-    PaintGL();
-    ~PaintGL();
-
-    static PaintGL *instance() /Factory/;
-    PaintGLContext *currentContext;
-};
-

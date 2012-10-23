@@ -32,7 +32,10 @@
 %Import QtGui/QtGuimod.sip
 %Import metlibs/metlibs.sip
 
+%Include AnnotationPlot.sip
+%Include Colour.sip
 %Include Controller.sip
 %Include LocalSetupParser.sip
+%Include PlotOptions.sip
 %Include PaintGL.sip
 

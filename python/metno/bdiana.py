@@ -82,14 +82,7 @@ class BDiana:
         """Returns a list of available plot times for the currently selected
         input file.
         """
-        fieldtimes = []
-        sattimes = []
-        obstimes = []
-        objtimes = []
-        ptimes = []
-        
-        self.controller.getPlotTimes(fieldtimes, sattimes, obstimes, objtimes, ptimes)
-        times = fieldtimes + sattimes + obstimes + objtimes + ptimes
+        times = sum(self.controller.getPlotTimes(), [])
         times.sort()
 
         return times
@@ -136,6 +129,96 @@ class BDiana:
         painter.end()
 
         return image
+    
+    def plotAnnotations(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
+    
+        """Plots the annotations for the product specified in the current input
+        file on an image with the specified width and height, and optionally
+        specified image format. Each annotation image is yielded by this
+        generator method.
+        """
+        self.controller.setPlotWindow(width, height)
+        
+        wrapper = PaintGL()
+        context = PaintGLContext()
+        context.makeCurrent()
+        
+        image = QImage(width, height, image_format)
+        painter = QPainter()
+        painter.begin(image)
+        context.begin(painter)
+        context.viewport = QRect(0, 0, width, height)
+        
+        rectangles = self.controller.plotAnnotations()
+        annotationTransform = context.transform
+
+        context.end()
+        painter.end()
+
+        for rectangle in rectangles:
+            sr = QRect(rectangle.x1, rectangle.y1, rectangle.width(), rectangle.height())
+            dr = annotationTransform.mapRect(sr)
+            yield image.copy(dr)
+
+    def getAnnotations(self):
+    
+        """Returns the annotations for the product specified.
+        """
+        annotations = []
+
+        for plot in self.controller.getAnnotations():
+        
+            for ann in plot.getAnnotations():
+            
+                annotation = {}
+                for text in ann.vstr:
+                
+                    key, text = self._parse_key(text)
+                    if text == "":
+                        # No key=value pair.
+                        annotation["title"] = key
+                        continue
+
+                    values = []
+                    while text:
+                        value, text = self._parse_value(text)
+                        values.append(value)
+                    
+                    annotation[key] = values
+
+                annotations.append(annotation)
+        
+        return annotations
+
+    def _parse_key(self, text):
+
+        key = ""
+        for i in range(len(text)):
+            c = text[i]
+            if c != "=":
+                key += c
+            else:
+                return key, text[i+1:]
+        
+        return key, ""
+
+    def _parse_value(self, text):
+
+        value = ""
+        in_string = False
+        for i in range(len(text)):
+            c = text[i]
+            if c == '"':
+                in_string = not in_string
+            elif c == " " or c == ",":
+                if in_string:
+                    value += c
+                else:
+                    return value, text[i+1:]
+            else:
+                value += c
+
+        return value, ""
 
 class InputFile:
 

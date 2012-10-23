@@ -220,3 +220,69 @@ template<TYPE>
     return sipGetState(sipTransferObj);
     %End
 };
+
+template<TYPE>
+%MappedType std::vector<TYPE*>
+{
+    %TypeHeaderCode
+    #include <vector>
+    %End
+
+    %ConvertFromTypeCode
+    PyObject *l;
+
+    if ((l = PyList_New(sipCpp->size())) == NULL)
+        return NULL;
+
+    for (unsigned int i = 0; i < sipCpp->size(); ++i)
+    {
+        TYPE *t = sipCpp->at(i);
+        PyObject *tobj;
+
+        if ((tobj = sipConvertFromType(t, sipType_TYPE, sipTransferObj)) == NULL)
+        {
+            Py_DECREF(l);
+            return NULL;
+        }
+
+        PyList_SET_ITEM(l, i, tobj);
+    }
+
+    return l;
+    %End
+
+    %ConvertToTypeCode
+    if (sipIsErr == NULL)
+    {
+        if (!PyList_Check(sipPy))
+            return 0;
+
+        for (unsigned int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
+        {
+            if (!sipCanConvertToType(PyList_GET_ITEM(sipPy, i), sipType_TYPE, 0))
+                return 0;
+        }
+
+        return 1;
+    }
+
+    std::vector<TYPE*> *v = new std::vector<TYPE*>();
+
+    for (unsigned int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
+    {
+        TYPE *t = reinterpret_cast<TYPE *>(sipConvertToType(PyList_GET_ITEM(sipPy, i),
+                                           sipType_TYPE, sipTransferObj, 0, 0, sipIsErr));
+        if (*sipIsErr)
+        {
+            delete v;
+            return 0;
+        }
+
+        v->push_back(t);
+    }
+
+    *sipCppPtr = v;
+
+    return sipGetState(sipTransferObj);
+    %End
+};
