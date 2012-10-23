@@ -33,31 +33,11 @@ class AnnotationPlot
 #include "diAnnotationPlot.h"
 %End
 public:
-  enum elementType {
-    text, symbol, image, input, table, arrow, box
-  };
-
-  struct element {
-    std::vector<AnnotationPlot::element> subelement;
-    AnnotationPlot::elementType eType;
-    miutil::miString eText;
-    int eCharacter;
-    miutil::miString eFont;
-    miutil::miString eFace;
-    miutil::miString textcolour;
-    miutil::miString eImage;
-    miutil::miString eName;
-    Alignment eHalign;
-    bool horizontal;
-  };
-
-
   struct Annotation {
     miutil::miString str;
     std::vector<miutil::miString> vstr;
     Alignment hAlign;
     Colour bordercolour;
-    std::vector<AnnotationPlot::element> annoElements;
   };
 
   AnnotationPlot();

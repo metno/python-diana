@@ -19,7 +19,7 @@ from datetime import datetime
 import sys
 
 from metlibs import milogger
-from diana import Controller, LocalSetupParser, PaintGL, PaintGLContext
+from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext
 from PyQt4.QtCore import QRect
 from PyQt4.QtGui import QImage, QPainter
 
@@ -173,18 +173,21 @@ class BDiana:
                 annotation = {}
                 for text in ann.vstr:
                 
-                    key, text = self._parse_key(text)
-                    if text == "":
-                        # No key=value pair.
-                        annotation["title"] = key
-                        continue
-
-                    values = []
                     while text:
+
+                        key, text = self._parse_key(text)
+                        if text == "":
+                            # No key=value pair.
+                            annotation["title"] = key
+                            continue
+                        
                         value, text = self._parse_value(text)
-                        values.append(value)
-                    
-                    annotation[key] = values
+                        if key == "table":
+                            value = self._parse_table(value)
+                        elif "colour" in key:
+                            value = Colour(value)
+
+                        annotation[key] = value
 
                 annotations.append(annotation)
         
@@ -210,7 +213,7 @@ class BDiana:
             c = text[i]
             if c == '"':
                 in_string = not in_string
-            elif c == " " or c == ",":
+            elif c == ",":
                 if in_string:
                     value += c
                 else:
@@ -219,6 +222,16 @@ class BDiana:
                 value += c
 
         return value, ""
+
+    def _parse_table(self, text):
+
+        pieces = text.split(";")
+        title = pieces.pop(0)
+        rows = []
+        for i in range(0, len(pieces), 3):
+            rows.append((Colour(pieces[i]), pieces[i+2]))
+
+        return {"title": title, "rows": rows}
 
 class InputFile:
 
