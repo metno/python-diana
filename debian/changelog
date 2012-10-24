@@ -1,3 +1,9 @@
+python-diana (0.3.3-0) unstable; urgency=low
+
+  * Added Spectrum manager support.
+
+ -- David Boddie <david.boddie@met.no>  Wed, 24 Oct 2012 16:31:34 +0200
+
 python-diana (0.3.2-0) unstable; urgency=low
 
   * Added more Controller API.

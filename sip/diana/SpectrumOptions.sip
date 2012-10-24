@@ -27,18 +27,17 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
+class SpectrumOptions
+{
+%TypeHeaderCode
+#include "diSpectrumOptions.h"
+%End
 
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
+public:
+  SpectrumOptions();
+  ~SpectrumOptions();
+  void setDefaults();
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include Controller.sip
-%Include LocalSetupParser.sip
-%Include PlotOptions.sip
-%Include PaintGL.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
-
+  std::vector<miutil::miString> writeOptions();
+  void readOptions(const std::vector<miutil::miString>& vstr);
+};

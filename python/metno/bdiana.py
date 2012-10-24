@@ -19,7 +19,9 @@ from datetime import datetime
 import sys
 
 from metlibs import milogger
-from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext
+from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext, \
+                  SpectrumManager
+
 from PyQt4.QtCore import QRect
 from PyQt4.QtGui import QImage, QPainter
 
@@ -75,7 +77,7 @@ class BDiana:
         dt = datetime.now()
         self.controller.setPlotTime(dt)
         
-        self.controller.plotCommands(input_file.plot_lines)
+        self.controller.plotCommands(input_file.read_plot_commands())
     
     def getPlotTimes(self):
 
@@ -105,13 +107,9 @@ class BDiana:
         """
         return self.controller.getMapArea()
     
-    def plot(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
+    def _plot(self, width, height, image_format, plot_object, plot_method):
     
-        """Plots the data specified in the current input file as an image with
-        the specified width and height, and with an optionally specified image
-        format.
-        """
-        self.controller.setPlotWindow(width, height)
+        plot_object.setPlotWindow(width, height)
         
         wrapper = PaintGL()
         context = PaintGLContext()
@@ -123,12 +121,21 @@ class BDiana:
         context.begin(painter)
         context.viewport = QRect(0, 0, width, height)
 
-        self.controller.plot()
+        value = plot_method()
+        transform = context.transform
         
         context.end()
         painter.end()
 
-        return image
+        return image, value, transform
+    
+    def plot(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
+    
+        """Plots the data specified in the current input file as an image with
+        the specified width and height, and with an optionally specified image
+        format.
+        """
+        return self._plot(width, height, image_format, self.controller, self.controller.plot)[0]
     
     def plotAnnotations(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
     
@@ -137,24 +144,9 @@ class BDiana:
         specified image format. Each annotation image is yielded by this
         generator method.
         """
-        self.controller.setPlotWindow(width, height)
+        image, rectangles, annotationTransform = self._plot(width, height, image_format,
+                                        self.controller, self.controller.plotAnnotations)
         
-        wrapper = PaintGL()
-        context = PaintGLContext()
-        context.makeCurrent()
-        
-        image = QImage(width, height, image_format)
-        painter = QPainter()
-        painter.begin(image)
-        context.begin(painter)
-        context.viewport = QRect(0, 0, width, height)
-        
-        rectangles = self.controller.plotAnnotations()
-        annotationTransform = context.transform
-
-        context.end()
-        painter.end()
-
         for rectangle in rectangles:
             sr = QRect(rectangle.x1, rectangle.y1, rectangle.width(), rectangle.height())
             dr = annotationTransform.mapRect(sr)
@@ -233,15 +225,46 @@ class BDiana:
 
         return {"title": title, "rows": rows}
 
+    def prepareSpectrum(self, input_file, as_field = False):
+    
+        """Prepares input from the specified input_file for plotting.
+        """
+        self.spectrumManager = SpectrumManager()
+        commands = input_file.read_spectrum_commands()
+        options = self.spectrumManager.getOptions()
+        options.readOptions(commands)
+        models, observations, station = input_file.parse_spectrum_commands(commands)
+        self.spectrumManager.setSelectedModels(models, observations, as_field)
+        self.spectrumManager.setModel()
+        self.spectrumManager.setStation(station)
+    
+    def getSpectrumTime(self):
+
+        return self.spectrumManager.getTime()
+
+    def setSpectrumTime(self, spectrum_time):
+
+        self.spectrumManager(spectrum_time)
+
+    def plotSpectrum(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
+    
+        """Plots the wave spectrum for the product specified in the current input
+        file on an image with the specified width and height, and optionally
+        specified image format.
+        """
+        image, success, transform = self._plot(width, height, image_format,
+                                               self.spectrumManager, self.spectrumManager.plot)
+
+        return image
+
 class InputFile:
 
     """Represents an input file for use with a BDiana instance."""
 
     def __init__(self, input_path):
 
-        lines = open(input_path).readlines()
-        self.parameters = self.read_input_parameters(lines)
-        self.plot_lines = self.read_plot_commands(lines)
+        self.lines = open(input_path).readlines()
+        self.parameters = self.read_input_parameters()
     
     def getBufferSize(self, width = 400, height = 400):
     
@@ -261,11 +284,11 @@ class InputFile:
 
         return width, height
     
-    def read_input_parameters(self, lines):
+    def read_input_parameters(self):
     
         d = {}
         
-        for line in lines:
+        for line in self.lines:
             line = line.strip()
             if line.startswith("#"):
                 continue
@@ -279,19 +302,52 @@ class InputFile:
         
         return d
     
-    def read_plot_commands(self, lines):
+    def read_commands(self, start, end):
     
-        plot_lines = []
-        in_plot = False
-        for line in lines:
+        lines = []
+        in_section = False
+        for line in self.lines:
             if line.strip().startswith("#"):
                 continue
-            elif line.strip().startswith("PLOT"):
-                in_plot = True
-            elif line.strip().startswith("ENDPLOT"):
-                in_plot = False
-            elif in_plot and line.strip():
-                plot_lines.append(line)
+            elif line.strip().lower().startswith(start.lower()):
+                in_section = True
+            elif line.strip().lower().startswith(end.lower()):
+                in_section = False
+            elif in_section and line.strip():
+                lines.append(line)
         
-        return plot_lines
+        return lines
+    
+    def read_plot_commands(self):
+    
+        return self.read_commands("plot", "endplot")
+    
+    def read_spectrum_commands(self):
+    
+        return self.read_commands("spectrum.plot", "endplot")
+
+    def parse_spectrum_commands(self, commands):
+
+        observations = False
+        station = None
+        models = []
+
+        for command in commands:
+        
+            command = command.strip()
+            if command.lower() == "observation.on":
+                observations = True
+            elif command.lower() == "observation.off":
+                observations = False
+            else:
+                pieces = command.split("=")
+                key, value = "".join(pieces[:1]), " ".join(pieces[1:])
+                
+                key = key.strip().lower()
+                if key == "station":
+                    station = value.strip().replace('"', '')
+                elif key == "model" or key == "models":
+                    models.append(value.strip())
+
+        return models, observations, station
 

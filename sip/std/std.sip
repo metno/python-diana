@@ -286,3 +286,67 @@ template<TYPE>
     return sipGetState(sipTransferObj);
     %End
 };
+
+%MappedType std::vector<float>
+{
+    %TypeHeaderCode
+    #include <vector>
+    %End
+
+    %ConvertFromTypeCode
+    PyObject *l;
+
+    if ((l = PyList_New(sipCpp->size())) == NULL)
+        return NULL;
+
+    for (unsigned int i = 0; i < sipCpp->size(); ++i)
+    {
+        PyObject *tobj;
+
+        if ((tobj = PyFloat_FromDouble(sipCpp->at(i))) == NULL)
+        {
+            Py_DECREF(l);
+            return NULL;
+        }
+
+        PyList_SET_ITEM(l, i, tobj);
+    }
+
+    return l;
+    %End
+
+    %ConvertToTypeCode
+    if (sipIsErr == NULL)
+    {
+        if (!PyList_Check(sipPy))
+            return 0;
+
+        for (unsigned int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
+        {
+            if (!PyFloat_Check(PyList_GET_ITEM(sipPy, i)))
+                return 0;
+        }
+
+        return 1;
+    }
+
+    std::vector<float> *v = new std::vector<float>();
+
+    for (unsigned int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
+    {
+        PyObject *f = PyList_GET_ITEM(sipPy, i);
+        if (!f)
+        {
+            delete v;
+            *sipIsErr = 1;
+            return 0;
+        }
+
+        v->push_back(PyFloat_AsDouble(f));
+    }
+
+    *sipCppPtr = v;
+
+    return sipGetState(sipTransferObj);
+    %End
+};
