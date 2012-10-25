@@ -1,3 +1,9 @@
+python-diana (0.3.4-1) unstable; urgency=low
+
+  * Added examples in the new python-diana-examples package.
+
+ -- David Boddie <david.boddie@met.no>  Wed, 24 Oct 2012 16:36:58 +0200
+
 python-diana (0.3.3-0) unstable; urgency=low
 
   * Added Spectrum manager support.
