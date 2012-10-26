@@ -20,6 +20,7 @@ if __name__ == "__main__":
     
     qt_pkg_dir = os.getenv("qt_pkg_dir")
     python_diana_pkg_dir = os.getenv("python_diana_pkg_dir")
+    dest_pkg_dir = os.path.join(python_diana_pkg_dir, "metno")
 
     config = pyqtconfig.Configuration()
     
@@ -57,14 +58,15 @@ if __name__ == "__main__":
                             "-I"+qt_pkg_dir+"/share/sip/PyQt4",
                             "-Isip",
                             config.pyqt_sip_flags,
+                            "-w",
                             "-o", # generate docstrings for signatures
                             sip_file])
-        print command
+        sys.stdout.write(command+"\n")
+        sys.stdout.flush()
+        
         if os.system(command) != 0:
             sys.exit(1)
         
-        dest_pkg_dir = python_diana_pkg_dir+"/metno"
-
         # Create the Makefile (within the diana directory).
         makefile = pyqtconfig.QtGuiModuleMakefile(
             config, build_file, dir=output_dir,
