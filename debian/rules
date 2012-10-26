@@ -9,6 +9,8 @@ examples_pkg_dir = "/opt/qt4-headless/share/python-diana-examples"
 
 build:
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
+	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/share/doc
+	mkdir -p $(CURDIR)/debian/python-diana-examples$(qt_pkg_dir)/share/doc
 	mkdir -p $(CURDIR)/debian/python-diana-examples$(examples_pkg_dir)
 	qt_pkg_dir=$(qt_pkg_dir) python_diana_pkg_dir=$(python_diana_pkg_dir) \
         PYTHONPATH=$(pyqt_pkg_dir)/site-packages python configure.py
@@ -26,6 +28,8 @@ install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/python-diana install
 	cp -a /usr/lib/libdiana.so* $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
 	cp -a examples $(CURDIR)/debian/python-diana-examples$(examples_pkg_dir)
+	cp -a doc/python-diana $(CURDIR)/debian/python-diana$(qt_pkg_dir)/share/doc
+	cp -a doc/python-diana-examples $(CURDIR)/debian/python-diana-examples$(qt_pkg_dir)/share/doc
 
 binary: binary-arch binary-indep
 
