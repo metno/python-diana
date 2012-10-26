@@ -19,14 +19,13 @@
 import datetime, sys
 from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
+from metno.diana import MovieMaker
 
 if __name__ == "__main__":
 
     if not 2 <= len(sys.argv) <= 3:
     
         sys.stderr.write("Usage: %s [setup file] <input file>\n" % sys.argv[0])
-        sys.stderr.write("Writes images for legends described by the input file with names\n"
-                         "legend0.png, legend1.png, ...\n")
         sys.exit(1)
     
     elif len(sys.argv) == 2:
@@ -45,9 +44,27 @@ if __name__ == "__main__":
         print "Failed to parse", setup_path
         sys.exit(1)
     
-    fields = bdiana.controller.getAllFieldNames()[0]
-    fields.sort()
-    print "\n".join(fields)
+    input_file = InputFile(input_path)
+    width, height = input_file.getBufferSize()
+    bdiana.prepare(input_file)
+    
+    times = bdiana.getPlotTimes()
+    if not times:
+        sys.stderr.write("No times found for the specified plot description.\n")
+    
+    try:
+        frameDelay = float(input_file.parameters["frameDelay"])
+    except (KeyError, ValueError):
+        frameDelay = 0.5
+
+    print "Saving temp.avi"
+    movie = MovieMaker("temp.avi", "avi", frameDelay);
+    for time in times:
+    
+        print "Plotting", time
+        bdiana.setPlotTime(time)
+        image = bdiana.plot(width, height)
+        movie.addImage(image)
 
     sys.exit()
 

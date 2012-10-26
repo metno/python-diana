@@ -5,7 +5,7 @@ python_version = "2.7"
 qt_pkg_dir = "/opt/qt4-headless"
 pyqt_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)
 python_diana_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)"/site-packages"
-examples_pkg_dir = "/opt/qt4-headless/share/python-diana"
+examples_pkg_dir = "/opt/qt4-headless/share/python-diana-examples"
 
 build:
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib

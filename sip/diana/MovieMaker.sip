@@ -27,19 +27,33 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
+class MovieMaker
+{
+%TypeHeaderCode
+#include "MovieMaker.h"
+%End
 
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
+public:
+  MovieMaker(const std::string &filename, const std::string &format,
+             float delay);
+  %Docstring
+  Sets the file name for the finished animation, the format it will be saved
+  in, and the delay to use between frames.
+  %End
+  ~MovieMaker();
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include Controller.sip
-%Include LocalSetupParser.sip
-%Include MovieMaker.sip
-%Include PlotOptions.sip
-%Include PaintGL.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
+  std::string outputFile() const;
+  %Docstring
+  Returns the name of the file that will be created by the movie maker.
+  %End
+  std::string outputFormat() const;
+  %Docstring
+  Returns the format of the file that will be created by the movie maker.
+  %End
 
+  bool addImage(const QImage &image);
+  %Docstring
+  Adds a new image to the animation, returning True if successful or False if
+  unsuccessful.
+  %End
+};

@@ -298,7 +298,7 @@ class InputFile:
             pieces = line.split("=")
             if len(pieces) > 1:
                 key, value = pieces[0], "=".join(pieces[1:])
-                d[key] = value
+                d[key.strip()] = value.strip()
         
         return d
     
