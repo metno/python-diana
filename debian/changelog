@@ -1,8 +1,14 @@
+python-diana (0.3.4-2) unstable; urgency=low
+
+  * Moved the examples into the installation within the /opt directory.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 26 Oct 2012 14:25:25 +0200
+
 python-diana (0.3.4-1) unstable; urgency=low
 
   * Added examples in the new python-diana-examples package.
 
- -- David Boddie <david.boddie@met.no>  Wed, 24 Oct 2012 16:36:58 +0200
+ -- David Boddie <david.boddie@met.no>  Thu, 25 Oct 2012 16:36:58 +0200
 
 python-diana (0.3.3-0) unstable; urgency=low
 

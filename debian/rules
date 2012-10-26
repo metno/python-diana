@@ -1,22 +1,31 @@
 #!/usr/bin/make -f
 
 version = $(shell dpkg-parsechangelog | awk '/^Version/{print $$2}')
+python_version = "2.7"
+qt_pkg_dir = "/opt/qt4-headless"
+pyqt_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)
+python_diana_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)"/site-packages"
+examples_pkg_dir = "/opt/qt4-headless/share/python-diana"
 
 build:
-	mkdir $(CURDIR)/debian/python-diana
-	mkdir -p $(CURDIR)/debian/python-diana-examples/opt/qt4-headless/share/python-diana
-	PYTHONPATH=/opt/qt4-headless/lib/python2.7/site-packages python configure.py
+	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
+	mkdir -p $(CURDIR)/debian/python-diana-examples$(examples_pkg_dir)
+	qt_pkg_dir=$(qt_pkg_dir) python_diana_pkg_dir=$(python_diana_pkg_dir) \
+        PYTHONPATH=$(pyqt_pkg_dir)/site-packages python configure.py
 	$(MAKE)
 
 clean:
-	if [ ! -f Makefile ]; then PYTHONPATH=/opt/qt4-headless/lib/python2.7/site-packages python configure.py; fi
+	
+	if [ ! -f Makefile ]; then qt_pkg_dir=$(qt_pkg_dir) \
+        python_diana_pkg_dir=$(python_diana_pkg_dir) \
+        PYTHONPATH=$(pyqt_pkg_dir)/site-packages python configure.py; fi
 	$(MAKE) clean
 	rm -rf $(CURDIR)/modules $(CURDIR)/debian/python-diana $(CURDIR)/debian/python-diana-examples $(CURDIR)/debian/files Makefile
 
 install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/python-diana install
-	cp -a /usr/lib/libdiana.so* $(CURDIR)/debian/python-diana/opt/qt4-headless/lib
-	cp -a examples $(CURDIR)/debian/python-diana-examples/opt/qt4-headless/share/python-diana
+	cp -a /usr/lib/libdiana.so* $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
+	cp -a examples $(CURDIR)/debian/python-diana-examples$(examples_pkg_dir)
 
 binary: binary-arch binary-indep
 
