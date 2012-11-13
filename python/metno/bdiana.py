@@ -25,6 +25,9 @@ from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext,
 from PyQt4.QtCore import QRect
 from PyQt4.QtGui import QImage, QPainter
 
+class BDianaError(Exception):
+    pass
+
 class BDiana:
 
     """Provides an API to access Diana plotting functionality.
@@ -51,6 +54,7 @@ class BDiana:
         self.logHandler.setObjectName(object_name or sys.argv[0])
 
         self.controller = None
+        self.renderHints = QPainter.RenderHints()
     
     def setup(self, setup_path):
     
@@ -118,6 +122,7 @@ class BDiana:
         image = QImage(width, height, image_format)
         painter = QPainter()
         painter.begin(image)
+        painter.setRenderHints(self.renderHints)
         context.begin(painter)
         context.viewport = QRect(0, 0, width, height)
 
@@ -289,10 +294,14 @@ class InputFile:
         d = {}
         
         for line in self.lines:
+        
+            at = line.find("#")
+            
+            if at != -1:
+               line = line[:at]
+
             line = line.strip()
-            if line.startswith("#"):
-                continue
-            elif line.startswith("PLOT"):
+            if line.startswith("PLOT"):
                 break
             
             pieces = line.split("=")
@@ -307,6 +316,11 @@ class InputFile:
         lines = []
         in_section = False
         for line in self.lines:
+
+            at = line.find("#")
+            if at != -1:
+                line = line[:at]
+
             if line.strip().startswith("#"):
                 continue
             elif line.strip().lower().startswith(start.lower()):

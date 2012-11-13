@@ -1,3 +1,9 @@
+python-diana (0.3.6-1) unstable; urgency=low
+
+  * Rebuilt against bdiana-3.30.
+
+ -- David Boddie <david.boddie@met.no>  Tue, 13 Nov 2012 13:33:23 +0100
+
 python-diana (0.3.5-1) unstable; urgency=low
 
   * Added the MovieMaker class to the diana module.

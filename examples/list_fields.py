@@ -22,21 +22,13 @@ from metno.bdiana import BDiana, InputFile
 
 if __name__ == "__main__":
 
-    if not 2 <= len(sys.argv) <= 3:
+    if not len(sys.argv) == 2:
     
-        sys.stderr.write("Usage: %s [setup file] <input file>\n" % sys.argv[0])
-        sys.stderr.write("Writes images for legends described by the input file with names\n"
-                         "legend0.png, legend1.png, ...\n")
+        sys.stderr.write("Usage: %s <setup file>\n" % sys.argv[0])
+        sys.stderr.write("Writes the available fields described by the setup file.\n")
         sys.exit(1)
     
-    elif len(sys.argv) == 2:
-    
-        setup_path = "/etc/diana/diana.setup-COMMON"
-        input_path = sys.argv[1]
-    
-    else:
-        setup_path = sys.argv[1]
-        input_path = sys.argv[2]
+    setup_path = sys.argv[1]
     
     app = QApplication(sys.argv)
     bdiana = BDiana()
