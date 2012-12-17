@@ -29,7 +29,11 @@
 
 class Plot
 {
+%TypeHeaderCode
+#include "diPlot.h"
+%End
+
 public:
   Plot();
-  virtual ~Plot() {}
+  virtual ~Plot();
 };

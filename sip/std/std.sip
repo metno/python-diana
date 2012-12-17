@@ -221,6 +221,101 @@ template<TYPE>
     %End
 };
 
+template<TYPE1, TYPE2>
+%MappedType std::map<TYPE1, TYPE2>
+{
+    %TypeHeaderCode
+    #include <map>
+    %End
+
+    %ConvertFromTypeCode
+    PyObject *d;
+
+    if ((d = PyDict_New()) == NULL)
+        return NULL;
+
+    std::map<TYPE>::iterator it;
+    for (it = sipCpp->begin(); it != sipCpp->end(); ++it)
+    {
+        TYPE *t1 = new TYPE(it->first);
+        TYPE *t2 = new TYPE(it->second);
+        PyObject *tobj1 = sipConvertFromNewType(t1, sipType_TYPE, sipTransferObj);
+        PyObject *tobj2 = sipConvertFromNewType(t2, sipType_TYPE, sipTransferObj);
+
+        if ((tobj1 == NULL) || (tobj2 == NULL) || (PyDict_SetItem(d, tobj1, tobj2) < 0))
+        {
+            Py_DECREF(d);
+            if (tobj1)
+                Py_DECREF(tobj1);
+            else
+                delete t1;
+            if (tobj2)
+                Py_DECREF(tobj2);
+            else
+                delete t2;
+
+            return NULL;
+        }
+
+        Py_DECREF(tobj1);
+        Py_DECREF(tobj2);
+    }
+
+    return d;
+    %End
+
+    %ConvertToTypeCode
+    PyObject *key;
+    PyObject *value;
+    SIP_SSIZE_T i = 0;
+
+    if (sipIsErr == NULL)
+    {
+        if (!PyDict_Check(sipPy))
+            return 0;
+
+        while (PyDict_Next(sipPy, &i, &key, &value))
+        {
+            if (!sipCanConvertToType(t1obj, sipType_TYPE1, SIP_NOT_NONE))
+                return 0;
+
+            if (!sipCanConvertToType(t2obj, sipType_TYPE2, SIP_NOT_NONE))
+                return 0;
+        }
+
+        return 1;
+    }
+
+    std::map<TYPE1, TYPE2> *m = new std::map<TYPE1, TYPE2>();
+
+    while (PyDict_Next(sipPy, &i, &key, &value))
+    {
+        int state1, state2;
+        
+        TYPE1 *t1 = reinterpret_cast<TYPE1 *>(sipConvertToType(t1obj, sipType_TYPE1, sipTransferObj, SIP_NOT_NONE, &state1, sipIsErr));
+        TYPE2 *t2 = reinterpret_cast<TYPE2 *>(sipConvertToType(t2obj, sipType_TYPE2, sipTransferObj, SIP_NOT_NONE, &state2, sipIsErr));
+
+        if (*sipIsErr)
+        {
+            sipReleaseType(t1, sipType_TYPE1, state1);
+            sipReleaseType(t2, sipType_TYPE2, state2);
+
+            delete m;
+            return 0;
+        }
+
+        m->insert(*t1, *t2);
+
+        sipReleaseType(t1, sipType_TYPE1, state1);
+        sipReleaseType(t2, sipType_TYPE2, state2);
+    }
+
+    *sipCppPtr = m;
+
+    return sipGetState(sipTransferObj);
+    %End
+};
+
 template<TYPE>
 %MappedType std::vector<TYPE*>
 {

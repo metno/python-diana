@@ -35,11 +35,14 @@
 
 %Include AnnotationPlot.sip
 %Include Colour.sip
+%Include CommonTypes.sip
 %Include Controller.sip
+%Include FieldPlot.sip
 %Include LocalSetupParser.sip
 %Include MovieMaker.sip
+%Include Plot.sip
 %Include PlotOptions.sip
 %Include PaintGL.sip
+%Include SatManager.sip
 %Include SpectrumManager.sip
 %Include SpectrumOptions.sip
-

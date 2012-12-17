@@ -39,6 +39,8 @@ public:
 
   void updateSources();
   void updateSource(const std::string & modelName);
+
+  std::vector<std::string> getFileNames(const std::string& modelName);
 };
 
 class Area

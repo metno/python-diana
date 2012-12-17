@@ -27,11 +27,12 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class AnnotationPlot
+class AnnotationPlot : public Plot
 {
 %TypeHeaderCode
 #include "diAnnotationPlot.h"
 %End
+
 public:
   struct Annotation {
     miutil::miString str;

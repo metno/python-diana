@@ -65,6 +65,8 @@ public:
   ~Controller();
 
   FieldManager* getFieldManager();
+  SatManager* getSatelliteManager();
+  //ObsManager* getObservationManager();
 
   bool parseSetup();
   %Docstring
@@ -202,5 +204,9 @@ public:
   PyTuple_SET_ITEM(sipRes, 1, a1Wrapper);
   PyTuple_SET_ITEM(sipRes, 2, a2Wrapper);
   %End
+
+//  std::vector<SatPlot*> getSatellitePlots() const;
+  std::vector<FieldPlot*> getFieldPlots() const;
+//  std::vector<ObsPlot*> getObsPlots() const;
 };
 

@@ -1,6 +1,7 @@
 python-diana (0.3.6-1) unstable; urgency=low
 
   * Rebuilt against bdiana-3.30.
+  * Added a missing exception to the bdiana module.
 
  -- David Boddie <david.boddie@met.no>  Tue, 13 Nov 2012 13:33:23 +0100
 
