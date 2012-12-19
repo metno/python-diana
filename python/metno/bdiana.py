@@ -22,8 +22,9 @@ from metlibs import milogger
 from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext, \
                   SpectrumManager
 
-from PyQt4.QtCore import QRect
-from PyQt4.QtGui import QImage, QPainter
+from PyQt4.QtCore import QRect, QSize, QSizeF
+from PyQt4.QtGui import QImage, QPainter, QPrinter
+from PyQt4.QtSvg import QSvgGenerator
 
 class BDianaError(Exception):
     pass
@@ -111,7 +112,7 @@ class BDiana:
         """
         return self.controller.getMapArea()
     
-    def _plot(self, width, height, image_format, plot_object, plot_method):
+    def _plot(self, width, height, paint_device, plot_object, plot_method):
     
         plot_object.setPlotWindow(width, height)
         
@@ -119,9 +120,8 @@ class BDiana:
         context = PaintGLContext()
         context.makeCurrent()
         
-        image = QImage(width, height, image_format)
         painter = QPainter()
-        painter.begin(image)
+        painter.begin(paint_device)
         painter.setRenderHints(self.renderHints)
         context.begin(painter)
         context.viewport = QRect(0, 0, width, height)
@@ -132,24 +132,53 @@ class BDiana:
         context.end()
         painter.end()
 
-        return image, value, transform
+        return paint_device, value, transform
     
-    def plot(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
+    def plotImage(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
     
         """Plots the data specified in the current input file as an image with
         the specified width and height, and with an optionally specified image
         format.
         """
-        return self._plot(width, height, image_format, self.controller, self.controller.plot)[0]
+        image = QImage(width, height, image_format)
+        return self._plot(width, height, image, self.controller, self.controller.plot)[0]
     
-    def plotAnnotations(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
+    def plotPDF(self, width, height, output_file):
+
+        """Plots the data specified in the current input file as a page in a
+        PDF file with the given width and height, writing the output to the
+        specified output file.
+        """
+        pdf = QPrinter()
+        pdf.setOutputFormat(QPrinter.PdfFormat)
+        pdf.setOutputFileName(output_file)
+        pdf.setPaperSize(QSizeF(width, height), QPrinter.DevicePixel)
+        pdf.setFullPage(True)
+        return self._plot(width, height, pdf, self.controller, self.controller.plot)[0]
+    
+    def plotSVG(self, width, height, output_file):
+
+        """Plots the data specified in the current input file as a page in a
+        PDF file with the given width and height, writing the output to the
+        specified output file.
+        """
+        printer = QPrinter()
+        svg = QSvgGenerator()
+        svg.setFileName(output_file)
+        svg.setSize(QSize(width, height))
+        svg.setViewBox(QRect(0, 0, width, height))
+        svg.setResolution(printer.resolution())
+        return self._plot(width, height, svg, self.controller, self.controller.plot)[0]
+    
+    def plotAnnotationImages(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
     
         """Plots the annotations for the product specified in the current input
         file on an image with the specified width and height, and optionally
         specified image format. Each annotation image is yielded by this
         generator method.
         """
-        image, rectangles, annotationTransform = self._plot(width, height, image_format,
+        image = QImage(width, height, image_format)
+        image, rectangles, annotationTransform = self._plot(width, height, image,
                                         self.controller, self.controller.plotAnnotations)
         
         for rectangle in rectangles:

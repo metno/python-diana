@@ -57,7 +57,7 @@ if __name__ == "__main__":
     width, height = input_file.getBufferSize()
     
     i = 0
-    for legend_image in bdiana.plotAnnotations(width, height):
+    for legend_image in bdiana.plotAnnotationImages(width, height):
         print "Saving legend%i.png" % i
         legend_image.save("legend%i.png" % i)
         i += 1
