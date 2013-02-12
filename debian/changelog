@@ -1,3 +1,9 @@
+python-diana (0.3.9-1) unstable; urgency=low
+
+  * Added the Controller.getFieldModels() method.
+
+ -- David Boddie <david.boddie@met.no>  Tue, 12 Feb 2012 15:43:28 +0100
+
 python-diana (0.3.8-1) unstable; urgency=low
 
   * Added methods to support more plot output formats.

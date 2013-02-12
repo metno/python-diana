@@ -85,14 +85,6 @@ public:
   actually create the plot.
   %End
 
-  void setPlotWindow(const int, const int);
-  %Docstring
-  Controller.setPlotWindow(int width, int height)
-
-  Defines the size in pixels of the plot window to be painted on. This is usually
-  the same size as the output device later used to record the plot.
-  %End
-
   void plot(bool over =true, bool under =true);
   %Docstring
   Controller.plot(bool over=True, bool under=True)
@@ -118,6 +110,14 @@ public:
   Controller.getMapArea() -> Area
 
   Returns the map area defined in map units.
+  %End
+
+  void setPlotWindow(const int, const int);
+  %Docstring
+  Controller.setPlotWindow(int width, int height)
+
+  Defines the size in pixels of the plot window to be painted on. This is usually
+  the same size as the output device later used to record the plot.
   %End
 
   SIP_PYTUPLE getPlotTimes() [void (std::vector<miutil::miTime>& fieldtimes,
@@ -203,6 +203,13 @@ public:
   PyTuple_SET_ITEM(sipRes, 0, a0Wrapper);
   PyTuple_SET_ITEM(sipRes, 1, a1Wrapper);
   PyTuple_SET_ITEM(sipRes, 2, a2Wrapper);
+  %End
+
+  std::vector<miutil::miString> getFieldModels();
+  %Docstring
+  Controller.getFieldModels()
+  
+  Returns the list of available field models.
   %End
 
 //  std::vector<SatPlot*> getSatellitePlots() const;
