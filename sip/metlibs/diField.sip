@@ -27,6 +27,40 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+%ModuleHeaderCode
+  #define FILL_LIST_VALUES(arg, wrapper, TYPE, SIP_TYPE) \
+    PyObject *wrapper = PyList_New(arg.size()); \
+    for (unsigned int i = 0; i < arg.size(); ++i) { \
+      TYPE *t = new TYPE(arg.at(i)); \
+      PyObject *tobj; \
+      if ((tobj = sipConvertFromNewType(t, SIP_TYPE, NULL)) == NULL) \
+          delete t; \
+      else \
+          PyList_SET_ITEM(wrapper, i, tobj); \
+  }
+
+  #define FILL_SET_VALUES(arg, wrapper, TYPE, SIP_TYPE) \
+    PyObject *wrapper = PySet_New(NULL); \
+    { \
+      std::set<TYPE>::iterator it; \
+      for (it = arg.begin(); it != arg.end(); ++it) { \
+        TYPE *t = new TYPE(*it); \
+        PyObject *tobj; \
+        if ((tobj = sipConvertFromNewType(t, SIP_TYPE, NULL)) == NULL) \
+          delete t; \
+        else \
+          PySet_Add(wrapper, tobj); \
+    } \
+  }
+  #define CONVERT_TYPE(obj, wrapper, TYPE, SIP_TYPE) \
+    PyObject *wrapper; \
+    { \
+      TYPE *t = new TYPE(obj); \
+      if ((wrapper = sipConvertFromNewType(t, SIP_TYPE, NULL)) == NULL) \
+        delete t; \
+    }
+%End
+
 class FieldManager
 {
 %TypeHeaderCode
@@ -39,6 +73,30 @@ public:
 
   void updateSources();
   void updateSource(const std::string & modelName);
+
+  std::vector<FieldDialogInfo> getFieldDialogInfo();
+  bool modelOK(const miutil::miString& modelName);
+
+  SIP_PYTUPLE getFieldGroups(const miutil::miString& modelNameRequest)
+    [void (const miutil::miString& modelNameRequest,
+           miutil::miString& modelName,
+           std::string refTime,
+           std::vector<FieldGroupInfo>& vfgi)];
+  %MethodCode
+  miutil::miString a1;
+  std::string a2;
+  std::vector<FieldGroupInfo> a3;
+  sipCpp->getFieldGroups(*a0, a1, a2, a3);
+
+  CONVERT_TYPE(a1, a1Wrapper, miutil::miString, sipType_miutil_miString)
+  CONVERT_TYPE(a2, a2Wrapper, std::string, sipType_std_string)
+  FILL_LIST_VALUES(a3, a3Wrapper, FieldGroupInfo, sipType_FieldGroupInfo)
+  
+  sipRes = PyTuple_New(3);
+  PyTuple_SET_ITEM(sipRes, 0, a1Wrapper);
+  PyTuple_SET_ITEM(sipRes, 1, a2Wrapper);
+  PyTuple_SET_ITEM(sipRes, 2, a3Wrapper);
+  %End
 
   std::vector<std::string> getFileNames(const std::string& modelName);
 };
@@ -78,3 +136,38 @@ public:
 
     miutil::miString toString(bool fortranStyle=true) const;
 };
+
+struct FieldGroupInfo
+{
+%TypeHeaderCode
+#include "diField/diCommonFieldTypes.h"
+%End
+  miutil::miString modelName;
+  miutil::miString groupName;
+  std::vector<miutil::miString> fieldNames;
+  std::vector<miutil::miString> standard_names;
+  std::vector<std::string> units;
+  std::vector<miutil::miString> levelNames;
+  std::vector<miutil::miString> idnumNames;
+  miutil::miString defaultLevel;
+  miutil::miString defaultIdnum;
+  std::string refTime;
+  std::string zaxis;
+  std::string extraaxis;
+  std::string grid;
+  bool cdmSyntax;
+  bool plotDefinitions;
+  FieldGroupInfo();
+};
+
+
+struct FieldDialogInfo
+{
+%TypeHeaderCode
+#include "diField/diCommonFieldTypes.h"
+%End
+  miutil::miString groupName;
+  miutil::miString groupType;
+  std::vector<miutil::miString> modelNames;
+};
+

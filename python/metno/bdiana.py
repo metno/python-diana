@@ -71,6 +71,13 @@ class BDiana:
 
         return True
     
+    def getFieldModelGroups(self):
+    
+        """Returns a list of objects describing the model groups and the
+        models contained within them."""
+
+        return self.controller.initFieldDialog()
+
     def prepare(self, input_file, archive = False):
     
         """Prepares input from the specified input_file for plotting.

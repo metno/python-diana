@@ -187,9 +187,14 @@ public:
 
   void archiveMode( bool );
 
+  std::vector<FieldDialogInfo> initFieldDialog();
+  %Docstring
+  Returns a list of objects describing field model information.
+  %End
+
   SIP_PYTUPLE getAllFieldNames() [void (std::vector<miutil::miString>& fieldNames,
-                           std::set<std::string>& fieldprefixes,
-                           std::set<std::string>& fieldsuffixes)];
+                                  std::set<std::string>& fieldprefixes,
+                                  std::set<std::string>& fieldsuffixes)];
   %MethodCode
   std::vector<miutil::miString> a0;
   std::set<std::string> a1;

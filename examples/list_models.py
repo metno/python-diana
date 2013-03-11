@@ -22,20 +22,13 @@ from metno.bdiana import BDiana, InputFile
 
 if __name__ == "__main__":
 
-    if not 2 <= len(sys.argv) <= 3:
+    if not len(sys.argv) == 2:
     
-        sys.stderr.write("Usage: %s [setup file] <input file>\n" % sys.argv[0])
-        sys.stderr.write("Writes the available times for fields described in the input file.\n")
+        sys.stderr.write("Usage: %s <setup file>\n" % sys.argv[0])
+        sys.stderr.write("Writes the available fields described by the setup file.\n")
         sys.exit(1)
     
-    elif len(sys.argv) == 2:
-    
-        setup_path = "/etc/diana/diana.setup-COMMON"
-        input_path = sys.argv[1]
-    
-    else:
-        setup_path = sys.argv[1]
-        input_path = sys.argv[2]
+    setup_path = sys.argv[1]
     
     app = QApplication(sys.argv)
     bdiana = BDiana()
@@ -44,25 +37,41 @@ if __name__ == "__main__":
         print "Failed to parse", setup_path
         sys.exit(1)
     
-    input_file = InputFile(input_path)
-    bdiana.prepare(input_file)
+    info = bdiana.getFieldModelGroups()
+    groups = []
 
-    times = bdiana.getPlotTimes()
-    if times:
-        bdiana.setPlotTime(times[-1])
-    else:
-        bdiana.setPlotTime(datetime.datetime.now())
+    for di in info:
     
-    c = bdiana.controller
-    fm = c.getFieldManager()
-    plots = c.getFieldPlots()
+        models = di.modelNames
+        groups.append((di.groupName, models))
+    
+    groups.sort()
+    fieldManager = bdiana.controller.getFieldManager()
 
-    for plot in plots:
-        model_name = plot.getModelName()
-        print model_name, fm.getFileNames(model_name)
+    for group, models in groups:
 
-    sm = c.getSatelliteManager()
-    #products = sm.getProductsInfo()
+        print group
+        models.sort()
+        
+        for model in models:
+
+            print " ", model
+            """
+            modelName, refTime, fieldGroups = fieldManager.getFieldGroups(model)
+            
+            fieldGroups = map(lambda g: (g.groupName, g.fieldNames), fieldGroups)
+            fieldGroups.sort()
+
+            for groupName, fieldNames in fieldGroups:
+            
+                print "  ", groupName
+                fieldNames.sort()
+
+                for fieldName in fieldNames:
+                
+                    print "   ", fieldName
+            """
+        print
 
     sys.exit()
 
