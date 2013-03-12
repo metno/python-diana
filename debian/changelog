@@ -1,3 +1,9 @@
+python-diana (0.4.0-1) unstable; urgency=low
+
+  * Added more field-related APIs.
+
+ -- David Boddie <david.boddie@met.no>  Tue, 12 Mar 2013 15:40:44 +0100
+
 python-diana (0.3.9-1) unstable; urgency=low
 
   * Added the Controller.getFieldModels() method.
