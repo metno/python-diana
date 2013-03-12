@@ -20,6 +20,22 @@ import datetime, sys
 from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
 
+def print_field_groups_and_fields(controller, model):
+
+    modelName, refTime, fieldGroups = controller.getFieldGroups(model, False)
+    
+    fieldGroups = map(lambda g: (g.groupName, g.fieldNames), fieldGroups)
+    fieldGroups.sort()
+
+    for groupName, fieldNames in fieldGroups:
+    
+        print "  ", groupName
+        fieldNames.sort()
+
+        for fieldName in fieldNames:
+        
+            print "   ", fieldName
+
 if __name__ == "__main__":
 
     if not len(sys.argv) == 2:
@@ -50,27 +66,16 @@ if __name__ == "__main__":
 
     for group, models in groups:
 
+        if group == "ARKIV":
+            continue
+
         print group
         models.sort()
         
         for model in models:
 
             print " ", model
-            """
-            modelName, refTime, fieldGroups = fieldManager.getFieldGroups(model)
-            
-            fieldGroups = map(lambda g: (g.groupName, g.fieldNames), fieldGroups)
-            fieldGroups.sort()
-
-            for groupName, fieldNames in fieldGroups:
-            
-                print "  ", groupName
-                fieldNames.sort()
-
-                for fieldName in fieldNames:
-                
-                    print "   ", fieldName
-            """
+        
         print
 
     sys.exit()

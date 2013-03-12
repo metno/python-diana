@@ -52,6 +52,13 @@
           PySet_Add(wrapper, tobj); \
     } \
   }
+  #define CONVERT_TYPE(obj, wrapper, TYPE, SIP_TYPE) \
+    PyObject *wrapper; \
+    { \
+      TYPE *t = new TYPE(obj); \
+      if ((wrapper = sipConvertFromNewType(t, SIP_TYPE, NULL)) == NULL) \
+        delete t; \
+    }
 %End
 
 class Controller
@@ -185,6 +192,13 @@ public:
   data will be used instead.
   %End
 
+  std::vector<miutil::miString> getFieldModels();
+  %Docstring
+  Controller.getFieldModels()
+  
+  Returns the list of available field models.
+  %End
+
   void archiveMode( bool );
 
   std::vector<FieldDialogInfo> initFieldDialog();
@@ -210,11 +224,26 @@ public:
   PyTuple_SET_ITEM(sipRes, 2, a2Wrapper);
   %End
 
-  std::vector<miutil::miString> getFieldModels();
-  %Docstring
-  Controller.getFieldModels()
+  SIP_PYTUPLE getFieldGroups(const miutil::miString& modelNameRequest, bool plotGroups)
+    [void (const miutil::miString& modelNameRequest,
+           miutil::miString& modelName,
+           std::string refTime,
+           bool plotGroups,
+           std::vector<FieldGroupInfo>& vfgi)];
+  %MethodCode
+  miutil::miString modelName;
+  std::string refTime;
+  std::vector<FieldGroupInfo> vfgi;
+  sipCpp->getFieldGroups(*a0, modelName, refTime, a1, vfgi);
+
+  CONVERT_TYPE(modelName, modelNameWrapper, miutil::miString, sipType_miutil_miString)
+  CONVERT_TYPE(refTime, refTimeWrapper, std::string, sipType_std_string)
+  FILL_LIST_VALUES(vfgi, vfgiWrapper, FieldGroupInfo, sipType_FieldGroupInfo)
   
-  Returns the list of available field models.
+  sipRes = PyTuple_New(3);
+  PyTuple_SET_ITEM(sipRes, 0, modelNameWrapper);
+  PyTuple_SET_ITEM(sipRes, 1, refTimeWrapper);
+  PyTuple_SET_ITEM(sipRes, 2, vfgiWrapper);
   %End
 
 //  std::vector<SatPlot*> getSatellitePlots() const;
