@@ -84,8 +84,8 @@ class BDiana:
         """
         self.controller.getFieldManager().updateSources()
         self.controller.archiveMode(archive)
+        self.controller.keepCurrentArea(False)
         
-        #c.keepCurrentArea(True)
         dt = datetime.now()
         self.controller.setPlotTime(dt)
         
