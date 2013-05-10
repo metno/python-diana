@@ -1,3 +1,9 @@
+python-diana (0.4.1-1) unstable; urgency=low
+
+  * Updated the sip files for the latest metlibs and Diana sources.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 10 May 2013 15:53:45 +0200
+
 python-diana (0.4.0-1) unstable; urgency=low
 
   * Added more field-related APIs.

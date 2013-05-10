@@ -33,4 +33,3 @@
 %Include diField.sip
 %Include milogger.sip
 %Include miutil.sip
-

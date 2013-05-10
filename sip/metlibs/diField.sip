@@ -30,7 +30,8 @@
 class FieldManager
 {
 %TypeHeaderCode
-#include "diField/diFieldManager.h"
+#include <string>
+#include <diField/diFieldManager.h>
 %End
 
 public:
@@ -41,24 +42,25 @@ public:
   void updateSource(const std::string & modelName);
 
   std::vector<FieldDialogInfo> getFieldDialogInfo();
-  bool modelOK(const miutil::miString& modelName);
+  bool modelOK(const std::string& modelName);
 
   std::vector<std::string> getFileNames(const std::string& modelName);
 };
 
 class Area
 {
-    %TypeHeaderCode
-    #include <diField/diArea.h>
-    %End
+%TypeHeaderCode
+#include <string>
+#include <diField/diArea.h>
+%End
 
 public:
     Area();
     ~Area();
 
-    miutil::miString toString() const;
-    miutil::miString toLogString() const;
-    miutil::miString getAreaString() const;
+    std::string toString() const;
+    std::string toLogString() const;
+    std::string getAreaString() const;
 };
 
 class Rectangle
@@ -79,7 +81,7 @@ public:
     float x2;
     float y2;
 
-    miutil::miString toString(bool fortranStyle=true) const;
+    std::string toString(bool fortranStyle=true) const;
 };
 
 struct FieldGroupInfo
@@ -87,15 +89,15 @@ struct FieldGroupInfo
 %TypeHeaderCode
 #include "diField/diCommonFieldTypes.h"
 %End
-  miutil::miString modelName;
-  miutil::miString groupName;
-  std::vector<miutil::miString> fieldNames;
-  std::vector<miutil::miString> standard_names;
+  std::string modelName;
+  std::string groupName;
+  std::vector<std::string> fieldNames;
+  std::vector<std::string> standard_names;
   std::vector<std::string> units;
-  std::vector<miutil::miString> levelNames;
-  std::vector<miutil::miString> idnumNames;
-  miutil::miString defaultLevel;
-  miutil::miString defaultIdnum;
+  std::vector<std::string> levelNames;
+  std::vector<std::string> idnumNames;
+  std::string defaultLevel;
+  std::string defaultIdnum;
   std::string refTime;
   std::string zaxis;
   std::string extraaxis;
@@ -111,8 +113,8 @@ struct FieldDialogInfo
 %TypeHeaderCode
 #include "diField/diCommonFieldTypes.h"
 %End
-  miutil::miString groupName;
-  miutil::miString groupType;
-  std::vector<miutil::miString> modelNames;
+  std::string groupName;
+  std::string groupType;
+  std::vector<std::string> modelNames;
 };
 
