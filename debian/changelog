@@ -1,3 +1,9 @@
+python-diana (0.4.2-1) unstable; urgency=low
+
+  * Ensured that any previous area is discarded when a new input file is processed.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 10 May 2013 19:04:59 +0200
+
 python-diana (0.4.1-1) unstable; urgency=low
 
   * Updated the sip files for the latest metlibs and Diana sources.
