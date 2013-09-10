@@ -1,3 +1,9 @@
+python-diana (0.4.3-1) unstable; urgency=low
+
+  * Updated the sip files to work with current Diana API.
+
+ -- David Boddie <david.boddie@met.no>  Mon, 09 Sep 2013 18:03:23 +0200
+
 python-diana (0.4.2-1) unstable; urgency=low
 
   * Ensured that any previous area is discarded when a new input file is processed.
