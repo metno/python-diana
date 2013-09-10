@@ -302,11 +302,19 @@ class InputFile:
 
     """Represents an input file for use with a BDiana instance."""
 
-    def __init__(self, input_path):
-
+    def __init__(self, input_path = None):
+    
+        if input_path is not None:
+            self.read(input_path)
+        else:
+            self.lines = []
+            self.parameters = {}
+    
+    def read(self, input_path):
+    
         self.lines = open(input_path).readlines()
         self.parameters = self.read_input_parameters()
-    
+
     def getBufferSize(self, width = 400, height = 400):
     
         """Returns the buffer size as specified in the input file or the
