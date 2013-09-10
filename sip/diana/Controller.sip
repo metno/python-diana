@@ -206,15 +206,15 @@ public:
   Returns a list of objects describing field model information.
   %End
 
-  SIP_PYTUPLE getAllFieldNames() [void (std::vector<miutil::miString>& fieldNames,
+  SIP_PYTUPLE getAllFieldNames() [void (std::vector<std::string>& fieldNames,
                                   std::set<std::string>& fieldprefixes,
                                   std::set<std::string>& fieldsuffixes)];
   %MethodCode
-  std::vector<miutil::miString> a0;
+  std::vector<std::string> a0;
   std::set<std::string> a1;
   std::set<std::string> a2;
   sipCpp->getAllFieldNames(a0, a1, a2);
-  FILL_LIST_VALUES(a0, a0Wrapper, miutil::miString, sipType_miutil_miString)
+  FILL_LIST_VALUES(a0, a0Wrapper, std::string, sipType_std_string)
   FILL_SET_VALUES(a1, a1Wrapper, std::string, sipType_std_string)
   FILL_SET_VALUES(a2, a2Wrapper, std::string, sipType_std_string)
 
