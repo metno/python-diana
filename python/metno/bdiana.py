@@ -23,7 +23,7 @@ from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext,
                   SpectrumManager
 
 from PyQt4.QtCore import QRect, QSize, QSizeF
-from PyQt4.QtGui import QImage, QPainter, QPrinter
+from PyQt4.QtGui import QApplication, QImage, QPainter, QPrinter
 from PyQt4.QtSvg import QSvgGenerator
 
 class BDianaError(Exception):

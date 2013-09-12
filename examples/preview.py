@@ -36,8 +36,7 @@ class Window(QMainWindow):
     def createImage(self):
 
         inp = bdiana.InputFile()
-        inp.lines = map(lambda l: l + "\n", str(self.editor.toPlainText()).split("\n"))
-        inp.parameters = inp.read_input_parameters()
+        inp.fromString(str(self.editor.toPlainText()))
         
         b = bdiana.BDiana()
         b.setup("/etc/diana/diana.setup-COMMON")
