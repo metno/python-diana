@@ -1,3 +1,10 @@
+python-diana (0.4.5-1) unstable; urgency=low
+
+  * Fixed imports in the bdiana module.
+  * Included a missing example.
+
+ -- David Boddie <david.boddie@met.no>  Thu, 12 Sep 2013 16:29:53 +0200
+
 python-diana (0.4.4-1) unstable; urgency=low
 
   * Ensured that a QApplication is initialised if one does not already exist
