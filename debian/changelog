@@ -1,3 +1,11 @@
+python-diana (0.4.4-1) unstable; urgency=low
+
+  * Ensured that a QApplication is initialised if one does not already exist
+    when BDiana.setup() is called.
+  * Added a InputFile.fromString() method for use with interactive tools.
+
+ -- David Boddie <david.boddie@met.no>  Thu, 12 Sep 2013 16:23:33 +0200
+
 python-diana (0.4.3-2) unstable; urgency=low
 
   * Repackaged for testing purposes.

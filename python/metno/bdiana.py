@@ -62,6 +62,11 @@ class BDiana:
         """Parses the setup file specified by setup_path, returning True if
         successful or False if unsuccessful.
         """
+
+        # There must already be a running QApplication for this to work.
+        if not QApplication.instance():
+            self.application = QApplication([])
+        
         if not LocalSetupParser.parse(setup_path):
             return False
         
@@ -314,6 +319,11 @@ class InputFile:
     
         self.lines = open(input_path).readlines()
         self.parameters = self.read_input_parameters()
+    
+    def fromString(self, text):
+
+        self.lines = text.split("\n")
+        self.parameters = self.read_input_parameters()
 
     def getBufferSize(self, width = 400, height = 400):
     
@@ -367,9 +377,9 @@ class InputFile:
 
             if line.strip().startswith("#"):
                 continue
-            elif line.strip().lower().startswith(start.lower()):
+            elif line.strip().lower() == start.lower():
                 in_section = True
-            elif line.strip().lower().startswith(end.lower()):
+            elif line.strip().lower() == end.lower():
                 in_section = False
             elif in_section and line.strip():
                 lines.append(line)
