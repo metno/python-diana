@@ -1,7 +1,7 @@
 /*
  python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 
- Copyright (C) 2012 met.no
+ Copyright (C) 2013 met.no
 
  Contact information:
  Norwegian Meteorological Institute
@@ -27,27 +27,24 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
+class Manager
+{
+%TypeHeaderCode
+#include "diManager.h"
+%End
 
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
+public:
+  Manager();
+  virtual ~Manager();
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include CommonTypes.sip
-%Include Controller.sip
-%Include DianaMainWindow.sip
-%Include DrawingManager.sip
-%Include FieldPlot.sip
-%Include LocalSetupParser.sip
-%Include Manager.sip
-%Include MapMode.sip
-%Include MovieMaker.sip
-%Include Plot.sip
-%Include PlotModule.sip
-%Include PlotOptions.sip
-%Include PaintGL.sip
-%Include SatManager.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
+  virtual bool parseSetup() = 0;
+  virtual void sendMouseEvent(QMouseEvent* event, EventResult& res) = 0;
+  virtual void sendKeyboardEvent(QKeyEvent* event, EventResult& res) = 0;
+
+  virtual bool changeProjection(const Area& newArea) = 0;
+  virtual void plot(bool under, bool over) = 0;
+
+  virtual void setPlotModule(PlotModule *pm) = 0;
+
+  bool enabled;
+};

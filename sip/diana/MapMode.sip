@@ -1,7 +1,7 @@
 /*
  python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 
- Copyright (C) 2012 met.no
+ Copyright (C) 2013 met.no
 
  Contact information:
  Norwegian Meteorological Institute
@@ -27,27 +27,47 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
+%ModuleCode
+#include "diMapMode.h"
+%End
 
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
+enum cursortype {
+  keep_it,
+  normal_cursor,
+  edit_cursor,
+  edit_move_cursor,
+  edit_value_cursor,
+  draw_cursor,
+  paint_select_cursor,
+  paint_move_cursor,
+  paint_draw_cursor,
+  paint_add_crusor,
+  paint_remove_crusor,
+  paint_forbidden_crusor
+};
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include CommonTypes.sip
-%Include Controller.sip
-%Include DianaMainWindow.sip
-%Include DrawingManager.sip
-%Include FieldPlot.sip
-%Include LocalSetupParser.sip
-%Include Manager.sip
-%Include MapMode.sip
-%Include MovieMaker.sip
-%Include Plot.sip
-%Include PlotModule.sip
-%Include PlotOptions.sip
-%Include PaintGL.sip
-%Include SatManager.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
+enum actiontype {
+  no_action,
+  pointclick,
+  rightclick,
+  browsing,
+  quick_browsing,
+  objects_changed,
+  fields_changed,
+  keypressed,
+  grid_area_changed,
+  doubleclick
+};
+
+struct EventResult {
+%TypeHeaderCode
+#include "diMapMode.h"
+%End
+  bool repaint;
+  bool background;
+  bool savebackground;
+  cursortype newcursor;
+  actiontype action;
+  EventResult();
+};
+

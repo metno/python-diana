@@ -1,7 +1,7 @@
 /*
  python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 
- Copyright (C) 2012 met.no
+ Copyright (C) 2013 met.no
 
  Contact information:
  Norwegian Meteorological Institute
@@ -27,27 +27,31 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
+class DianaMainWindow : public QMainWindow
+{
+%TypeHeaderCode
+#include "qtMainWindow.h"
+%End
 
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
+public:
+  DianaMainWindow(Controller*, const miutil::miString ver_str,
+                               const miutil::miString buils_str,
+                               const miutil::miString dianaTitle="Diana",
+                               bool profetEnabled=false);
+  ~DianaMainWindow();
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include CommonTypes.sip
-%Include Controller.sip
-%Include DianaMainWindow.sip
-%Include DrawingManager.sip
-%Include FieldPlot.sip
-%Include LocalSetupParser.sip
-%Include Manager.sip
-%Include MapMode.sip
-%Include MovieMaker.sip
-%Include Plot.sip
-%Include PlotModule.sip
-%Include PlotOptions.sip
-%Include PaintGL.sip
-%Include SatManager.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
+  void checkNews();
+  void start();
+
+protected:
+  void timerEvent(QTimerEvent*);
+  void setTimeLabel();
+  void stopAnimation();
+  void focusInEvent ( QFocusEvent * );
+  void closeEvent( QCloseEvent* );
+
+  bool event(QEvent* event);
+
+public slots:
+  void toggleToolBar();
+};

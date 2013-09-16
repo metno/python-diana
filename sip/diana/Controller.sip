@@ -75,6 +75,9 @@ public:
   SatManager* getSatelliteManager();
   //ObsManager* getObservationManager();
 
+  void addManager(const std::string &name, Manager *man);
+  Manager *getManager(const std::string &name);
+
   bool parseSetup();
   %Docstring
   Controller.parseSetup() -> bool

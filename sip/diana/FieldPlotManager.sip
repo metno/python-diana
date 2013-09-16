@@ -27,27 +27,27 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
+class FieldPlotManager
+{
+%TypeHeaderCode
+#include "diFieldPlotManager.h"
+%End
 
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
+public:
+  FieldPlotManager(FieldManager *fm);
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include CommonTypes.sip
-%Include Controller.sip
-%Include DianaMainWindow.sip
-%Include DrawingManager.sip
-%Include FieldPlot.sip
-%Include LocalSetupParser.sip
-%Include Manager.sip
-%Include MapMode.sip
-%Include MovieMaker.sip
-%Include Plot.sip
-%Include PlotModule.sip
-%Include PlotOptions.sip
-%Include PaintGL.sip
-%Include SatManager.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
+  struct PlotField {
+    miutil::miString name;
+    miutil::miString fieldgroup;
+    miutil::miString plot;
+    std::vector<miutil::miString> input;
+    std::set< miutil::miString > vcoord;
+  };
+
+  void getAllFieldNames(std::vector<miutil::miString>& fieldNames);
+
+  std::vector<miutil::miString> getFields();
+  std::vector<miutil::miString> getPlotFields();
+
+  std::vector<FieldPlotManager::PlotField> getFullPlotFields();
+};

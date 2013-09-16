@@ -1,7 +1,7 @@
 /*
  python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 
- Copyright (C) 2012 met.no
+ Copyright (C) 2013 met.no
 
  Contact information:
  Norwegian Meteorological Institute
@@ -27,27 +27,35 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
+class DrawingManager : QObject, Manager
+{
+%TypeHeaderCode
+#include "diDrawingManager.h"
+%End
 
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
+public:
+  DrawingManager();
+  ~DrawingManager();
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include CommonTypes.sip
-%Include Controller.sip
-%Include DianaMainWindow.sip
-%Include DrawingManager.sip
-%Include FieldPlot.sip
-%Include LocalSetupParser.sip
-%Include Manager.sip
-%Include MapMode.sip
-%Include MovieMaker.sip
-%Include Plot.sip
-%Include PlotModule.sip
-%Include PlotOptions.sip
-%Include PaintGL.sip
-%Include SatManager.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
+/*
+  void setPlotModule(PlotModule *pm);
+
+  bool parseSetup();
+
+  void sendMouseEvent(QMouseEvent* event, EventResult& res);
+  void sendKeyboardEvent(QKeyEvent* event, EventResult& res);
+
+  bool changeProjection(const Area& newArea);
+  void plot(bool under, bool over);
+
+  EditItemManager *getEditItemManager();
+  void setEditItemManager(EditItemManager *eim);
+
+  QList<QPointF> getLatLonPoints(EditItemBase* item) const;
+  void setLatLonPoints(EditItemBase* item, const QList<QPointF> &latLonPoints);
+  QList<QPointF> PhysToGeo(const QList<QPoint> &points) const;
+  QList<QPoint> GeoToPhys(const QList<QPointF> &latLonPoints);
+*/
+
+  static DrawingManager *instance();
+};
