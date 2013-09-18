@@ -41,10 +41,13 @@ public:
   virtual void sendMouseEvent(QMouseEvent* event, EventResult& res) = 0;
   virtual void sendKeyboardEvent(QKeyEvent* event, EventResult& res) = 0;
 
+  virtual std::vector<miutil::miTime> getTimes() const = 0;
   virtual bool changeProjection(const Area& newArea) = 0;
+  virtual bool prepare(const miutil::miTime &time) = 0;
   virtual void plot(bool under, bool over) = 0;
 
   virtual void setPlotModule(PlotModule *pm) = 0;
 
-  bool enabled;
+  virtual bool isEnabled() const = 0;
+  virtual void setEnabled(bool enable) = 0;
 };

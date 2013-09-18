@@ -16,8 +16,7 @@ if __name__ == "__main__":
     if not c.parseSetup():
         sys.exit(1)
 
-    mw = DianaMainWindow(c, "0.00.0", "0.00.0", "python-diana")
-    mw.start()
-    mw.show()
+    work_area = WorkArea(c)
+    work_area.show()
 
     sys.exit(app.exec_())

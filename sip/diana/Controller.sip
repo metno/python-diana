@@ -59,6 +59,52 @@
       if ((wrapper = sipConvertFromNewType(t, SIP_TYPE, NULL)) == NULL) \
         delete t; \
     }
+  #define FILL_DICT_VALUES(arg, wrapper, TYPE1, TYPE2) \
+   PyObject *wrapper; \
+   { \
+     std::map<TYPE1,TYPE2>::iterator it; \
+     for (it = arg.begin(); it != arg.end(); ++it) { \
+       \
+       TYPE1 *t1 = new TYPE1(it->first); \
+       const sipTypeDef *td1 = sipFindType("TYPE1"); \
+       if (td1 == NULL) { \
+         sipIsErr = 1; \
+         delete t1; \
+         break; \
+       } \
+       \
+       TYPE2 *t2 = new TYPE2(it->second); \
+       const sipTypeDef *td2 = sipFindType("TYPE2"); \
+       if (td2 == NULL) { \
+         sipIsErr = 1; \
+         delete t1; \
+         delete t2; \
+         break; \
+       } \
+       \
+       PyObject *tobj1 = sipConvertFromNewType(t1, td1, Py_None); \
+       PyObject *tobj2 = sipConvertFromNewType(t2, td2, Py_None); \
+       \
+       if ((tobj1 == NULL) || (tobj2 == NULL) || (PyDict_SetItem(wrapper, tobj1, tobj2) < 0)) \
+       { \
+         Py_DECREF(wrapper); \
+         if (tobj1) \
+           Py_DECREF(tobj1); \
+         else \
+           delete t1; \
+         if (tobj2) \
+           Py_DECREF(tobj2); \
+         else \
+           delete t2; \
+         \
+         sipIsErr = 1; \
+         break; \
+       } \
+       \
+       Py_DECREF(tobj1); \
+       Py_DECREF(tobj2); \
+     } \
+   }
 %End
 
 class Controller
@@ -130,36 +176,35 @@ public:
   the same size as the output device later used to record the plot.
   %End
 
-  SIP_PYTUPLE getPlotTimes() [void (std::vector<miutil::miTime>& fieldtimes,
-                                    std::vector<miutil::miTime>& sattimes,
-                                    std::vector<miutil::miTime>& obstimes,
-                                    std::vector<miutil::miTime>& objtimes,
-                                    std::vector<miutil::miTime>& ptimes)];
+  SIP_PYDICT getPlotTimes(bool updateSources = false)
+        [void (std::map<std::string,std::vector<miutil::miTime> >& times,
+               bool updateSources = false)];
   %Docstring
-  Controller.getPlotTimes(list fieldtimes, list sattimes, list obstimes, list objtimes, list ptimes)
+  times = Controller.getPlotTimes(updateSources = False)
 
-  Replaces the items in the lists supplied to contain the available times for fields,
+  Replaces the items in the dictionary to contain the available times for fields,
   satellite images, observations, objects and products.
   %End
   %MethodCode
-  std::vector<miutil::miTime> a0;
-  std::vector<miutil::miTime> a1;
-  std::vector<miutil::miTime> a2;
-  std::vector<miutil::miTime> a3;
-  std::vector<miutil::miTime> a4;
-  sipCpp->getPlotTimes(a0, a1, a2, a3, a4);
-  FILL_LIST_VALUES(a0, a0Wrapper, miutil::miTime, sipType_miutil_miTime)
-  FILL_LIST_VALUES(a1, a1Wrapper, miutil::miTime, sipType_miutil_miTime)
-  FILL_LIST_VALUES(a2, a2Wrapper, miutil::miTime, sipType_miutil_miTime)
-  FILL_LIST_VALUES(a3, a3Wrapper, miutil::miTime, sipType_miutil_miTime)
-  FILL_LIST_VALUES(a4, a4Wrapper, miutil::miTime, sipType_miutil_miTime)
+  std::map<std::string,std::vector<miutil::miTime> > times;
+  sipCpp->getPlotTimes(times, a0);
 
-  sipRes = PyTuple_New(5);
-  PyTuple_SET_ITEM(sipRes, 0, a0Wrapper);
-  PyTuple_SET_ITEM(sipRes, 1, a1Wrapper);
-  PyTuple_SET_ITEM(sipRes, 2, a2Wrapper);
-  PyTuple_SET_ITEM(sipRes, 3, a3Wrapper);
-  PyTuple_SET_ITEM(sipRes, 4, a4Wrapper);
+  sipRes = PyDict_New();
+  std::map<std::string,std::vector<miutil::miTime> >::iterator it;
+  for (it = times.begin(); it != times.end(); ++it) {
+    CONVERT_TYPE(it->first, key, std::string, sipType_std_string);
+    FILL_LIST_VALUES(it->second, value, miutil::miTime, sipType_miutil_miTime);
+    PyDict_SetItem(sipRes, key, value);
+  }
+  //FILL_DICT_VALUES(times, timesWrapper, std::string, std::vector<miutil::miTime>);
+  //sipRes = timesWrapper;
+
+  //const sipTypeDef *td1 = sipFindType("std::map<std::string,std::vector<miutil::miTime> >");
+  //if (td1 == NULL) {
+  //  sipIsErr = 1;
+  //} else {
+  //  sipRes = sipConvertFromType(&times, td1, Py_None);
+  //}
   %End
 
 /*  vector<AnnotationPlot*> getAnnotations();

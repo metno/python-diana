@@ -234,13 +234,28 @@ template<TYPE1, TYPE2>
     if ((d = PyDict_New()) == NULL)
         return NULL;
 
-    std::map<TYPE>::iterator it;
+    std::map<TYPE1,TYPE2>::iterator it;
     for (it = sipCpp->begin(); it != sipCpp->end(); ++it)
     {
-        TYPE *t1 = new TYPE(it->first);
-        TYPE *t2 = new TYPE(it->second);
-        PyObject *tobj1 = sipConvertFromNewType(t1, sipType_TYPE, sipTransferObj);
-        PyObject *tobj2 = sipConvertFromNewType(t2, sipType_TYPE, sipTransferObj);
+        TYPE1 *t1 = new TYPE1(it->first);
+        const sipTypeDef *td1 = sipFindType("TYPE1");
+        if (td1 == NULL) {
+            sipIsErr = 1;
+            delete t1;
+            break;
+        }
+
+        TYPE2 *t2 = new TYPE2(it->second);
+        const sipTypeDef *td2 = sipFindType("TYPE2");
+        if (td2 == NULL) {
+            sipIsErr = 1;
+            delete t1;
+            delete t2;
+            break;
+        }
+
+        PyObject *tobj1 = sipConvertFromNewType(t1, td1, Py_None);
+        PyObject *tobj2 = sipConvertFromNewType(t2, td2, Py_None);
 
         if ((tobj1 == NULL) || (tobj2 == NULL) || (PyDict_SetItem(d, tobj1, tobj2) < 0))
         {
@@ -292,8 +307,14 @@ template<TYPE1, TYPE2>
     {
         int state1, state2;
         
-        TYPE1 *t1 = reinterpret_cast<TYPE1 *>(sipConvertToType(t1obj, sipType_TYPE1, sipTransferObj, SIP_NOT_NONE, &state1, sipIsErr));
-        TYPE2 *t2 = reinterpret_cast<TYPE2 *>(sipConvertToType(t2obj, sipType_TYPE2, sipTransferObj, SIP_NOT_NONE, &state2, sipIsErr));
+        const sipTypeDef *td1 = sipFindType("TYPE1");
+        const sipTypeDef *td2 = sipFindType("TYPE2");
+        if (td1 == NULL || td2 == NULL) {
+            delete m;
+            return 0;
+        }
+        TYPE1 *t1 = reinterpret_cast<TYPE1 *>(sipConvertToType(t1obj, td1, sipTransferObj, SIP_NOT_NONE, &state1, sipIsErr));
+        TYPE2 *t2 = reinterpret_cast<TYPE2 *>(sipConvertToType(t2obj, td2, sipTransferObj, SIP_NOT_NONE, &state2, sipIsErr));
 
         if (*sipIsErr)
         {
