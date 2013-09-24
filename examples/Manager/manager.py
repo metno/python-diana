@@ -8,6 +8,7 @@ class TestManager(Manager):
 
         Manager.__init__(self)
         self.enabled = False
+        TestManager.instance = self
 
     def parseSetup(self):
 

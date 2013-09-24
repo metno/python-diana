@@ -41,6 +41,7 @@
 %Include Colour.sip
 %Include CommonTypes.sip
 %Include Controller.sip
+%Include DataDialog.sip
 %Include DianaMainWindow.sip
 %Include DrawingManager.sip
 %Include FieldPlot.sip

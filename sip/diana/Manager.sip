@@ -27,7 +27,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class Manager
+class Manager : public QObject
 {
 %TypeHeaderCode
 #include "diManager.h"
@@ -50,4 +50,7 @@ public:
 
   virtual bool isEnabled() const = 0;
   virtual void setEnabled(bool enable) = 0;
+
+signals:
+  void timesUpdated();
 };

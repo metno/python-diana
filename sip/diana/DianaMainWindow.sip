@@ -43,6 +43,9 @@ public:
   void checkNews();
   void start();
 
+  void addDialog(DataDialog *dialog);
+  void updateDialog();
+
 protected:
   void timerEvent(QTimerEvent*);
   void setTimeLabel();

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+import readline, rlcompleter, sys
 from PyQt4.QtGui import *
 from metno.diana import *
 
@@ -20,4 +20,5 @@ if __name__ == "__main__":
     mw.start()
     mw.show()
 
-    sys.exit(app.exec_())
+    #sys.exit(app.exec_())
+    readline.parse_and_bind("tab: complete")

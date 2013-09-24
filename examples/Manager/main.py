@@ -4,7 +4,8 @@ import sys
 from PyQt4.QtGui import *
 from metno.diana import *
 
-import manager
+from manager import TestManager
+from dialog import TestDialog
 
 if __name__ == "__main__":
 
@@ -15,7 +16,7 @@ if __name__ == "__main__":
 
     c = Controller()
 
-    m = manager.TestManager()
+    m = TestManager()
     c.addManager("test", m)
     c.addManager("drawing", DrawingManager.instance())
 
@@ -23,13 +24,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     mw = DianaMainWindow(c, "1.0", "1.0", "python-diana manager test")
-
-    testToolBar = mw.addToolBar("Test")
-    testAction = testToolBar.addAction("Enable test mode")
-    testAction.setCheckable(True)
-    testAction.setChecked(False)
-
-    testAction.toggled.connect(m.setEnabled)
+    d = TestDialog(mw, c)
+    mw.addDialog(d)
 
     mw.start()
     mw.show()
