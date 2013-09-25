@@ -45,6 +45,7 @@
 %Include DianaMainWindow.sip
 %Include DrawingManager.sip
 %Include FieldPlot.sip
+%Include FieldPlotManager.sip
 %Include GLwidget.sip
 %Include LocalSetupParser.sip
 %Include Manager.sip

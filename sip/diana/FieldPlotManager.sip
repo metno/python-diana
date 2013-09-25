@@ -44,10 +44,15 @@ public:
     std::set< miutil::miString > vcoord;
   };
 
-  void getAllFieldNames(std::vector<miutil::miString>& fieldNames);
+  SIP_PYLIST getAllFieldNames() [void (std::vector<std::string>&)];
+  %MethodCode
+  std::vector<std::string> a0;
+  sipCpp->getAllFieldNames(a0);
+  FILL_LIST_VALUES(a0, a0Wrapper, std::string, sipType_std_string)
 
-  std::vector<miutil::miString> getFields();
-  std::vector<miutil::miString> getPlotFields();
+  sipRes = a0Wrapper;
+  %End
 
-  std::vector<FieldPlotManager::PlotField> getFullPlotFields();
+  std::vector<std::string> getFields();
+  std::vector<std::string> getPlotFields();
 };

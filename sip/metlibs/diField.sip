@@ -118,3 +118,34 @@ struct FieldDialogInfo
   std::vector<std::string> modelNames;
 };
 
+struct FieldRequest
+{
+%TypeHeaderCode
+#include "diField/diCommonFieldTypes.h"
+%End
+  std::string modelName;
+  std::string paramName;
+  std::string zaxis;
+  std::string eaxis;
+  std::string taxis;
+  std::string plevel;
+  std::string elevel;
+  std::string grid;
+  std::string version;
+  std::string refTime;
+  miutil::miTime ptime;
+  std::string unit;
+  int hourOffset;
+  int minOffset;
+  int time_tolerance;
+  int refhour;
+  int refoffset;
+  int      forecastSpec;
+  std::vector<int> forecast;
+  bool allTimeSteps;
+  bool standard_name;
+  bool plotDefinition;
+  bool checkSourceChanged;
+  FieldRequest();
+};
+

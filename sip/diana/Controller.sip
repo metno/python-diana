@@ -254,6 +254,16 @@ public:
   Returns a list of objects describing field model information.
   %End
 
+  std::set<std::string> getFieldReferenceTimes(const std::string model);
+  %Docstring
+  Returns all reference times for the given model.
+  %End
+
+  std::string getBestFieldReferenceTime(const std::string& model, int refOffset, int refHour);
+  %Docstring
+  Returns the references time given by refOffset and refHour or the last reference time for the given model.
+  %End
+
   SIP_PYTUPLE getAllFieldNames() [void (std::vector<std::string>& fieldNames,
                                   std::set<std::string>& fieldprefixes,
                                   std::set<std::string>& fieldsuffixes)];
@@ -270,6 +280,11 @@ public:
   PyTuple_SET_ITEM(sipRes, 0, a0Wrapper);
   PyTuple_SET_ITEM(sipRes, 1, a1Wrapper);
   PyTuple_SET_ITEM(sipRes, 2, a2Wrapper);
+  %End
+
+  std::vector<miutil::miTime> getFieldTime(std::vector<FieldRequest>& request);
+  %Docstring
+  Returns available times for the requested fields.
   %End
 
   SIP_PYTUPLE getFieldGroups(const miutil::miString& modelNameRequest, bool plotGroups)
