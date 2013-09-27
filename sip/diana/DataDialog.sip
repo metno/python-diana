@@ -112,6 +112,7 @@ public:
   virtual ~DataDialog();
 
   virtual QAction *action() const;
+  virtual std::string name() const = 0;
 
 signals:
   void emitTimes(miutil::miString, TimeList);

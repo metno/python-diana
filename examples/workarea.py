@@ -86,8 +86,6 @@ class Window(QMainWindow):
         fields = set()
 
         for group in fieldGroups:
-            if group.modelName != model:
-                continue
             for field in group.fieldNames:
                 fields.add(field)
         
@@ -206,7 +204,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     paintgl = PaintGL()
     
-    LocalSetupParser.parse("/etc/diana/diana.setup-COMMON")
+    LocalSetupParser.parse("/etc/diana/3.33/diana.setup-COMMON")
 
     c = Controller()
     #c.addManager("drawing", DrawingManager.instance())
@@ -219,7 +217,7 @@ if __name__ == "__main__":
     window.resize(800, 512)
     window.show()
 
-    sys.exit(app.exec_())
+    #sys.exit(app.exec_())
     
-    #import readline, rlcompleter
-    #readline.parse_and_bind("tab: complete")
+    import readline, rlcompleter
+    readline.parse_and_bind("tab: complete")

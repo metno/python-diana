@@ -65,4 +65,6 @@ public:
   void PhysToMap(const float,const float,float&,float&);
   bool PhysToGeo(const float x, const float y, float& lat, float& lon, Area area, Rectangle r);
   bool GeoToPhys(const float, const float, float&, float&, Area area, Rectangle r);
+
+  static PlotModule *instance();
 };

@@ -76,18 +76,38 @@ class BDiana:
 
         return True
     
-    def getFieldModelGroups(self):
+    def getFieldModels(self):
     
         """Returns a list of objects describing the model groups and the
         models contained within them."""
 
         return self.controller.initFieldDialog()
+    
+    def getModels(self):
+    
+        models = set()
+        for group in self.getFieldModels():
+            for model in group.modelNames:
+                models.add(model)
 
+        return models
+    
+    def getFields(self, model):
+
+        fields = set()
+        model, refTime, fieldGroups = self.controller.getFieldGroups(model, False)
+        
+        for group in fieldGroups:
+            for field in group.fieldNames:
+                fields.add(field)
+        
+        return fields
+    
     def prepare(self, input_file, archive = False):
     
         """Prepares input from the specified input_file for plotting.
         """
-        self.controller.getFieldManager().updateSources()
+        #self.controller.getFieldManager().updateSources()
         self.controller.archiveMode(archive)
         self.controller.keepCurrentArea(False)
         
@@ -101,9 +121,12 @@ class BDiana:
         """Returns a list of available plot times for the currently selected
         input file.
         """
-        times = sum(self.controller.getPlotTimes(), [])
-        times.sort()
+        times = []
 
+        for plot_type, t in self.controller.getPlotTimes().items():
+            times += t
+
+        times.sort()
         return times
     
     def setPlotTime(self, plot_time):

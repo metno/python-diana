@@ -1,3 +1,12 @@
+python-diana (0.4.7-1) unstable; urgency=low
+
+  * Added support for more APIs.
+  * Added examples to test the APIs.
+  * Removed an unnecessary updateSources() call in the BDiana.prepare()
+    method that could take a long time to process.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 27 Sep 2013 17:33:52 +0200
+
 python-diana (0.4.6-1) unstable; urgency=low
 
   * Fixed imports in the bdiana module again.
