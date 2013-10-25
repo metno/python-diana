@@ -55,14 +55,26 @@ public:
   sipCpp->getPlotWindow(w, h);
 
   PyObject *widthWrapper = PyInt_FromLong(w);
-  PyObject *heightWrapper = PyInt_FromLong(w);
+  PyObject *heightWrapper = PyInt_FromLong(h);
 
   sipRes = PyTuple_New(2);
   PyTuple_SET_ITEM(sipRes, 0, widthWrapper);
   PyTuple_SET_ITEM(sipRes, 1, heightWrapper);
   %End
 
-  void PhysToMap(const float,const float,float&,float&);
+  SIP_PYTUPLE PhysToMap(const float, const float) [void (const float, const float, float &, float &)];
+  %MethodCode
+  float xmap, ymap;
+  sipCpp->PhysToMap(a0, a1, xmap, ymap);
+
+  PyObject *xmapWrapper = PyFloat_FromDouble(xmap);
+  PyObject *ymapWrapper = PyFloat_FromDouble(ymap);
+
+  sipRes = PyTuple_New(2);
+  PyTuple_SET_ITEM(sipRes, 0, xmapWrapper);
+  PyTuple_SET_ITEM(sipRes, 1, ymapWrapper);
+  %End
+
   bool PhysToGeo(const float x, const float y, float& lat, float& lon, Area area, Rectangle r);
   bool GeoToPhys(const float, const float, float&, float&, Area area, Rectangle r);
 

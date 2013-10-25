@@ -1,3 +1,9 @@
+python-diana (0.4.7-2) unstable; urgency=low
+
+  * Updated APIs and dependencies.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 25 Oct 2013 16:08:03 +0200
+
 python-diana (0.4.7-1) unstable; urgency=low
 
   * Added support for more APIs.

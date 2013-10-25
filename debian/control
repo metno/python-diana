@@ -18,7 +18,7 @@ Description: Python language bindings to Diana
 
 Package: python-diana-examples
 Architecture: any
-Depends: python-diana, python2.7
+Depends: python-diana, python, python2.7
 Description: Example scripts for Python language bindings to Diana
  A set of example scripts that show how to use Diana's Python
  language bindings to create common products.

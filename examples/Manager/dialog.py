@@ -6,8 +6,6 @@ from manager import TestManager
 
 class TestDialog(DataDialog):
 
-    #emitTimes = pyqtSignal("miutil::miString", "std::vector<miutil::miTime>")
-
     def __init__(self, parent, controller):
 
         DataDialog.__init__(self, parent, controller)
@@ -29,12 +27,10 @@ class TestDialog(DataDialog):
 
     def action(self):
     
-        print self, "action"
         return self._action
 
     def updateTimes(self):
     
         tm = TestManager.instance
         times = tm.getTimes()
-        #self.emitTimes.emit("test", times)
-        #self.applyData.emit()
+        self.emitTimes.emit("test", times)

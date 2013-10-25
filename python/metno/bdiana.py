@@ -326,6 +326,7 @@ class BDiana:
 
         return image
 
+
 class InputFile:
 
     """Represents an input file for use with a BDiana instance."""
@@ -441,4 +442,3 @@ class InputFile:
                     models.append(value.strip())
 
         return models, observations, station
-

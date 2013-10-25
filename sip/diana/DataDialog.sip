@@ -27,80 +27,6 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-typedef std::vector<miutil::miTime> TimeList;
-
-%MappedType TimeList
-{
-%TypeHeaderCode
-#include <vector>
-#include <puTools/miTime.h>
-typedef std::vector<miutil::miTime> TimeList;
-%End
-
-    %ConvertFromTypeCode
-    PyObject *l;
-
-    if ((l = PyList_New(sipCpp->size())) == NULL)
-        return NULL;
-
-    for (unsigned int i = 0; i < sipCpp->size(); ++i)
-    {
-        miutil::miTime *t = new miutil::miTime(sipCpp->at(i));
-        PyObject *tobj;
-
-        if ((tobj = sipConvertFromNewType(t, sipType_miutil_miTime, sipTransferObj)) == NULL)
-        {
-            Py_DECREF(l);
-            delete t;
-            return NULL;
-        }
-
-        PyList_SET_ITEM(l, i, tobj);
-    }
-
-    return l;
-    %End
-
-    %ConvertToTypeCode
-    if (sipIsErr == NULL)
-    {
-        if (!PyList_Check(sipPy))
-            return 0;
-
-        for (unsigned int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
-        {
-            if (!sipCanConvertToType(PyList_GET_ITEM(sipPy, i), sipType_miutil_miTime, 0))
-                return 0;
-        }
-
-        return 1;
-    }
-
-    std::vector<miutil::miTime> *v = new std::vector<miutil::miTime>();
-
-    for (unsigned int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
-    {
-        int state;
-        miutil::miTime *t = reinterpret_cast<miutil::miTime *>(sipConvertToType(PyList_GET_ITEM(sipPy, i),
-                                           sipType_miutil_miTime, sipTransferObj, SIP_NOT_NONE,
-                                           &state, sipIsErr));
-        if (*sipIsErr)
-        {
-            sipReleaseType(t, sipType_miutil_miTime, state);
-            delete v;
-            return 0;
-        }
-
-        v->push_back(*t);
-        sipReleaseType(t, sipType_miutil_miTime, state);
-    }
-
-    *sipCppPtr = v;
-
-    return sipGetState(sipTransferObj);
-    %End
-};
-
 class DataDialog : public QDialog
 {
 %TypeHeaderCode
@@ -114,9 +40,16 @@ public:
   virtual QAction *action() const;
   virtual std::string name() const = 0;
 
+  virtual void updateDialog() = 0;
+  virtual std::vector<miutil::miString> getOKString() = 0;
+  virtual void putOKString(const std::vector<miutil::miString>& vstr) = 0;
+
+public slots:
+  virtual void updateTimes() = 0;
+
 signals:
-  void emitTimes(miutil::miString, TimeList);
-  void emitTimes(miutil::miString, TimeList, bool);
+  void emitTimes(const miutil::miString &, const std::vector<miutil::miTime> &);
+  void emitTimes(const miutil::miString &, const std::vector<miutil::miTime> &, bool);
   void applyData();
   void hideData();
   void showsource(const std::string, const std::string="");

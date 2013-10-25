@@ -98,3 +98,74 @@
     %End
 };
 
+%MappedType std::vector<miutil::miTime>
+{
+%TypeHeaderCode
+#include <vector>
+#include <puTools/miTime.h>
+%End
+
+    %ConvertFromTypeCode
+    PyObject *l;
+
+    if ((l = PyList_New(sipCpp->size())) == NULL)
+        return NULL;
+
+    for (unsigned int i = 0; i < sipCpp->size(); ++i)
+    {
+        miutil::miTime *t = new miutil::miTime(sipCpp->at(i));
+        PyObject *tobj;
+
+        if ((tobj = sipConvertFromNewType(t, sipType_miutil_miTime, sipTransferObj)) == NULL)
+        {
+            Py_DECREF(l);
+            delete t;
+            return NULL;
+        }
+
+        PyList_SET_ITEM(l, i, tobj);
+    }
+
+    return l;
+    %End
+
+    %ConvertToTypeCode
+    if (sipIsErr == NULL)
+    {
+        if (!PyList_Check(sipPy))
+            return 0;
+
+        for (unsigned int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
+        {
+            if (!sipCanConvertToType(PyList_GET_ITEM(sipPy, i), sipType_miutil_miTime, 0))
+                return 0;
+        }
+
+        return 1;
+    }
+
+    std::vector<miutil::miTime> *v = new std::vector<miutil::miTime>();
+
+    for (unsigned int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
+    {
+        int state;
+        miutil::miTime *t = reinterpret_cast<miutil::miTime *>(sipConvertToType(PyList_GET_ITEM(sipPy, i),
+                                           sipType_miutil_miTime, sipTransferObj, SIP_NOT_NONE,
+                                           &state, sipIsErr));
+        if (*sipIsErr)
+        {
+            sipReleaseType(t, sipType_miutil_miTime, state);
+            delete v;
+            return 0;
+        }
+
+        v->push_back(*t);
+        sipReleaseType(t, sipType_miutil_miTime, state);
+    }
+
+    *sipCppPtr = v;
+
+    return sipGetState(sipTransferObj);
+    %End
+};
+

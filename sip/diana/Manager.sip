@@ -45,8 +45,7 @@ public:
   virtual bool changeProjection(const Area& newArea) = 0;
   virtual bool prepare(const miutil::miTime &time) = 0;
   virtual void plot(bool under, bool over) = 0;
-
-  virtual void setPlotModule(PlotModule *pm) = 0;
+  virtual bool processInput(const std::vector<std::string>& inp) = 0;
 
   virtual bool isEnabled() const = 0;
   virtual void setEnabled(bool enable) = 0;
