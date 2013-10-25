@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 
 # python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 #
@@ -29,33 +30,11 @@
 
 class PlotCommand:
 
-    def __init__(self, command):
+    def __init__(self):
 
-        self.command = command
         self.options = {}
         self.order = []
 
-    def write(self):
-    
-        pieces = [self.command]
-        for option in self.order:
-            pieces.append(option + "=" + self.options[option])
-
-        return " ".join(pieces)
-
-
-class Field(PlotCommand):
-
-    available = {"model": None,
-                 "plottype": ("contour", "contour2", "value", "symbol",
-                              "alpha_shade", "alarm_box", "fill_cell", "wind",
-                              "wind_temp_fl", "wind_value", "vector", "frame",
-                              "direction")}
-    
-    def __init__(self):
-
-        PlotCommand.__init__(self, "FIELD")
-    
     def _add_command(self, option, value):
 
         if option not in self.options:
@@ -81,3 +60,41 @@ class Field(PlotCommand):
         # Otherwise, the value must be in the sequence found.
         elif available and value in available:
             self._add_command(option, value)
+
+    def write(self):
+    
+        pieces = [self.command]
+        for option in self.order:
+            pieces.append(option + "=" + self.options[option])
+
+        return " ".join(pieces)
+
+
+class Field(PlotCommand):
+
+    command = "FIELD"
+
+    available = {"model": None,
+                 "plot": None,
+                 "plottype": ("contour", "contour2", "value", "symbol",
+                              "alpha_shade", "alarm_box", "fill_cell", "wind",
+                              "wind_temp_fl", "wind_value", "vector", "frame",
+                              "direction")}
+
+
+class Map(PlotCommand):
+
+    command = "MAP"
+
+    available = {"backcolour": None,
+                 "map": ("Gshhs-Auto", "Euro1", "Euro2", "Euro3", "Fin",
+                         "Norkart", "Norkart2", "Regioner", "Banker",
+                         "Banker1", "Banker2", "Banker_test", "MinQNH",
+                         "FIR", "High.Seas", "skredvarsling", "NVE_flom",
+                         "Europa-TVkart", "Wvs-Auto", "Kommuner", "Fylker",
+                         "Riksgrense", "Kyst", "Høyde", "Vann", "Vei",
+                         "Vei2", "Vei3", "Bane", "World", "Gebco.world",
+                         "Vanlig", "Norsea", "Simra_fly", "Flystriper",
+                         "Approach-area"),
+                 "land": ("on", "off"),
+                 "land.colour": None}
