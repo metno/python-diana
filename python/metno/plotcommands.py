@@ -79,5 +79,5 @@ class Field(PlotCommand):
         if available is None:
             self._add_command(option, value)
         # Otherwise, the value must be in the sequence found.
-        elif available and value in self.available:
+        elif available and value in available:
             self._add_command(option, value)
