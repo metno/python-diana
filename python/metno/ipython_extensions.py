@@ -27,4 +27,15 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-__all__ = ["bdiana", "diana", "ipython_extensions", "metlibs", "plotcommands"]
+from PyQt4.QtCore import QBuffer
+from PyQt4.QtGui import QImageWriter
+from IPython.core.display import Image
+
+def embed(im):
+    w = QImageWriter()
+    buf = QBuffer()
+    buf.open(buf.WriteOnly)
+    w.setFormat("png")
+    w.setDevice(buf)
+    w.write(im)
+    return Image(data=str(buf.buffer()), format="png", embed=True)
