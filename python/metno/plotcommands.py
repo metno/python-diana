@@ -101,3 +101,22 @@ class Map(PlotCommand):
                          "Approach-area"),
                  "land": ("on", "off"),
                  "land.colour": None}
+
+
+class Area(PlotCommand):
+
+    command = "AREA"
+    
+    available = {"name": ("Europa", "Norge", "Trøndelag", "N-Norge",
+                          "S-Norge", "Norge.20W", "VA-Norge", "VV-Norge",
+                          "VNN-Norge", "Atlant", "SIGkart", "NyttSigkart4",
+                          "SWIkart", "N.halvkule", "S.halvkule",
+                          "S.halvkule+180", "N.halvkule-90", "N.halvkule+90",
+                          "Hirlam-grid", "Merkator", "Geografisk", "Globalt",
+                          "Infosat.1", "Analyse_min", "ENHF", "ENST", "ENHV",
+                          "ENNK", "Norge.smal", "Ishav", "N-Europa",
+                          "N.halvkule+65", "Troms", "H10-stor", "H10-liten",
+                          "Skandinavia", "proj_hirlam", "proj_bonne",
+                          "proj_van_der_grinten", "proj_eqc", "proj_obtran",
+                          "proj_lambert", "EPSG-4326", "EPSG-32661",
+                          "EPSG-32761", "epsg:900913", "epsg:3575")}
