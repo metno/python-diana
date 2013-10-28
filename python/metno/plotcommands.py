@@ -30,10 +30,13 @@
 
 class PlotCommand:
 
-    def __init__(self):
+    def __init__(self, **kwargs):
 
         self.options = {}
         self.order = []
+        
+        for key, value in kwargs.items():
+            self.setOption(key, value)
 
     def _add_command(self, option, value):
 
@@ -61,7 +64,7 @@ class PlotCommand:
         elif available and value in available:
             self._add_command(option, value)
 
-    def write(self):
+    def text(self):
     
         pieces = [self.command]
         for option in self.order:

@@ -18,12 +18,12 @@
 from datetime import datetime
 import sys
 
-from metlibs import milogger
+from metlibs import FieldRequest, milogger
 from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext, \
                   SpectrumManager
 
 from PyQt4.QtCore import QRect, QSize, QSizeF
-from PyQt4.QtGui import QApplication, QImage, QPainter, QPrinter
+from PyQt4.QtGui import QApplication, QColor, QImage, QPainter, QPrinter
 from PyQt4.QtSvg import QSvgGenerator
 
 class BDianaError(Exception):
@@ -103,6 +103,13 @@ class BDiana:
         
         return fields
     
+    def getFieldTimes(self, model, field):
+    
+        req = FieldRequest()
+        req.modelName = model
+        req.paramName = field
+        return self.controller.getFieldTime([req])
+    
     def prepare(self, input_file, archive = False):
     
         """Prepares input from the specified input_file for plotting.
@@ -115,6 +122,12 @@ class BDiana:
         self.controller.setPlotTime(dt)
         
         self.controller.plotCommands(input_file.read_plot_commands())
+    
+    def setPlotCommands(self, plot_commands):
+    
+        inp = InputFile()
+        inp.lines = ["PLOT"] + plot_commands + ["ENDPLOT"]
+        self.prepare(inp)
     
     def getPlotTimes(self):
 
@@ -176,6 +189,7 @@ class BDiana:
         format.
         """
         image = QImage(width, height, image_format)
+        image.fill(QColor(0, 0, 0, 0))
         return self._plot(width, height, image, self.controller, self.controller.plot)[0]
     
     def plotPDF(self, width, height, output_file):
