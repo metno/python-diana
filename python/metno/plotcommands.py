@@ -68,7 +68,7 @@ class PlotCommand:
     
         pieces = [self.command]
         for option in self.order:
-            pieces.append(option + "=" + self.options[option])
+            pieces.append(option + "=" + str(self.options[option]))
 
         return " ".join(pieces)
 

@@ -3,8 +3,9 @@ python-diana (0.4.8-1) unstable; urgency=low
   * Added convenience methods to the BDiana class.
   * Changed the write() method to text() in the PlotCommand class.
   * Added an Area plot command.
+  * Ensured that plot option values are converted to strings.
 
- -- David Boddie <david.boddie@met.no>  Mon, 28 Oct 2013 17:52:21 +0100
+ -- David Boddie <david.boddie@met.no>  Mon, 28 Oct 2013 18:29:28 +0100
 
 python-diana (0.4.7-2) unstable; urgency=low
 
