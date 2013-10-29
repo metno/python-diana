@@ -31,7 +31,7 @@
 ### TODO: Obtain available options by parsing the relevant sections in a
 ### specified input file.
 
-class NoValue:
+class AnyValue:
     pass
 
 class PlotCommand:
@@ -59,13 +59,15 @@ class PlotCommand:
 
         return self.available.get(option)
     
-    def setOption(self, option, value):
+    def setOption(self, option, value = None):
     
         available = self.available.get(option)
-
+        
         # If no information is supplied then the value is a free choice.
-        if available is None:
+        if available is AnyValue:
             self._add_command(option, value)
+        elif available is None:
+            self._add_command(option, None)
         # Otherwise, the value must be in the sequence found.
         elif available and value in available:
             self._add_command(option, value)
@@ -74,7 +76,7 @@ class PlotCommand:
     
         pieces = [self.command]
         for option in self.order:
-            if self.available.get(option) != NoValue:
+            if self.available.get(option) != AnyValue:
                 pieces.append(option + "=" + str(self.options[option]))
             else:
                 pieces.append(option)
@@ -86,8 +88,8 @@ class Field(PlotCommand):
 
     command = "FIELD"
 
-    available = {"model": None,
-                 "plot": None,
+    available = {"model": AnyValue,
+                 "plot": AnyValue,
                  "plottype": ("contour", "contour2", "value", "symbol",
                               "alpha_shade", "alarm_box", "fill_cell", "wind",
                               "wind_temp_fl", "wind_value", "vector", "frame",
@@ -98,7 +100,7 @@ class Map(PlotCommand):
 
     command = "MAP"
 
-    available = {"backcolour": None,
+    available = {"backcolour": AnyValue,
                  "map": ("Gshhs-Auto", "Euro1", "Euro2", "Euro3", "Fin",
                          "Norkart", "Norkart2", "Regioner", "Banker",
                          "Banker1", "Banker2", "Banker_test", "MinQNH",
@@ -109,7 +111,7 @@ class Map(PlotCommand):
                          "Vanlig", "Norsea", "Simra_fly", "Flystriper",
                          "Approach-area"),
                  "land": ("on", "off"),
-                 "land.colour": None}
+                 "land.colour": AnyValue}
 
 
 class Area(PlotCommand):
@@ -135,16 +137,16 @@ class Label(PlotCommand):
 
     command = "LABEL"
 
-    available = {"data": NoValue,
-                 "text": None,
-                 "tcolour": None,
-                 "bcolour": None,
-                 "fcolour": None,
-                 "anno": None,
+    available = {"data": None,
+                 "text": AnyValue,
+                 "tcolour": AnyValue,
+                 "bcolour": AnyValue,
+                 "fcolour": AnyValue,
+                 "anno": AnyValue,
                  "halign": ("left", "right", "center"),
                  "valign": ("top", "bottom", "center"),
                  "polystyle": ("fill", "border", "both", "none"),
-                 "margin": None,
-                 "fontname": None,
-                 "fontface": None,
-                 "fontsize": None}
+                 "margin": AnyValue,
+                 "fontname": AnyValue,
+                 "fontface": AnyValue,
+                 "fontsize": AnyValue}
