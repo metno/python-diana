@@ -84,7 +84,7 @@ class PlotCommand:
         if type(Available) == type(ValueType) and issubclass(Available, ValueType):
             self._add_command(option, Available().validate(value))
         # Otherwise, the value must be in the sequence found.
-        elif available and value in available:
+        elif Available and value in Available:
             self._add_command(option, value)
 
     def text(self):
