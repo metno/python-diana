@@ -28,6 +28,9 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+### TODO: Obtain available options by parsing the relevant sections in a
+### specified input file.
+
 class PlotCommand:
 
     def __init__(self, **kwargs):
@@ -120,3 +123,21 @@ class Area(PlotCommand):
                           "proj_van_der_grinten", "proj_eqc", "proj_obtran",
                           "proj_lambert", "EPSG-4326", "EPSG-32661",
                           "EPSG-32761", "epsg:900913", "epsg:3575")}
+
+
+class Label(PlotCommand):
+
+    name = "LABEL"
+
+    available = {"text": None,
+                 "tcolour": None,
+                 "bcolour": None,
+                 "fcolour": None,
+                 "anno": None,
+                 "halign": ("left", "right", "center"),
+                 "valign": ("top", "bottom", "center"),
+                 "polystyle": ("fill", "border", "both", "none"),
+                 "margin": None,
+                 "fontname": None,
+                 "fontface": None,
+                 "fontsize": None}
