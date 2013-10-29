@@ -48,7 +48,7 @@ class QuotedValue(ValueType):
 
 class RectangleValue(ValueType):
     def validate(self, value):
-        return ":".join(map(float, value))
+        return ":".join(map(str, value))
 
 class PlotCommand:
 
