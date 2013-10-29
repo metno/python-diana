@@ -31,14 +31,24 @@
 ### TODO: Obtain available options by parsing the relevant sections in a
 ### specified input file.
 
-class NoValue:
+class ValueType:
     pass
 
-class AnyValue:
-    pass
+class NoValue(ValueType):
+    def validate(self, value):
+        return None
 
-class QuotedValue:
-    pass
+class AnyValue(ValueType):
+    def validate(self, value):
+        return value
+
+class QuotedValue(ValueType):
+    def validate(self, value):
+        return '"' + str(value) + '"'
+
+class RectangleValue(ValueType):
+    def validate(self, value):
+        return ":".join(map(float, value))
 
 class PlotCommand:
 
@@ -67,15 +77,12 @@ class PlotCommand:
     
     def setOption(self, option, value = None):
     
-        available = self.available.get(option, AnyValue)
+        Available = self.available.get(option, AnyValue)
         
-        # If no information is supplied then the value is a free choice.
-        if available is AnyValue:
-            self._add_command(option, value)
-        elif available is NoValue:
-            self._add_command(option, None)
-        elif available is QuotedValue:
-            self._add_command(option, '"' + str(value) + '"')
+        # If the available value type is described by a value type class then
+        # instantiate it and ask it to validate the value.
+        if type(Available) == type(ValueType) and issubclass(Available, ValueType):
+            self._add_command(option, Available().validate(value))
         # Otherwise, the value must be in the sequence found.
         elif available and value in available:
             self._add_command(option, value)
@@ -139,7 +146,8 @@ class Area(PlotCommand):
                           "proj_van_der_grinten", "proj_eqc", "proj_obtran",
                           "proj_lambert", "EPSG-4326", "EPSG-32661",
                           "EPSG-32761", "epsg:900913", "epsg:3575"),
-                 "proj4string": QuotedValue}
+                 "proj4string": QuotedValue,
+                 "rectangle": RectangleValue}
 
 
 class Label(PlotCommand):
