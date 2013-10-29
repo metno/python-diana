@@ -127,7 +127,7 @@ class Area(PlotCommand):
 
 class Label(PlotCommand):
 
-    name = "LABEL"
+    command = "LABEL"
 
     available = {"text": None,
                  "tcolour": None,
