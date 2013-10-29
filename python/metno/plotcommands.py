@@ -64,7 +64,7 @@ class PlotCommand:
     
     def setOption(self, option, value = None):
     
-        available = self.available.get(option, NoValue)
+        available = self.available.get(option, AnyValue)
         
         # If no information is supplied then the value is a free choice.
         if available is AnyValue:
