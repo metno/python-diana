@@ -38,6 +38,21 @@ public:
   FieldManager();
   ~FieldManager();
 
+  bool updateFileSetup(const std::vector<std::string>& lines,
+                       std::vector<std::string>& errors,
+                       bool clearSources=false,
+                       bool top=false);
+  %Docstring
+  Updates the list of field files held by the manager using the descriptions
+  provided in the list of lines. Errors are returned in the list of errors
+  passed to the method.
+
+  If clearSources is True then the existing field sources are cleared before
+  the new field files are read.
+  If top is True then the new fields are given priority over any existing
+  fields with the same names.
+  %End
+
   void updateSources();
   void updateSource(const std::string & modelName);
 

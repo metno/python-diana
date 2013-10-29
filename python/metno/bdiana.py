@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 from datetime import datetime
-import sys
+import os, sys
 
 from metlibs import FieldRequest, milogger
 from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext, \
@@ -75,6 +75,15 @@ class BDiana:
             return False
 
         return True
+    
+    def addField(self, name, file_name, format = "netcdf", clear = False, top = False):
+    
+        line = "m=%s t=fimex f=%s format=%s" % (name, file_name, format)
+        
+        fm = self.controller.getFieldManager()
+        errors = []
+        if not fm.updateFileSetup([line], errors, clear, top):
+            return errors
     
     def getFieldModels(self):
     
