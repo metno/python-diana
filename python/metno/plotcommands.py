@@ -37,6 +37,9 @@ class NoValue:
 class AnyValue:
     pass
 
+class QuotedValue:
+    pass
+
 class PlotCommand:
 
     def __init__(self, **kwargs):
@@ -71,6 +74,8 @@ class PlotCommand:
             self._add_command(option, value)
         elif available is NoValue:
             self._add_command(option, None)
+        elif available is QuotedValue:
+            self._add_command(option, '"' + str(value) + '"')
         # Otherwise, the value must be in the sequence found.
         elif available and value in available:
             self._add_command(option, value)
@@ -133,7 +138,8 @@ class Area(PlotCommand):
                           "Skandinavia", "proj_hirlam", "proj_bonne",
                           "proj_van_der_grinten", "proj_eqc", "proj_obtran",
                           "proj_lambert", "EPSG-4326", "EPSG-32661",
-                          "EPSG-32761", "epsg:900913", "epsg:3575")}
+                          "EPSG-32761", "epsg:900913", "epsg:3575"),
+                 "proj4string": QuotedValue}
 
 
 class Label(PlotCommand):
