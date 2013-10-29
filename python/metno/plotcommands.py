@@ -31,6 +31,9 @@
 ### TODO: Obtain available options by parsing the relevant sections in a
 ### specified input file.
 
+class NoValue:
+    pass
+
 class AnyValue:
     pass
 
@@ -61,12 +64,12 @@ class PlotCommand:
     
     def setOption(self, option, value = None):
     
-        available = self.available.get(option)
+        available = self.available.get(option, NoValue)
         
         # If no information is supplied then the value is a free choice.
         if available is AnyValue:
             self._add_command(option, value)
-        elif available is None:
+        elif available is NoValue:
             self._add_command(option, None)
         # Otherwise, the value must be in the sequence found.
         elif available and value in available:
@@ -137,7 +140,7 @@ class Label(PlotCommand):
 
     command = "LABEL"
 
-    available = {"data": None,
+    available = {"data": NoValue,
                  "text": AnyValue,
                  "tcolour": AnyValue,
                  "bcolour": AnyValue,
