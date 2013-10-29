@@ -76,7 +76,7 @@ class PlotCommand:
     
         pieces = [self.command]
         for option in self.order:
-            if self.available.get(option) != AnyValue:
+            if self.available.get(option) != None:
                 pieces.append(option + "=" + str(self.options[option]))
             else:
                 pieces.append(option)
