@@ -31,6 +31,9 @@
 ### TODO: Obtain available options by parsing the relevant sections in a
 ### specified input file.
 
+class NoValue:
+    pass
+
 class PlotCommand:
 
     def __init__(self, **kwargs):
@@ -71,7 +74,10 @@ class PlotCommand:
     
         pieces = [self.command]
         for option in self.order:
-            pieces.append(option + "=" + str(self.options[option]))
+            if self.available[option] != NoValue:
+                pieces.append(option + "=" + str(self.options[option]))
+            else:
+                pieces.append(option)
 
         return " ".join(pieces)
 
@@ -129,7 +135,8 @@ class Label(PlotCommand):
 
     command = "LABEL"
 
-    available = {"text": None,
+    available = {"data": NoValue,
+                 "text": None,
                  "tcolour": None,
                  "bcolour": None,
                  "fcolour": None,
