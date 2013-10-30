@@ -50,6 +50,13 @@ class RectangleValue(ValueType):
     def validate(self, value):
         return ":".join(map(str, value))
 
+class BooleanValue(ValueType):
+    def validate(self, value):
+        if value == True:
+            return "true"
+        else:
+            return "false"
+
 class PlotCommand:
 
     def __init__(self, **kwargs):
@@ -108,7 +115,9 @@ class Field(PlotCommand):
                  "plottype": ("contour", "contour2", "value", "symbol",
                               "alpha_shade", "alarm_box", "fill_cell", "wind",
                               "wind_temp_fl", "wind_value", "vector", "frame",
-                              "direction")}
+                              "direction"),
+                 "antialiasing": BooleanValue,
+                 "frame": (0, 1, 2, 3)}
 
 
 class Map(PlotCommand):
