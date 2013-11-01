@@ -42,6 +42,10 @@ class AnyValue(ValueType):
     def validate(self, value):
         return value
 
+class FloatValue(ValueType):
+    def validate(self, value):
+        return float(value)
+
 class QuotedValue(ValueType):
     def validate(self, value):
         return '"' + str(value) + '"'
@@ -57,7 +61,41 @@ class BooleanValue(ValueType):
         else:
             return "false"
 
+class ChoiceValue(ValueType):
+
+    """Specifies an option that accepts one or more values based on the value
+    of another, previously defined option.
+    """
+
+    def __init__(self, field_name, choices, multiple = False, delimiter = ","):
+    
+        # The field name defines the option in the plot command that contains
+        # the section to use to verify this option value.
+        self.field_name = field_name
+        self.choices = choices
+        self.multiple = multiple
+        self.delimiter = delimiter
+    
+    def validate(self, section, value):
+
+        if not self.multiple:
+            values = [value]
+        values = []
+        for item in value:
+            try:
+                if item in self.choices[section]:
+                    values.append(item)
+                    if not self.multiple:
+                        break
+            except KeyError:
+                raise ValueError, "'%s' not an appropriate value for '%s'." % (value, section)
+        
+        return self.delimiter.join(values)
+
+
 class PlotCommand:
+
+    hidden = []
 
     def __init__(self, **kwargs):
 
@@ -79,8 +117,12 @@ class PlotCommand:
         return self.available.keys()
 
     def getAvailable(self, option):
-
-        return self.available.get(option)
+    
+        a = self.available.get(option)
+        if isinstance(a, ChoiceValue):
+            return a.choices
+        else:
+            return a
     
     def setOption(self, option, value = None):
     
@@ -89,7 +131,14 @@ class PlotCommand:
         # If the available value type is described by a value type class then
         # instantiate it and ask it to validate the value.
         if type(Available) == type(ValueType) and issubclass(Available, ValueType):
-            self._add_command(option, Available().validate(value))
+            Available = Available()
+
+        if isinstance(Available, ChoiceValue):
+            # Read the value of the option that this option depends on and
+            # pass that as the section to use to verify the value supplied.
+            self._add_command(option, Available.validate(self.options[Available.field_name], value))
+        elif isinstance(Available, ValueType):
+            self._add_command(option, Available.validate(value))
         # Otherwise, the value must be in the sequence found.
         elif Available and value in Available:
             self._add_command(option, value)
@@ -99,7 +148,10 @@ class PlotCommand:
         pieces = [self.command]
         for option in self.order:
             if self.available.get(option) != NoValue:
-                pieces.append(option + "=" + str(self.options[option]))
+                if option in self.hidden:
+                    pieces.append(str(self.options[option]))
+                else:
+                    pieces.append(option + "=" + str(self.options[option]))
             else:
                 pieces.append(option)
 
@@ -171,8 +223,72 @@ class Label(PlotCommand):
                  "anno": AnyValue,
                  "halign": ("left", "right", "center"),
                  "valign": ("top", "bottom", "center"),
+                 "xoffset": FloatValue,
+                 "yoffset": FloatValue,
+                 "xratio": FloatValue,
+                 "yratio": FloatValue,
                  "polystyle": ("fill", "border", "both", "none"),
-                 "margin": AnyValue,
+                 "margin": FloatValue,
+                 "font": AnyValue,
                  "fontname": AnyValue,
                  "fontface": AnyValue,
-                 "fontsize": AnyValue}
+                 "fontsize": AnyValue,
+                 "yclinewidth": AnyValue,
+                 "plotrequested": BooleanValue}
+
+
+class Observations(PlotCommand):
+
+    command = "OBS"
+
+    available = {"data": ("Synop", "Metar", "List", "Pressure", "Ocean",
+                          "Tide"),
+                 "plot": ("Synop", "Metar", "List", "Pressure", "Ocean",
+                          "Tide"),
+                 "parameter": ChoiceValue("data",
+                     {"Synop": ("Wind", "TTT", "TdTdTd", "PPPP", "ppp", "a",
+                                "h", "VV", "N", "RRR", "ww", "W1", "W2", "Nh",
+                                "Cl", "Cm", "Ch", "vs", "ds", "TwTwTw",
+                                "PwaHwa", "dw1dw1", "Pw1Hw1", "TxTn", "sss",
+                                "911ff", "s", "fxfx", "Id", "St.no(3)",
+                                "St.no(5)", "Time"),
+                      "Metar": ("Wind", "dndx", "fmfm", "TTT", "TdTdTd", "ww",
+                                "REww", "VVVV/Dv", "VxVxVxVx/Dvx", "Clouds",
+                                "PHPHPHPH", "Id"),
+                      "List": ("Pos", "dd", "ff", "T_red", "Date", "Time",
+                               "Height", "Zone", "Name", "RRR_1", "RRR_6",
+                               "RRR_12", "RRR_24", "quality"),
+                      "Pressure": ("Pos", "Wind", "dd", "ff", "TTT", "TdTdTd",
+                                   "PPPP", "Id", "Date", "Time", "HHH", "QI",
+                                   "QI_NM", "QI_RFF"),
+                      "Ocean": ("Id", "PwaPwa", "HwaHwa", "depth", "TTTT",
+                                "SSSS", "Date", "Time"),
+                      "Tide": ("Pos", "TE", "Id", "Date", "Time")},
+                      multiple = True
+                      ),
+                 "density": FloatValue,
+                 "antialiasing": BooleanValue}
+
+    def setOption(self, option, value = None):
+    
+        if option == "density" and str(value).startswith("all"):
+            self._add_command(option, value)
+        else:
+            PlotCommand.setOption(self, option, value)
+
+
+class Satellite(PlotCommand):
+
+    command = "SAT"
+
+    available = {"product": AnyValue,
+                 "subproduct": AnyValue,
+                 "channel": AnyValue,
+                 "alpha": FloatValue,
+                 "mosaic": (0, 1)}
+    
+    hidden = ["product", "subproduct", "channel"]
+
+
+class Radar(Satellite):
+    pass

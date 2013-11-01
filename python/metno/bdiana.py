@@ -119,6 +119,21 @@ class BDiana:
         req.paramName = field
         return self.controller.getFieldTime([req])
     
+    def getObsTimes(self, type):
+
+        obs_manager = self.controller.getObservationManager()
+        return obs_manager.getObsTimes(["OBS data=" + type])
+    
+    def getSatProducts(self):
+
+        sat_manager = self.controller.getSatelliteManager()
+        return sat_manager.getProductsInfo()
+    
+    def getSatTimes(self, product, subproduct):
+
+        sat_manager = self.controller.getSatelliteManager()
+        return sat_manager.getSatTimes(["SAT " + product + " " + subproduct])
+
     def prepare(self, input_file, archive = False):
     
         """Prepares input from the specified input_file for plotting.

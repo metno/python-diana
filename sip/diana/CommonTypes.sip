@@ -50,3 +50,15 @@ struct SatFileInfo
   miutil::miString fileformat;
   SatFileInfo();
 };
+
+struct SatValues
+{
+%TypeHeaderCode
+#include "diCommonTypes.h"
+%End
+
+    miutil::miString channel;
+    float value; ///<rgb
+    miutil::miString text; ///<palette
+};
+

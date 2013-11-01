@@ -1,7 +1,7 @@
 /*
  python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 
- Copyright (C) 2012 met.no
+ Copyright (C) 2013 met.no
 
  Contact information:
  Norwegian Meteorological Institute
@@ -27,38 +27,16 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
-
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
-
-%ModuleHeaderCode
-#define USE_PAINTGL
+class ObsManager
+{
+%TypeHeaderCode
+#include "diObsManager.h"
 %End
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include CommonTypes.sip
-%Include Controller.sip
-%Include DataDialog.sip
-%Include DianaMainWindow.sip
-%Include DrawingManager.sip
-%Include FieldPlot.sip
-%Include FieldPlotManager.sip
-%Include GLwidget.sip
-%Include LocalSetupParser.sip
-%Include Manager.sip
-%Include MapMode.sip
-%Include MovieMaker.sip
-%Include ObsManager.sip
-%Include Plot.sip
-%Include PlotModule.sip
-%Include PlotOptions.sip
-%Include PaintGL.sip
-%Include Sat.sip
-%Include SatManager.sip
-%Include SatPlot.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
-%Include WorkArea.sip
+public:
+    ObsManager();
+    std::vector<miutil::miTime> getObsTimes(const std::vector<miutil::miString>& obsTypes);
+    void archiveMode(bool on);
+    bool timeListChanged;
+};
+

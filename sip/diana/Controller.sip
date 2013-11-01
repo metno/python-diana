@@ -119,7 +119,7 @@ public:
 
   FieldManager* getFieldManager();
   SatManager* getSatelliteManager();
-  //ObsManager* getObservationManager();
+  ObsManager* getObservationManager();
 
   void addManager(const std::string &name, Manager *man);
   Manager *getManager(const std::string &name);
@@ -247,6 +247,16 @@ public:
   Returns the list of available field models.
   %End
 
+  std::vector<miutil::miString> getCalibChannels();
+  %Docstring
+  Returns the names of the current channels (with calibration).
+  %End
+
+  std::vector <miutil::miString> getSatnames();
+  %Docstring
+  Returns the satellite names from all satellite plots.
+  %End
+          
   void archiveMode( bool );
 
   std::vector<FieldDialogInfo> initFieldDialog();
