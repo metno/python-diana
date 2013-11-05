@@ -35,53 +35,53 @@ class SatManager
 
 public:
     struct subProdInfo {
-      std::vector<miutil::miString> pattern;
+      std::vector<std::string> pattern;
       std::vector<bool> archive;
-      miutil::miString formattype; //holds mitiff or hdf5
-      miutil::miString metadata;
-      miutil::miString channelinfo;
-      miutil::miString paletteinfo;
+      std::string formattype; //holds mitiff or hdf5
+      std::string metadata;
+      std::string channelinfo;
+      std::string paletteinfo;
       int hdf5type;
       std::vector<SatFileInfo> file;
-      std::vector<miutil::miString> channel;
+      std::vector<std::string> channel;
       unsigned long updateTime;
     };
 
     SatManager();
-    bool init(std::vector<SatPlot*>&, const std::vector<miutil::miString>&);
+    bool init(std::vector<SatPlot*>&, const std::vector<std::string>&);
     bool setData(SatPlot *);
-    std::vector<miutil::miTime> getSatTimes(const std::vector<miutil::miString>&, bool updateFileList=false, bool openFiles=false);
+    std::vector<miutil::miTime> getSatTimes(const std::vector<std::string>&, bool updateFileList=false, bool openFiles=false);
 
-    const std::vector<SatFileInfo> & getFiles(const miutil::miString &,
-                                              const miutil::miString &,
+    const std::vector<SatFileInfo> & getFiles(const std::string &,
+                                              const std::string &,
                                               bool = false);
-    const std::vector<Colour> & getColours(const miutil::miString &,
-                                           const miutil::miString &);
-    const std::vector<miutil::miString>& getChannels(const miutil::miString &satellite,
-                                                     const miutil::miString & file,
+    const std::vector<Colour> & getColours(const std::string &,
+                                           const std::string &);
+    const std::vector<std::string>& getChannels(const std::string &satellite,
+                                                     const std::string & file,
                                                      int index=-1);
-    bool isMosaic(const miutil::miString &satellite, const miutil::miString & file);
+    bool isMosaic(const std::string &satellite, const std::string & file);
 
     void cutImageRGBA(unsigned char *image, float cut, int *index);
-    int getFileName(miutil::miString &);
+    int getFileName(std::string &);
     int getFileName(const miutil::miTime&);
 
-    SIP_PYDICT getProductsInfo() const [std::map<miutil::miString, std::map<miutil::miString,SatManager::subProdInfo> > ()];
+    SIP_PYDICT getProductsInfo() const [std::map<std::string, std::map<std::string,SatManager::subProdInfo> > ()];
     %MethodCode
-    std::map<miutil::miString, std::map<miutil::miString,SatManager::subProdInfo> > m = sipCpp->getProductsInfo();
+    std::map<std::string, std::map<std::string,SatManager::subProdInfo> > m = sipCpp->getProductsInfo();
 
     PyObject *d = PyDict_New();
     if (d == NULL) {
         sipIsErr = 1;
 
     } else {
-        std::map<miutil::miString, std::map<miutil::miString,SatManager::subProdInfo> >::iterator it;
+        std::map<std::string, std::map<std::string,SatManager::subProdInfo> >::iterator it;
         for (it = m.begin(); it != m.end(); ++it) {
 
-            std::map<miutil::miString,SatManager::subProdInfo> productMap = it->second;
+            std::map<std::string,SatManager::subProdInfo> productMap = it->second;
 
-            miutil::miString *t1 = new miutil::miString(it->first);
-            PyObject *tobj1 = sipConvertFromNewType(t1, sipType_miutil_miString, Py_None);
+            std::string *t1 = new std::string(it->first);
+            PyObject *tobj1 = sipConvertFromNewType(t1, sipType_std_string, Py_None);
             PyObject *d2 = PyDict_New();
 
             if ((tobj1 == NULL) || (d2 == NULL) || (PyDict_SetItem(d, tobj1, d2) < 0)) {
@@ -97,11 +97,11 @@ public:
                 break;
             }
 
-            std::map<miutil::miString,SatManager::subProdInfo>::iterator it2;
+            std::map<std::string,SatManager::subProdInfo>::iterator it2;
 
             for (it2 = productMap.begin(); it2 != productMap.end(); ++it2) {
-                miutil::miString *t2 = new miutil::miString(it2->first);
-                PyObject *tobj2 = sipConvertFromNewType(t2, sipType_miutil_miString, Py_None);
+                std::string *t2 = new std::string(it2->first);
+                PyObject *tobj2 = sipConvertFromNewType(t2, sipType_std_string, Py_None);
                 SatManager::subProdInfo *t3 = new SatManager::subProdInfo(it2->second);
                 PyObject *tobj3 = sipConvertFromNewType(t3, sipType_SatManager_subProdInfo, Py_None);
 

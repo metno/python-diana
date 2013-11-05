@@ -36,7 +36,7 @@ class Colour
 public:
   enum {maxv= 255};
 
-  Colour(const miutil::miString);
+  Colour(const std::string);
   Colour(const int, const int,
          const int, const int =maxv);
   Colour(const Colour &rhs);

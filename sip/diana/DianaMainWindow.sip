@@ -34,9 +34,9 @@ class DianaMainWindow : public QMainWindow
 %End
 
 public:
-  DianaMainWindow(Controller*, const miutil::miString ver_str,
-                               const miutil::miString buils_str,
-                               const miutil::miString dianaTitle="Diana",
+  DianaMainWindow(Controller*, const std::string ver_str,
+                               const std::string buils_str,
+                               const std::string dianaTitle="Diana",
                                bool profetEnabled=false);
   ~DianaMainWindow();
 

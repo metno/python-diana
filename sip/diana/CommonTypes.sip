@@ -33,21 +33,21 @@ struct SatFileInfo
 #include "diCommonTypes.h"
 %End
 
-  miutil::miString name;
-  miutil::miString formattype; //mitiff or hdf5
-  miutil::miString metadata;
-  miutil::miString channelinfo;
-  miutil::miString paletteinfo;
+  std::string name;
+  std::string formattype; //mitiff or hdf5
+  std::string metadata;
+  std::string channelinfo;
+  std::string paletteinfo;
   int hdf5type;
   miutil::miTime time;
   //miutil::miClock clock;
   int day;
   bool opened;
-  std::vector<miutil::miString> channel;
-  miutil::miString default_channel;
+  std::vector<std::string> channel;
+  std::string default_channel;
   bool palette;
   std::vector<Colour> col;
-  miutil::miString fileformat;
+  std::string fileformat;
   SatFileInfo();
 };
 
@@ -57,8 +57,8 @@ struct SatValues
 #include "diCommonTypes.h"
 %End
 
-    miutil::miString channel;
+    std::string channel;
     float value; ///<rgb
-    miutil::miString text; ///<palette
+    std::string text; ///<palette
 };
 

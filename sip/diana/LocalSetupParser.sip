@@ -38,9 +38,9 @@ class LocalSetupParser
 public:
   LocalSetupParser();
 
-  static bool parse( miutil::miString& mainfilename );
-  static miutil::miString basicValue(const miutil::miString& key);
-  static miutil::miString getSetupFileName();
-  static void setSetupFileName(const miutil::miString& sf);
+  static bool parse( std::string& mainfilename );
+  static std::string basicValue(const std::string& key);
+  static std::string getSetupFileName();
+  static void setSetupFileName(const std::string& sf);
 };
 

@@ -133,7 +133,7 @@ public:
   been parsed by LocalSetupParser.parse().
   %End
 
-  void plotCommands(const std::vector<miutil::miString>&);
+  void plotCommands(const std::vector<std::string>&);
   %Docstring
   Controller.plotCommands(list commands)
 
@@ -211,7 +211,7 @@ public:
   vector<Rectangle> plotAnnotations();
   void getCapabilitiesTime(set<miutil::miTime>& okTimes,
                            set<miutil::miTime>& constTimes,
-                           const vector<miutil::miString>& pinfos,
+                           const vector<std::string>& pinfos,
                            bool allTimes=true);
 */
   bool setPlotTime(miutil::miTime&);
@@ -240,19 +240,19 @@ public:
   data will be used instead.
   %End
 
-  std::vector<miutil::miString> getFieldModels();
+  std::vector<std::string> getFieldModels();
   %Docstring
   Controller.getFieldModels()
   
   Returns the list of available field models.
   %End
 
-  std::vector<miutil::miString> getCalibChannels();
+  std::vector<std::string> getCalibChannels();
   %Docstring
   Returns the names of the current channels (with calibration).
   %End
 
-  std::vector <miutil::miString> getSatnames();
+  std::vector <std::string> getSatnames();
   %Docstring
   Returns the satellite names from all satellite plots.
   %End
@@ -297,19 +297,19 @@ public:
   Returns available times for the requested fields.
   %End
 
-  SIP_PYTUPLE getFieldGroups(const miutil::miString& modelNameRequest, bool plotGroups)
-    [void (const miutil::miString& modelNameRequest,
-           miutil::miString& modelName,
+  SIP_PYTUPLE getFieldGroups(const std::string& modelNameRequest, bool plotGroups)
+    [void (const std::string& modelNameRequest,
+           std::string& modelName,
            std::string refTime,
            bool plotGroups,
            std::vector<FieldGroupInfo>& vfgi)];
   %MethodCode
-  miutil::miString modelName;
+  std::string modelName;
   std::string refTime;
   std::vector<FieldGroupInfo> vfgi;
   sipCpp->getFieldGroups(*a0, modelName, refTime, a1, vfgi);
 
-  CONVERT_TYPE(modelName, modelNameWrapper, miutil::miString, sipType_miutil_miString)
+  CONVERT_TYPE(modelName, modelNameWrapper, std::string, sipType_std_string)
   CONVERT_TYPE(refTime, refTimeWrapper, std::string, sipType_std_string)
   FILL_LIST_VALUES(vfgi, vfgiWrapper, FieldGroupInfo, sipType_FieldGroupInfo)
   

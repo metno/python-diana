@@ -46,19 +46,19 @@ public:
     Area& getSatArea();
     double getGridResolutionX();
     double getGridResolutionY();
-    void getSatAnnotation(miutil::miString &, Colour &);
-    void getSatName(miutil::miString &);
-    void getCalibChannels(std::vector<miutil::miString>& channels);
+    void getSatAnnotation(std::string &, Colour &);
+    void getSatName(std::string &);
+    void getCalibChannels(std::vector<std::string>& channels);
     void values(float x,float y, std::vector<SatValues>& satval);
     %Docstring
     Returns the pixel value at the point specified by the x and y coordinates.
 
-    bool getAnnotations(std::vector<miutil::miString>& anno);
+    bool getAnnotations(std::vector<std::string>& anno);
     %Docstring
     Returns the plot legend.
     %End
 
-    void setSatAuto(bool, const miutil::miString&, const miutil::miString&);
+    void setSatAuto(bool, const std::string&, const std::string&);
 
 private:
     SatPlot(const SatPlot &rhs);

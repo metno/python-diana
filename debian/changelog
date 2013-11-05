@@ -1,3 +1,12 @@
+python-diana (0.4.9-1) unstable; urgency=low
+
+  * Added Satellite and Radar plot commands.
+  * Added more convenience methods to the BDiana class for adding new
+    fields, getting information about satellite products and times,
+    and getting observation times.
+
+ -- David Boddie <david.boddie@met.no>  Tue, 05 Nov 2013 14:28:46 +0100
+
 python-diana (0.4.8-1) unstable; urgency=low
 
   * Added convenience methods to the BDiana class.

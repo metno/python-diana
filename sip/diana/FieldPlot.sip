@@ -37,5 +37,5 @@ public:
   FieldPlot();
   ~FieldPlot();
 
-  miutil::miString getModelName();
+  std::string getModelName();
 };

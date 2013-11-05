@@ -42,28 +42,28 @@ public:
   void setPlotWindow(int w, int h);
 
   void setModel();
-  void setStation(const miutil::miString& station);
+  void setStation(const std::string& station);
   void setTime(const miutil::miTime& time);
-  miutil::miString setStation(int step);
+  std::string setStation(int step);
   miutil::miTime setTime(int step);
 
   const miutil::miTime getTime();
-  const miutil::miString getStation();
-  const miutil::miString getLastStation();
-  const std::vector<miutil::miString>& getStationList();
+  const std::string getStation();
+  const std::string getLastStation();
+  const std::vector<std::string>& getStationList();
   const std::vector<float>& getLatitudes();
   const std::vector<float>& getLongitudes();
   const std::vector<miutil::miTime>& getTimeList();
 
-  std::vector<miutil::miString> getModelNames();
-  std::vector<miutil::miString> getModelFiles();
-  void setFieldModels(const std::vector<miutil::miString>& fieldmodels);
-  void setSelectedModels(const std::vector<miutil::miString>& models,
+  std::vector<std::string> getModelNames();
+  std::vector<std::string> getModelFiles();
+  void setFieldModels(const std::vector<std::string>& fieldmodels);
+  void setSelectedModels(const std::vector<std::string>& models,
 			 bool obs, bool field);
-  void setSelectedFiles(const std::vector<miutil::miString>& files,
+  void setSelectedFiles(const std::vector<std::string>& files,
 			bool obs, bool field);
 
-  std::vector<miutil::miString> getSelectedModels();
+  std::vector<std::string> getSelectedModels();
 
   bool plot();
 };

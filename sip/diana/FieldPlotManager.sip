@@ -37,11 +37,11 @@ public:
   FieldPlotManager(FieldManager *fm);
 
   struct PlotField {
-    miutil::miString name;
-    miutil::miString fieldgroup;
-    miutil::miString plot;
-    std::vector<miutil::miString> input;
-    std::set< miutil::miString > vcoord;
+    std::string name;
+    std::string fieldgroup;
+    std::string plot;
+    std::vector<std::string> input;
+    std::set< std::string > vcoord;
   };
 
   SIP_PYLIST getAllFieldNames() [void (std::vector<std::string>&)];

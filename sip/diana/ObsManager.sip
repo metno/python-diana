@@ -35,7 +35,7 @@ class ObsManager
 
 public:
     ObsManager();
-    std::vector<miutil::miTime> getObsTimes(const std::vector<miutil::miString>& obsTypes);
+    std::vector<miutil::miTime> getObsTimes(const std::vector<std::string>& obsTypes);
     void archiveMode(bool on);
     bool timeListChanged;
 };

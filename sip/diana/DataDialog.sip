@@ -41,15 +41,15 @@ public:
   virtual std::string name() const = 0;
 
   virtual void updateDialog() = 0;
-  virtual std::vector<miutil::miString> getOKString() = 0;
-  virtual void putOKString(const std::vector<miutil::miString>& vstr) = 0;
+  virtual std::vector<std::string> getOKString() = 0;
+  virtual void putOKString(const std::vector<std::string>& vstr) = 0;
 
 public slots:
   virtual void updateTimes() = 0;
 
 signals:
-  void emitTimes(const miutil::miString &, const std::vector<miutil::miTime> &);
-  void emitTimes(const miutil::miString &, const std::vector<miutil::miTime> &, bool);
+  void emitTimes(const std::string &, const std::vector<miutil::miTime> &);
+  void emitTimes(const std::string &, const std::vector<miutil::miTime> &, bool);
   void applyData();
   void hideData();
   void showsource(const std::string, const std::string="");

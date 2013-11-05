@@ -35,18 +35,18 @@ class AnnotationPlot : public Plot
 
 public:
   struct Annotation {
-    miutil::miString str;
-    std::vector<miutil::miString> vstr;
+    std::string str;
+    std::vector<std::string> vstr;
     Alignment hAlign;
     Colour bordercolour;
   };
 
   AnnotationPlot();
-  AnnotationPlot(const miutil::miString&);
+  AnnotationPlot(const std::string&);
   ~AnnotationPlot();
 
   bool plot();
-  bool prepare(const miutil::miString&);
+  bool prepare(const std::string&);
   const std::vector<AnnotationPlot::Annotation>& getAnnotations();
 
   Rectangle getBoundingBox() const;

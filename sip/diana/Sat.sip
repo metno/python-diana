@@ -35,16 +35,16 @@ class Sat
 
 public:
     bool approved;        ///< approved for plotting
-    miutil::miString satellite;   ///< main product name
-    miutil::miString filetype;    ///< subproduct
-    miutil::miString formatType;  ///< filetype (mitiff or hdf5)
-    miutil::miString metadata;
-    miutil::miString channelInfo;
-    miutil::miString paletteinfo;
+    std::string satellite;   ///< main product name
+    std::string filetype;    ///< subproduct
+    std::string formatType;  ///< filetype (mitiff or hdf5)
+    std::string metadata;
+    std::string channelInfo;
+    std::string paletteinfo;
     int hdf5type;
-    std::vector<miutil::miString> vch; ///< name of channels selected
-    miutil::miString filename;    ///< explicit selection of file
-    miutil::miString actualfile;  ///< actual filename used
+    std::vector<std::string> vch; ///< name of channels selected
+    std::string filename;    ///< explicit selection of file
+    std::string actualfile;  ///< actual filename used
     bool autoFile;        ///< filename from plot time
     float cut;            ///< image cut/stretch factor
     int alphacut;          ///< alpha-blending cutoff value
@@ -57,14 +57,14 @@ public:
     double gridResolutionX; /// Grid Resolution in the X direction
     double gridResolutionY; /// Grid Resolution in the Y direction
     miutil::miTime time;          ///< valid time
-    miutil::miString annotation;  ///< annotation string
-    miutil::miString plotname;    ///< unique plotname
+    std::string annotation;  ///< annotation string
+    std::string plotname;    ///< unique plotname
     bool palette;         ///< palette sat-file
-    miutil::miString plotChannels;///< channelname for annotation
+    std::string plotChannels;///< channelname for annotation
     bool mosaic;          ///< make mosaic plot
     miutil::miTime firstMosaicFileTime; ///< time start for mosaic image generation
     miutil::miTime lastMosaicFileTime;  ///< time stop for mosaic image generation
-    miutil::miString satellite_name; ///< name of satellite from file
+    std::string satellite_name; ///< name of satellite from file
     bool commonColourStretch;    /// other images can use stretch from this image
 
     float TrueLat; ///< grid true latitude
@@ -74,21 +74,21 @@ public:
     float Bx;      ///< grid parameter
     float By;      ///< grid parameter
 
-    miutil::miString projection;
-    miutil::miString proj_string;
+    std::string projection;
+    std::string proj_string;
 
-    miutil::miString cal_vis;            /// calibration info visible channel
-    miutil::miString cal_ir;             /// calibration info ir channel
-    std::vector<miutil::miString> cal_table;  /// calibration info
+    std::string cal_vis;            /// calibration info visible channel
+    std::string cal_ir;             /// calibration info ir channel
+    std::vector<std::string> cal_table;  /// calibration info
 /*
     struct table_cal {
-        miutil::miString channel;
-        std::vector<miutil::miString> val;
+        std::string channel;
+        std::vector<std::string> val;
         float a;
         float b;
     };
     std::map<int,table_cal> calibrationTable; /// calibration of current channels
 */
-    std::vector<miutil::miString> cal_channels;  /// name++ of current channels
+    std::vector<std::string> cal_channels;  /// name++ of current channels
 };
 

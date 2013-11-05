@@ -38,6 +38,6 @@ public:
   ~SpectrumOptions();
   void setDefaults();
 
-  std::vector<miutil::miString> writeOptions();
-  void readOptions(const std::vector<miutil::miString>& vstr);
+  std::vector<std::string> writeOptions();
+  void readOptions(const std::vector<std::string>& vstr);
 };
