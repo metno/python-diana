@@ -2,13 +2,14 @@
 
 version = $(shell dpkg-parsechangelog | awk '/^Version/{print $$2}')
 python_version = "2.7"
-qt_pkg_dir = "/usr/lib"
+qt_pkg_dir = "/usr"
 pyqt_pkg_dir = "/usr/lib/python"$(python_version)
 python_diana_pkg_dir = "/usr/lib/python"$(python_version)"/dist-packages"
 examples_pkg_dir = "/usr/share/python-diana-examples"
 
 build:
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
+	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib/python-diana
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/share/doc
 	mkdir -p $(CURDIR)/debian/python-diana-examples$(qt_pkg_dir)/share/doc
 	mkdir -p $(CURDIR)/debian/python-diana-examples$(examples_pkg_dir)
@@ -26,7 +27,7 @@ clean:
 
 install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/python-diana install
-	cp -a /usr/lib/libdiana.so* $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
+	cp -a /usr/lib/libdiana.so* $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib/python-diana
 	cp -a examples $(CURDIR)/debian/python-diana-examples$(examples_pkg_dir)
 	cp -a doc/python-diana $(CURDIR)/debian/python-diana$(qt_pkg_dir)/share/doc
 	cp -a doc/python-diana-examples $(CURDIR)/debian/python-diana-examples$(qt_pkg_dir)/share/doc
