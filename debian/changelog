@@ -1,8 +1,9 @@
 python-diana (0.5.0-1) unstable; urgency=low
 
   * Renamed the BDiana addField() method to addModel().
+  * Simplified plot methods and fixed spectrum plotting.
 
- -- David Boddie <david.boddie@met.no>  Thu, 07 Nov 2013 11:51:39 +0100
+ -- David Boddie <david.boddie@met.no>  Thu, 07 Nov 2013 15:58:54 +0100
 
 python-diana (0.4.9-2) unstable; urgency=low
 

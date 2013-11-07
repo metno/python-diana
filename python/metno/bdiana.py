@@ -62,7 +62,7 @@ class BDiana:
         """Parses the setup file specified by setup_path, returning True if
         successful or False if unsuccessful.
         """
-
+        
         # There must already be a running QApplication for this to work.
         if not QApplication.instance():
             self.application = QApplication([])
@@ -86,7 +86,7 @@ class BDiana:
         The clear keyword argument is used to clear the list of models registered with
         Diana. The top keyword argument is used to place the new model at the top of
         the list of models when shown in Diana's field dialog."""
-
+        
         line = "m=%s t=fimex f=%s format=%s" % (name, file_name, format)
         
         fm = self.controller.getFieldManager()
@@ -98,12 +98,13 @@ class BDiana:
     
         """Returns a list of objects describing the model groups and the
         models contained within them."""
-
+        
         return self.controller.initFieldDialog()
     
     def getModels(self):
     
         """Returns a set of available models."""
+
         models = set()
         for group in self.getFieldModels():
             for model in group.modelNames:
@@ -115,6 +116,7 @@ class BDiana:
 
         """Returns the available fields for the given model.
         Models can be obtained using the getModels() method."""
+
         fields = set()
         model, refTime, fieldGroups = self.controller.getFieldGroups(model, False)
         
@@ -128,22 +130,32 @@ class BDiana:
     
         """Returns the available times for the given model and field.
         Models and fields can be obtained using the getModels() and getFields() methods."""
+
         req = FieldRequest()
         req.modelName = model
         req.paramName = field
         return self.controller.getFieldTime([req])
     
     def getObsTimes(self, type):
+    
+        """Returns the available times for the given type of observation.
+        Acceptable types include Synop, Metar, Pressure, Ocean and Tide."""
 
         obs_manager = self.controller.getObservationManager()
         return obs_manager.getObsTimes(["OBS data=" + type])
     
     def getSatProducts(self):
-
+    
+        """Returns the available satellite and radar products as a dictionary
+        of products, each of which contains a dictionary of subproducts."""
+        
         sat_manager = self.controller.getSatelliteManager()
         return sat_manager.getProductsInfo()
     
     def getSatTimes(self, product, subproduct):
+    
+        """Returns the available times for the given satellite/radar product
+        and subproduct."""
 
         sat_manager = self.controller.getSatelliteManager()
         return sat_manager.getSatTimes(["SAT " + product + " " + subproduct])
@@ -163,6 +175,9 @@ class BDiana:
     
     def setPlotCommands(self, plot_commands):
     
+        """Sets the commands to be used for plotting. A call to this method
+        must be followed by a call to setPlotTime() with an appropriate time."""
+
         inp = InputFile()
         inp.lines = ["PLOT"] + plot_commands + ["ENDPLOT"]
         self.prepare(inp)
@@ -194,12 +209,17 @@ class BDiana:
 
     def getPlotArea(self):
     
-        """Returns the plot area that will be displayed in the plot.
-        """
+        """Returns the plot area that will be displayed in the plot."""
+
         return self.controller.getMapArea()
     
-    def _plot(self, width, height, paint_device, plot_object, plot_method):
+    def _plot(self, width, height, paint_device, plot_object = None, plot_method = None):
     
+        if not plot_object:
+            plot_object = self.controller
+        if not plot_method:
+            plot_method = plot_object.plot
+
         plot_object.setPlotWindow(width, height)
         
         wrapper = PaintGL()
@@ -220,7 +240,8 @@ class BDiana:
 
         return paint_device, value, transform
     
-    def plotImage(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
+    def plotImage(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied,
+                  _plotting_object = None):
     
         """Plots the data specified in the current input file as an image with
         the specified width and height, and with an optionally specified image
@@ -228,9 +249,9 @@ class BDiana:
         """
         image = QImage(width, height, image_format)
         image.fill(QColor(0, 0, 0, 0))
-        return self._plot(width, height, image, self.controller, self.controller.plot)[0]
+        return self._plot(width, height, image, _plotting_object)[0]
     
-    def plotPDF(self, width, height, output_file):
+    def plotPDF(self, width, height, output_file, _plotting_object = None):
 
         """Plots the data specified in the current input file as a page in a
         PDF file with the given width and height, writing the output to the
@@ -241,9 +262,9 @@ class BDiana:
         pdf.setOutputFileName(output_file)
         pdf.setPaperSize(QSizeF(width, height), QPrinter.DevicePixel)
         pdf.setFullPage(True)
-        return self._plot(width, height, pdf, self.controller, self.controller.plot)[0]
+        return self._plot(width, height, pdf, _plotting_object)[0]
     
-    def plotSVG(self, width, height, output_file):
+    def plotSVG(self, width, height, output_file, _plotting_object = None):
 
         """Plots the data specified in the current input file as a page in a
         PDF file with the given width and height, writing the output to the
@@ -255,7 +276,7 @@ class BDiana:
         svg.setSize(QSize(width, height))
         svg.setViewBox(QRect(0, 0, width, height))
         svg.setResolution(printer.resolution())
-        return self._plot(width, height, svg, self.controller, self.controller.plot)[0]
+        return self._plot(width, height, svg, _plotting_object)[0]
     
     def plotAnnotationImages(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
     
@@ -345,6 +366,8 @@ class BDiana:
             rows.append((Colour(pieces[i]), pieces[i+2]))
 
         return {"title": title, "rows": rows}
+    
+    # Spectrum plot methods - perhaps these should be in a separate namespace
 
     def prepareSpectrum(self, input_file, as_field = False):
     
@@ -359,24 +382,29 @@ class BDiana:
         self.spectrumManager.setModel()
         self.spectrumManager.setStation(station)
     
+    def defineSpectrum(self, models, observations, station, as_field = False):
+    
+        self.spectrumManager = SpectrumManager()
+        self.spectrumManager.setSelectedModels(models, observations, as_field)
+        self.spectrumManager.setModel()
+        self.spectrumManager.setStation(station)
+    
     def getSpectrumTime(self):
 
         return self.spectrumManager.getTime()
 
     def setSpectrumTime(self, spectrum_time):
 
-        self.spectrumManager(spectrum_time)
+        self.spectrumManager.setTime(spectrum_time)
 
-    def plotSpectrum(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
+    def plotSpectrumImage(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
     
         """Plots the wave spectrum for the product specified in the current input
         file on an image with the specified width and height, and optionally
         specified image format.
         """
-        image, success, transform = self._plot(width, height, image_format,
-                                               self.spectrumManager, self.spectrumManager.plot)
 
-        return image
+        return self.plotImage(width, height, image_format, self.spectrumManager)
 
 
 class InputFile:
