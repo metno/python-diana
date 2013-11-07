@@ -23,7 +23,7 @@ from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext,
                   SpectrumManager
 
 from PyQt4.QtCore import QRect, QSize, QSizeF
-from PyQt4.QtGui import QApplication, QColor, QImage, QPainter, QPrinter
+from PyQt4.QtGui import QApplication, QColor, QImage, QPainter, QPicture, QPrinter
 from PyQt4.QtSvg import QSvgGenerator
 
 class BDianaError(Exception):
@@ -55,6 +55,7 @@ class BDiana:
         self.logHandler.setObjectName(object_name or sys.argv[0])
 
         self.controller = None
+        self.spectrumManager = None
         self.renderHints = QPainter.RenderHints()
     
     def setup(self, setup_path):
@@ -74,6 +75,7 @@ class BDiana:
         if not self.controller.parseSetup():
             return False
 
+        self.spectrumManager = SpectrumManager()
         return True
     
     def addModel(self, name, file_name, format = "netcdf", clear = False, top = False):
@@ -229,6 +231,7 @@ class BDiana:
         painter = QPainter()
         painter.begin(paint_device)
         painter.setRenderHints(self.renderHints)
+        painter.setClipRect(QRect(0, 0, width, height))
         context.begin(painter)
         context.viewport = QRect(0, 0, width, height)
 
@@ -278,6 +281,12 @@ class BDiana:
         svg.setResolution(printer.resolution())
         return self._plot(width, height, svg, _plotting_object)[0]
     
+    def plotPicture(self, width, height, _plotting_object = None):
+
+        picture = QPicture()
+        picture.setBoundingRect(QRect(0, 0, width, height))
+        return self._plot(width, height, picture, _plotting_object)[0]
+
     def plotAnnotationImages(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
     
         """Plots the annotations for the product specified in the current input
@@ -369,42 +378,65 @@ class BDiana:
     
     # Spectrum plot methods - perhaps these should be in a separate namespace
 
-    def prepareSpectrum(self, input_file, as_field = False):
+    def getSpectrumModels(self):
     
-        """Prepares input from the specified input_file for plotting.
-        """
-        self.spectrumManager = SpectrumManager()
-        commands = input_file.read_spectrum_commands()
-        options = self.spectrumManager.getOptions()
-        options.readOptions(commands)
-        models, observations, station = input_file.parse_spectrum_commands(commands)
-        self.spectrumManager.setSelectedModels(models, observations, as_field)
-        self.spectrumManager.setModel()
-        self.spectrumManager.setStation(station)
-    
-    def defineSpectrum(self, models, observations, station, as_field = False):
-    
-        self.spectrumManager = SpectrumManager()
-        self.spectrumManager.setSelectedModels(models, observations, as_field)
-        self.spectrumManager.setModel()
-        self.spectrumManager.setStation(station)
-    
-    def getSpectrumTime(self):
+        """Returns the list of available wave spectrum models."""
 
-        return self.spectrumManager.getTime()
+        return self.spectrumManager.getModelNames()
+
+    def setSpectrumModel(self, model, observations = False, as_field = False):
+    
+        """Sets a single wave spectrum model to use."""
+
+        self.setSpectrumModels([model], observations, as_field)
+
+    def setSpectrumModels(self, models, observations = False, as_field = False):
+    
+        """Sets the wave spectrum models to use."""
+
+        self.spectrumManager.setSelectedModels(models, observations, as_field)
+        self.spectrumManager.setModel()
+    
+    def getSpectrumStations(self):
+    
+        """Returns the list of stations for which spectrum data is available."""
+        
+        return self.spectrumManager.getStationList()
+
+    def setSpectrumStation(self, station):
+    
+        """Sets the station for which spectrum data will be obtained."""
+
+        self.spectrumManager.setStation(station)
+    
+    def getSpectrumTimes(self):
+    
+        """Returns the available times for which spectrum data is available."""
+
+        return self.spectrumManager.getTimeList()
 
     def setSpectrumTime(self, spectrum_time):
+    
+        """Sets the spectrum time to use for the wave spectrum plot."""
 
         self.spectrumManager.setTime(spectrum_time)
 
     def plotSpectrumImage(self, width, height, image_format = QImage.Format_ARGB32_Premultiplied):
     
-        """Plots the wave spectrum for the product specified in the current input
-        file on an image with the specified width and height, and optionally
-        specified image format.
+        """Plots the wave spectrum for the currently selected models and station
+        on an image with the specified width and height, and optionally specified
+        image format.
         """
 
         return self.plotImage(width, height, image_format, self.spectrumManager)
+
+    def plotSpectrumPDF(self, width, height, output_file):
+    
+        """Plots the wave spectrum for the currently selected models and station
+        as a page in a PDF file with the given width and height, writing the output
+        to the specified output file."""
+
+        return self.plotPDF(width, height, output_file, self.spectrumManager)
 
 
 class InputFile:
