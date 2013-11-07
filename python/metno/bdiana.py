@@ -76,8 +76,17 @@ class BDiana:
 
         return True
     
-    def addField(self, name, file_name, format = "netcdf", clear = False, top = False):
+    def addModel(self, name, file_name, format = "netcdf", clear = False, top = False):
     
+        """Adds a new model to Diana's collection, registering it with the given name.
+        Model information is loaded from the file specified by file_name which is, by
+        default, understood to be in NetCDF format. Use the format keyword argument
+        to specify an alternative file format.
+        
+        The clear keyword argument is used to clear the list of models registered with
+        Diana. The top keyword argument is used to place the new model at the top of
+        the list of models when shown in Diana's field dialog."""
+
         line = "m=%s t=fimex f=%s format=%s" % (name, file_name, format)
         
         fm = self.controller.getFieldManager()
@@ -94,6 +103,7 @@ class BDiana:
     
     def getModels(self):
     
+        """Returns a set of available models."""
         models = set()
         for group in self.getFieldModels():
             for model in group.modelNames:
@@ -103,6 +113,8 @@ class BDiana:
     
     def getFields(self, model):
 
+        """Returns the available fields for the given model.
+        Models can be obtained using the getModels() method."""
         fields = set()
         model, refTime, fieldGroups = self.controller.getFieldGroups(model, False)
         
@@ -114,6 +126,8 @@ class BDiana:
     
     def getFieldTimes(self, model, field):
     
+        """Returns the available times for the given model and field.
+        Models and fields can be obtained using the getModels() and getFields() methods."""
         req = FieldRequest()
         req.modelName = model
         req.paramName = field

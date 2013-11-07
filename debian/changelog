@@ -1,3 +1,9 @@
+python-diana (0.5.0-1) unstable; urgency=low
+
+  * Renamed the BDiana addField() method to addModel().
+
+ -- David Boddie <david.boddie@met.no>  Thu, 07 Nov 2013 11:51:39 +0100
+
 python-diana (0.4.9-2) unstable; urgency=low
 
   * Updated the packaging to put the libdiana dependencies in a better place.
