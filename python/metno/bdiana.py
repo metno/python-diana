@@ -248,8 +248,8 @@ class BDiana:
     
         """Plots the data specified in the current input file as an image with
         the specified width and height, and with an optionally specified image
-        format.
-        """
+        format. Returns the image produced."""
+
         image = QImage(width, height, image_format)
         image.fill(QColor(0, 0, 0, 0))
         return self._plot(width, height, image, _plotting_object)[0]
@@ -258,8 +258,9 @@ class BDiana:
 
         """Plots the data specified in the current input file as a page in a
         PDF file with the given width and height, writing the output to the
-        specified output file.
-        """
+        specified output file. Returns the QPrinter object used to write the
+        file."""
+
         pdf = QPrinter()
         pdf.setOutputFormat(QPrinter.PdfFormat)
         pdf.setOutputFileName(output_file)
@@ -271,8 +272,8 @@ class BDiana:
 
         """Plots the data specified in the current input file as a page in a
         PDF file with the given width and height, writing the output to the
-        specified output file.
-        """
+        specified output file. Returns the SVG object produced."""
+
         printer = QPrinter()
         svg = QSvgGenerator()
         svg.setFileName(output_file)
@@ -282,6 +283,10 @@ class BDiana:
         return self._plot(width, height, svg, _plotting_object)[0]
     
     def plotPicture(self, width, height, _plotting_object = None):
+    
+        """Plots a picture with the given width and height. Returns the
+        picture object produced. Pictures can be used as intermediate
+        output and combined to produce final products."""
 
         picture = QPicture()
         picture.setBoundingRect(QRect(0, 0, width, height))
@@ -292,8 +297,8 @@ class BDiana:
         """Plots the annotations for the product specified in the current input
         file on an image with the specified width and height, and optionally
         specified image format. Each annotation image is yielded by this
-        generator method.
-        """
+        generator method."""
+
         image = QImage(width, height, image_format)
         image, rectangles, annotationTransform = self._plot(width, height, image,
                                         self.controller, self.controller.plotAnnotations)
@@ -305,8 +310,8 @@ class BDiana:
 
     def getAnnotations(self):
     
-        """Returns the annotations for the product specified.
-        """
+        """Returns a list of annotations for the product specified."""
+
         annotations = []
 
         for plot in self.controller.getAnnotations():

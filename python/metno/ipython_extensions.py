@@ -28,10 +28,19 @@
 #
 
 from PyQt4.QtCore import QBuffer
-from PyQt4.QtGui import QImageWriter
+from PyQt4.QtGui import QImage, QImageWriter, QPainter, QPicture
 from IPython.core.display import Image
 
 def embed(im):
+
+    if isinstance(im, QPicture):
+        pic = im
+        im = QImage(im.width(), im.height(), QImage.Format_ARGB32_Premultiplied)
+        p = QPainter()
+        p.begin(im)
+        p.drawPicture(0, 0, pic)
+        p.end()
+
     w = QImageWriter()
     buf = QBuffer()
     buf.open(buf.WriteOnly)
