@@ -73,9 +73,48 @@ public:
     Area();
     ~Area();
 
+    const Projection& P() const;
+    const Rectangle& R() const;
+
     std::string toString() const;
     std::string toLogString() const;
     std::string getAreaString() const;
+};
+
+class Projection
+{
+%TypeHeaderCode
+#include <diField/diProjection.h>
+%End
+
+public:
+    enum pType {
+      undefined_projection = 0,
+      polarstereographic_60= 1,
+      geographic=            2,
+      spherical_rotated=     3,
+      polarstereographic=    4,
+      mercator=              5,
+      lambert=               6,
+      generic=             100
+    };
+    enum { speclen= 6 };
+
+    Projection();
+    Projection(const std::string& projStr, const double projResX, const double projResY);
+    Projection(const std::map<std::string,std::string>& definitions, double resolutionX, double resolutionY);
+
+    ~Projection();
+
+    bool set_proj_definition(const std::string& projStr, const double projResX=1.0, const double projResY=1.0);
+    std::string getProjDefinition() const;
+
+    bool isDefined() const;
+
+    bool setProjection(const std::string& projectionString, double& resolutionX, double& resolutionY);
+    bool setProjectionFromLog(const std::string& logtext, double& resolutionX, double& resolutionY);
+    std::string toString(bool fortranStyle=true) const;
+    std::string toLogString() const;
 };
 
 class Rectangle

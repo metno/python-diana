@@ -240,18 +240,16 @@ template<TYPE1, TYPE2>
         TYPE1 *t1 = new TYPE1(it->first);
         const sipTypeDef *td1 = sipFindType("TYPE1");
         if (td1 == NULL) {
-            sipIsErr = 1;
             delete t1;
-            break;
+            return NULL;
         }
 
         TYPE2 *t2 = new TYPE2(it->second);
         const sipTypeDef *td2 = sipFindType("TYPE2");
         if (td2 == NULL) {
-            sipIsErr = 1;
             delete t1;
             delete t2;
-            break;
+            return NULL;
         }
 
         PyObject *tobj1 = sipConvertFromNewType(t1, td1, Py_None);
@@ -291,10 +289,10 @@ template<TYPE1, TYPE2>
 
         while (PyDict_Next(sipPy, &i, &key, &value))
         {
-            if (!sipCanConvertToType(t1obj, sipType_TYPE1, SIP_NOT_NONE))
+            if (!sipCanConvertToType(key, sipType_TYPE1, SIP_NOT_NONE))
                 return 0;
 
-            if (!sipCanConvertToType(t2obj, sipType_TYPE2, SIP_NOT_NONE))
+            if (!sipCanConvertToType(value, sipType_TYPE2, SIP_NOT_NONE))
                 return 0;
         }
 
@@ -313,8 +311,8 @@ template<TYPE1, TYPE2>
             delete m;
             return 0;
         }
-        TYPE1 *t1 = reinterpret_cast<TYPE1 *>(sipConvertToType(t1obj, td1, sipTransferObj, SIP_NOT_NONE, &state1, sipIsErr));
-        TYPE2 *t2 = reinterpret_cast<TYPE2 *>(sipConvertToType(t2obj, td2, sipTransferObj, SIP_NOT_NONE, &state2, sipIsErr));
+        TYPE1 *t1 = reinterpret_cast<TYPE1 *>(sipConvertToType(key, td1, sipTransferObj, SIP_NOT_NONE, &state1, sipIsErr));
+        TYPE2 *t2 = reinterpret_cast<TYPE2 *>(sipConvertToType(value, td2, sipTransferObj, SIP_NOT_NONE, &state2, sipIsErr));
 
         if (*sipIsErr)
         {
@@ -325,7 +323,7 @@ template<TYPE1, TYPE2>
             return 0;
         }
 
-        m->insert(*t1, *t2);
+        (*m)[(*t1)] = (*t2);
 
         sipReleaseType(t1, sipType_TYPE1, state1);
         sipReleaseType(t2, sipType_TYPE2, state2);
