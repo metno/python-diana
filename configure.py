@@ -12,7 +12,7 @@ def get_diana_version():
     for line in depends:
         pieces = line.split()
         for piece in pieces:
-            name_pieces = piece.split("-")
+            name_pieces = piece.strip(",").split("-")
             if len(name_pieces) == 2 and name_pieces[0] == "diana":
                 return name_pieces[1]
     return None
