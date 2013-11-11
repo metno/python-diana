@@ -4,6 +4,27 @@ import glob, os, sys
 import sipconfig
 from PyQt4 import pyqtconfig
 
+def get_diana_version():
+
+    depends = filter(lambda line: line.startswith("Depends:"),
+                     open("debian/control").readlines())
+    
+    for line in depends:
+        pieces = line.split()
+        for piece in pieces:
+            name_pieces = piece.split("-")
+            if len(name_pieces) == 2 and name_pieces[0] == "diana":
+                return name_pieces[1]
+    return None
+
+def get_python_diana_version():
+
+    line = open("debian/changelog").readline()
+    pieces = line.split()
+
+    return pieces[1][1:-1]
+
+
 if __name__ == "__main__":
 
     if not 1 <= len(sys.argv) <= 3:
@@ -100,6 +121,21 @@ if __name__ == "__main__":
         makefile.generate()
         
         output_dirs.append(output_dir)
+    
+    # Update the metno package version.
+    diana_version = get_diana_version()
+    python_diana_version = get_python_diana_version()
+
+    if not diana_version or not python_diana_version:
+        sys.stderr.write("Failed to find version information for Diana (%s) "
+                         "or python-diana (%s)\n" % (repr(diana_version),
+                                                     repr(python_diana_version)))
+        sys.exit(1)
+    
+    f = open("python/metno/versions.py", "w")
+    f.write('\ndiana_version = "%s"\npython_diana_version = "%s"\n' % (
+        diana_version, python_diana_version))
+    
     
     # Generate the top-level Makefile.
     python_files = glob.glob(os.path.join("python", "metno", "*.py"))

@@ -1,3 +1,12 @@
+python-diana (0.5.1-1) unstable; urgency=low
+
+  * Rebuilt against diana-nogl-3.34.
+  * Embedded version information in the versions module.
+  * Added support for a fallback setup file path to the BDiana.setup method
+    based on the embedded version information.
+
+ -- David Boddie <david.boddie@met.no>  Mon, 11 Nov 2013 15:43:50 +0100
+
 python-diana (0.5.0-1) unstable; urgency=low
 
   * Renamed the BDiana addField() method to addModel().

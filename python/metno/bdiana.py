@@ -22,6 +22,8 @@ from metlibs import FieldRequest, milogger
 from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext, \
                   SpectrumManager
 
+from metno.versions import diana_version, python_diana_version
+
 from PyQt4.QtCore import QRect, QSize, QSizeF
 from PyQt4.QtGui import QApplication, QColor, QImage, QPainter, QPicture, QPrinter
 from PyQt4.QtSvg import QSvgGenerator
@@ -58,7 +60,7 @@ class BDiana:
         self.spectrumManager = None
         self.renderHints = QPainter.RenderHints()
     
-    def setup(self, setup_path):
+    def setup(self, setup_path = None):
     
         """Parses the setup file specified by setup_path, returning True if
         successful or False if unsuccessful.
@@ -68,6 +70,9 @@ class BDiana:
         if not QApplication.instance():
             self.application = QApplication([])
         
+        if not setup_path:
+            setup_path = "/etc/diana/%s/diana.setup-COMMON" % diana_version
+
         if not LocalSetupParser.parse(setup_path):
             return False
         
