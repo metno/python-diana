@@ -27,6 +27,20 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+%ModuleHeaderCode
+  #define FILL_ARRAY_PYTHON_VALUES(array, size, wrapper, TYPE, PY_CONVERT_METHOD) \
+    wrapper = PyList_New(size); \
+    for (unsigned int i = 0; i < size; ++i) { \
+      PyObject *tobj; \
+      if ((tobj = PY_CONVERT_METHOD(array[i])) == NULL) { \
+          Py_DECREF(wrapper); \
+          wrapper = NULL; \
+          break; \
+      } else \
+          PyList_SET_ITEM(wrapper, i, tobj); \
+  }
+%End
+
 struct SatFileInfo
 {
 %TypeHeaderCode
@@ -60,5 +74,47 @@ struct SatValues
     std::string channel;
     float value; ///<rgb
     std::string text; ///<palette
+};
+
+struct ObsPositions
+{
+%TypeHeaderCode
+#include "diCommonTypes.h"
+%End
+
+    Area obsArea;
+    int numObs;
+    float* xpos
+    {
+    %GetCode
+        FILL_ARRAY_PYTHON_VALUES(sipCpp->xpos, sipCpp->numObs, sipPy, float, PyFloat_FromDouble)
+    %End
+    %SetCode
+        sipPy = NULL;
+    %End
+    };
+
+    float* ypos
+    {
+    %GetCode
+        FILL_ARRAY_PYTHON_VALUES(sipCpp->ypos, sipCpp->numObs, sipPy, float, PyFloat_FromDouble)
+    %End
+    %SetCode
+        sipPy = NULL;
+    %End
+    };
+
+    float* values
+    {
+    %GetCode
+        FILL_ARRAY_PYTHON_VALUES(sipCpp->values, sipCpp->numObs, sipPy, float, PyFloat_FromDouble)
+    %End
+    %SetCode
+        sipPy = NULL;
+    %End
+    };
+
+    bool convertToGrid;
+    ObsPositions();
 };
 

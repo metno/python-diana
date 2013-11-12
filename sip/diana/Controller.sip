@@ -231,6 +231,11 @@ public:
   an error occurred.
   %End
 
+  void updateObs();
+  %Docstring
+  Updates the information held about observations.
+  %End
+
   void keepCurrentArea(bool);
   %Docstring
   Controller.keepCurrentArea(bool keep)

@@ -203,3 +203,18 @@ struct FieldRequest
   FieldRequest();
 };
 
+class TimeFilter
+{
+%TypeHeaderCode
+#include "diField/TimeFilter.h"
+%End
+
+  TimeFilter();
+
+  bool initFilter(std::string& filename, bool advanced_=false);
+  bool ok();
+  bool getTime(std::string name, miutil::miTime & t);
+
+  std::string getTimeStr(std::string name);
+};
+

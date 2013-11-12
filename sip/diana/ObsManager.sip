@@ -34,9 +34,53 @@ class ObsManager
 %End
 
 public:
+    struct patternInfo {
+        TimeFilter filter;
+        std::string pattern;
+        bool archive;
+        std::string fileType;
+    };
+
+    struct FileInfo {
+        std::string filename;
+        miutil::miTime   time;
+        std::string filetype;
+    };
+
+    struct ProdInfo {
+//      ObsFormat obsformat; // ObsFormat is private
+        std::string dialogName;
+        std::string plotFormat;
+        std::vector<ObsManager::patternInfo> pattern;
+        std::vector<ObsManager::FileInfo> fileInfo;
+        std::vector<std::string> headerinfo;
+        std::string timeInfo;
+        int timeRangeMin;
+        int timeRangeMax;
+        float current;
+        bool synoptic;
+        std::string headerfile;
+        std::string metaData;
+/*  #ifdef ROADOBS
+        std::string stationfile;
+        std::string databasefile;
+        int daysback;
+    #endif */
+        bool useFileTime;
+        std::vector<std::string> parameter;
+    };
+
     ObsManager();
+    bool init(ObsPlot *, const std::string&);
+    bool prepare(ObsPlot *,miutil::miTime);
+
     std::vector<miutil::miTime> getObsTimes(const std::vector<std::string>& obsTypes);
+    bool obs_mslp();
+    void updateObsPositions(const std::vector<ObsPlot*> oplot);
+    ObsPositions& getObsPositions();
+    void clearObsPositions();
     void archiveMode(bool on);
     bool timeListChanged;
-};
 
+    std::map<std::string, ObsManager::ProdInfo> getProductsInfo() const;
+};

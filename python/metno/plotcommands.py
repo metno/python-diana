@@ -61,6 +61,10 @@ class BooleanValue(ValueType):
         else:
             return "false"
 
+class ListValue(ValueType):
+    def validate(self, value):
+        return ",".join(map(str, value))
+
 class ChoiceValue(ValueType):
 
     """Specifies an option that accepts one or more values based on the value
@@ -245,27 +249,7 @@ class Observations(PlotCommand):
                           "Tide"),
                  "plot": ("Synop", "Metar", "List", "Pressure", "Ocean",
                           "Tide"),
-                 "parameter": ChoiceValue("data",
-                     {"Synop": ("Wind", "TTT", "TdTdTd", "PPPP", "ppp", "a",
-                                "h", "VV", "N", "RRR", "ww", "W1", "W2", "Nh",
-                                "Cl", "Cm", "Ch", "vs", "ds", "TwTwTw",
-                                "PwaHwa", "dw1dw1", "Pw1Hw1", "TxTn", "sss",
-                                "911ff", "s", "fxfx", "Id", "St.no(3)",
-                                "St.no(5)", "Time"),
-                      "Metar": ("Wind", "dndx", "fmfm", "TTT", "TdTdTd", "ww",
-                                "REww", "VVVV/Dv", "VxVxVxVx/Dvx", "Clouds",
-                                "PHPHPHPH", "Id"),
-                      "List": ("Pos", "dd", "ff", "T_red", "Date", "Time",
-                               "Height", "Zone", "Name", "RRR_1", "RRR_6",
-                               "RRR_12", "RRR_24", "quality"),
-                      "Pressure": ("Pos", "Wind", "dd", "ff", "TTT", "TdTdTd",
-                                   "PPPP", "Id", "Date", "Time", "HHH", "QI",
-                                   "QI_NM", "QI_RFF"),
-                      "Ocean": ("Id", "PwaPwa", "HwaHwa", "depth", "TTTT",
-                                "SSSS", "Date", "Time"),
-                      "Tide": ("Pos", "TE", "Id", "Date", "Time")},
-                      multiple = True
-                      ),
+                 "parameter": ListValue, # use BDiana.getObsParameters()
                  "density": FloatValue,
                  "antialiasing": BooleanValue}
 

@@ -19,8 +19,8 @@ from datetime import datetime
 import os, sys
 
 from metlibs import FieldRequest, milogger
-from diana import Colour, Controller, LocalSetupParser, PaintGL, PaintGLContext, \
-                  SpectrumManager
+from diana import Colour, Controller, LocalSetupParser, ObsPlot, PaintGL, \
+                  PaintGLContext, SpectrumManager
 
 from metno.versions import diana_version, python_diana_version
 
@@ -143,14 +143,47 @@ class BDiana:
         req.paramName = field
         return self.controller.getFieldTime([req])
     
+    def getObsTypes(self):
+    
+        """Returns the available observation types."""
+
+        obs_manager = self.controller.getObservationManager()
+        return map(lambda p: p.dialogName, obs_manager.getProductsInfo().values())
+    
+    def getObsParameters(self, type):
+
+        """Returns the available parameters for the given observation type."""
+
+        obs_manager = self.controller.getObservationManager()
+        info = obs_manager.getProductsInfo()
+
+        for product in info.values():
+            if product.dialogName == type:
+                return product.parameter
+
+        return []
+    
     def getObsTimes(self, type):
     
         """Returns the available times for the given type of observation.
-        Acceptable types include Synop, Metar, Pressure, Ocean and Tide."""
+        Acceptable types can be found by calling getObsTypes() and include
+        Synop, Metar, Pressure, Ocean and Tide."""
 
         obs_manager = self.controller.getObservationManager()
         return obs_manager.getObsTimes(["OBS data=" + type])
     
+    def getObsPositions(self, type, time):
+    
+        """Returns an object containing information about the positions of
+        observations of the given type for the specified time."""
+
+        obs_manager = self.controller.getObservationManager()
+        op = ObsPlot()
+        obs_manager.init(op, "OBS data=" + type + " devfield=true")
+        obs_manager.prepare(op, time)
+        obs_manager.updateObsPositions([op])
+        return obs_manager.getObsPositions()
+
     def getSatProducts(self):
     
         """Returns the available satellite and radar products as a dictionary

@@ -1,3 +1,10 @@
+python-diana (0.5.2-1) unstable; urgency=low
+
+  * Added support for more of the ObsManager API, including support for
+    reading observation positions.
+
+ -- David Boddie <david.boddie@met.no>  Tue, 12 Nov 2013 15:45:05 +0100
+
 python-diana (0.5.1-1) unstable; urgency=low
 
   * Rebuilt against diana-nogl-3.34.

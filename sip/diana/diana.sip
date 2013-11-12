@@ -52,6 +52,7 @@
 %Include MapMode.sip
 %Include MovieMaker.sip
 %Include ObsManager.sip
+%Include ObsPlot.sip
 %Include Plot.sip
 %Include PlotModule.sip
 %Include PlotOptions.sip
