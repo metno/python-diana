@@ -1,3 +1,11 @@
+python-diana (0.5.3-1) unstable; urgency=low
+
+  * Added the missing versions module.
+  * Added more observation APIs.
+  * Added a useful plot option to the Field plot command.
+
+ -- David Boddie <david.boddie@met.no>  Wed, 13 Nov 2013 18:31:33 +0100
+
 python-diana (0.5.2-1) unstable; urgency=low
 
   * Added support for more of the ObsManager API, including support for
