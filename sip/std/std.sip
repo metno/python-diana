@@ -592,3 +592,104 @@ template<TYPE>
     return sipGetState(sipTransferObj);
     %End
 };
+
+template<TYPE1, float>
+%MappedType std::map<TYPE1, float>
+{
+    %TypeHeaderCode
+    #include <map>
+    %End
+
+    %ConvertFromTypeCode
+    PyObject *d;
+
+    if ((d = PyDict_New()) == NULL)
+        return NULL;
+
+    std::map<TYPE1,float>::iterator it;
+    for (it = sipCpp->begin(); it != sipCpp->end(); ++it)
+    {
+        TYPE1 *t1 = new TYPE1(it->first);
+        const sipTypeDef *td1 = sipFindType("TYPE1");
+        if (td1 == NULL) {
+            delete t1;
+            return NULL;
+        }
+
+        PyObject *tobj1 = sipConvertFromNewType(t1, td1, Py_None);
+        PyObject *tobj2 = PyFloat_FromDouble(it->second);
+
+        if ((tobj1 == NULL) || (tobj2 == NULL) || (PyDict_SetItem(d, tobj1, tobj2) < 0))
+        {
+            Py_DECREF(d);
+            if (tobj1)
+                Py_DECREF(tobj1);
+            else
+                delete t1;
+            if (tobj2)
+                Py_DECREF(tobj2);
+
+            return NULL;
+        }
+
+        Py_DECREF(tobj1);
+        Py_DECREF(tobj2);
+    }
+
+    return d;
+    %End
+
+    %ConvertToTypeCode
+    PyObject *key;
+    PyObject *value;
+    SIP_SSIZE_T i = 0;
+
+    if (sipIsErr == NULL)
+    {
+        if (!PyDict_Check(sipPy))
+            return 0;
+
+        while (PyDict_Next(sipPy, &i, &key, &value))
+        {
+            if (!sipCanConvertToType(key, sipType_TYPE1, SIP_NOT_NONE))
+                return 0;
+
+            if (!PyFloat_Check(value))
+                return 0;
+        }
+
+        return 1;
+    }
+
+    std::map<TYPE1, float> *m = new std::map<TYPE1, float>();
+
+    while (PyDict_Next(sipPy, &i, &key, &value))
+    {
+        int state1;
+        
+        const sipTypeDef *td1 = sipFindType("TYPE1");
+        if (td1 == NULL) {
+            delete m;
+            return 0;
+        }
+        TYPE1 *t1 = reinterpret_cast<TYPE1 *>(sipConvertToType(key, td1, sipTransferObj, SIP_NOT_NONE, &state1, sipIsErr));
+        float t2 = PyFloat_AsDouble(value);
+
+        if (*sipIsErr || PyErr_Occurred())
+        {
+            sipReleaseType(t1, sipType_TYPE1, state1);
+
+            delete m;
+            return 0;
+        }
+
+        (*m)[(*t1)] = t2;
+
+        sipReleaseType(t1, sipType_TYPE1, state1);
+    }
+
+    *sipCppPtr = m;
+
+    return sipGetState(sipTransferObj);
+    %End
+};

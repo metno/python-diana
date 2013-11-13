@@ -27,27 +27,35 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class ObsPlot
+class ObsData
 {
 %TypeHeaderCode
-#include "diObsPlot.h"
+#include "diObsData.h"
 %End
 
 public:
-  ObsPlot();
-  ~ObsPlot();
+  //desc
+  std::string dataType;
+  std::string id;
+  std::string name;
+  float xpos;
+  float ypos;
+  int zone;
+  miutil::miTime obsTime;
 
-  const std::vector<std::string>& dataTypes() const;
-  miutil::miTime getObsTime();
-  void setObsTime(const miutil::miTime& t);
-  int getTimeDiff();
-  void setTimeDiff(int diff);
+  //metar
+  std::string metarId;
+  bool CAVOK;              
+  std::vector<std::string> REww;   ///< Recent weather
+  std::vector<std::string> ww;     ///< Significant weather
+  std::vector<std::string> cloud;  ///< Clouds
+  std::string appendix;       ///< For whatever remains
+  
+  std::map<std::string,float> fdata;
+  std::map<std::string,std::string> stringdata;
 
-  ObsData& getNextObs();
-
-  std::vector<std::string> getFileNames() const; // Returns the file names containing observation data.
-
-private:
-  ObsPlot(const ObsPlot &rhs);
+  //Hqc  
+  std::map<std::string,std::string> flag; 
+  std::map<std::string,Colour> flagColour;
 };
 

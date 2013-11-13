@@ -173,7 +173,8 @@ class Field(PlotCommand):
                               "wind_temp_fl", "wind_value", "vector", "frame",
                               "direction"),
                  "antialiasing": BooleanValue,
-                 "frame": (0, 1, 2, 3)}
+                 "frame": (0, 1, 2, 3),
+                 "line.values": ListValue}
 
 
 class Map(PlotCommand):

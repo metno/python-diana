@@ -51,6 +51,7 @@
 %Include Manager.sip
 %Include MapMode.sip
 %Include MovieMaker.sip
+%Include ObsData.sip
 %Include ObsManager.sip
 %Include ObsPlot.sip
 %Include Plot.sip
