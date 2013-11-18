@@ -123,9 +123,18 @@ class BDiana:
 
         """Returns the available fields for the given model.
         Models can be obtained using the getModels() method."""
-
+        
         fields = set()
-        model, refTime, fieldGroups = self.controller.getFieldGroups(model, False)
+
+        # Find the reference times first.
+        refTimes = self.controller.getFieldReferenceTimes(model)
+        if not refTimes:
+            return fields
+        
+        refTimes = list(refTimes)
+        refTimes.sort()
+
+        model, fieldGroups = self.controller.getFieldGroups(model, refTimes[-1], False)
         
         for group in fieldGroups:
             for field in group.fieldNames:

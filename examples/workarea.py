@@ -80,7 +80,10 @@ class Window(QMainWindow):
 
     def readFields(self):
     
-        model, refTime, fieldGroups = self.controller.getFieldGroups(self.model, False)
+        refTimes = list(self.controller.getFieldReferenceTimes(self.model))
+        refTimes.sort()
+
+        model, fieldGroups = self.controller.getFieldGroups(self.model, refTimes[-1], False)
         self.fieldsList.clear()
         
         fields = set()
@@ -204,7 +207,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     paintgl = PaintGL()
     
-    LocalSetupParser.parse("/etc/diana/3.33/diana.setup-COMMON")
+    LocalSetupParser.parse("/etc/diana/3.34/diana.setup-COMMON")
 
     c = Controller()
     #c.addManager("drawing", DrawingManager.instance())

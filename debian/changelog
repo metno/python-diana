@@ -1,3 +1,11 @@
+python-diana (0.5.4-1) unstable; urgency=low
+
+  * Fixed the Controller.getFieldGroups() method wrapper.
+  * Updated the BDiana class and examples to use the method's correct form.
+  * Added an example to list the available models and fields.
+
+ -- David Boddie <david.boddie@met.no>  Mon, 18 Nov 2013 18:42:43 +0100
+
 python-diana (0.5.3-1) unstable; urgency=low
 
   * Added the missing versions module.

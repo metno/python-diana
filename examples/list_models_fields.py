@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (C) 2012 met.no
+# Copyright (C) 2013 met.no
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,66 +20,31 @@ import datetime, sys
 from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
 
-def print_field_groups_and_fields(controller, model):
-
-    refTimes = list(controller.getFieldReferenceTimes())
-    refTimes.sort()
-
-    modelName, fieldGroups = controller.getFieldGroups(model, refTimes[-1], False)
-    
-    fieldGroups = map(lambda g: (g.groupName, g.fieldNames), fieldGroups)
-    fieldGroups.sort()
-
-    for groupName, fieldNames in fieldGroups:
-    
-        print "  ", groupName
-        fieldNames.sort()
-
-        for fieldName in fieldNames:
-        
-            print "   ", fieldName
-
 if __name__ == "__main__":
 
     if not len(sys.argv) == 2:
     
         sys.stderr.write("Usage: %s <setup file>\n" % sys.argv[0])
-        sys.stderr.write("Writes the available fields described by the setup file.\n")
+        sys.stderr.write("Writes the available models and fields described by the setup file.\n")
         sys.exit(1)
     
     setup_path = sys.argv[1]
     
     app = QApplication(sys.argv)
-    bdiana = BDiana()
+    b = BDiana()
     
-    if not bdiana.setup(setup_path):
+    if not b.setup(setup_path):
         print "Failed to parse", setup_path
         sys.exit(1)
     
-    info = bdiana.getFieldModels()
-    groups = []
+    models = list(b.getModels())
+    models.sort()
 
-    for di in info:
-    
-        models = di.modelNames
-        groups.append((di.groupName, models))
-    
-    groups.sort()
-    fieldManager = bdiana.controller.getFieldManager()
-
-    for group, models in groups:
-
-        if group == "ARKIV":
-            continue
-
-        print group
-        models.sort()
-        
-        for model in models:
-
-            print " ", model
-        
-        print
+    for model in models:
+        print model
+        fields = list(b.getFields(model))
+        fields.sort()
+        print "\n ".join(fields)
 
     sys.exit()
 
