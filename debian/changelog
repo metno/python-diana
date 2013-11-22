@@ -1,3 +1,9 @@
+python-diana (0.5.6-1) unstable; urgency=low
+
+  * Added support for page units to the plotPDF() method.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 22 Nov 2013 16:34:55 +0100
+
 python-diana (0.5.5-1) unstable; urgency=low
 
   * Updated the setPlotCommands() method to accept PlotCommand objects

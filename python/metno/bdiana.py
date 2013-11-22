@@ -301,16 +301,32 @@ class BDiana:
         image.fill(QColor(0, 0, 0, 0))
         return self._plot(width, height, image, _plotting_object)[0]
     
-    def plotPDF(self, width, height, output_file, _plotting_object = None):
+    def plotPDF(self, width, height, output_file, units = "pixels", _plotting_object = None):
 
         """Plots the data specified in the current input file as a page in a
         PDF file with the given width and height, writing the output to the
-        specified output file. Returns the QPrinter object used to write the
-        file."""
+        specified output file. The optional units argument specifies the units
+        used to measure the plot size; by default, pixels are used, but "cm",
+        "mm" and "in" are also acceptable.
+        
+        Returns the QPrinter object used to write the file."""
 
         pdf = QPrinter()
         pdf.setOutputFormat(QPrinter.PdfFormat)
         pdf.setOutputFileName(output_file)
+        
+        if units == "in":
+            width = pdf.logicalDpiX() * width
+            height = pdf.logicalDpiY() * height
+        elif units == "cm":
+            width = pdf.logicalDpiX() * (width / 2.54)
+            height = pdf.logicalDpiY() * (height / 2.54)
+        elif units == "mm":
+            width = pdf.logicalDpiX() * (width / 25.4)
+            height = pdf.logicalDpiY() * (height / 25.4)
+        else:
+            raise BDianaError, "Unknown units specified to plotPDF: %s" % units
+
         pdf.setPaperSize(QSizeF(width, height), QPrinter.DevicePixel)
         pdf.setFullPage(True)
         return self._plot(width, height, pdf, _plotting_object)[0]
