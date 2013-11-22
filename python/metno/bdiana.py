@@ -228,7 +228,7 @@ class BDiana:
         must be followed by a call to setPlotTime() with an appropriate time."""
 
         inp = InputFile()
-        inp.lines = ["PLOT"] + plot_commands + ["ENDPLOT"]
+        inp.lines = ["PLOT"] + map(str, plot_commands) + ["ENDPLOT"]
         self.prepare(inp)
     
     def getPlotTimes(self):

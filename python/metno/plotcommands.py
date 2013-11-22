@@ -108,6 +108,9 @@ class PlotCommand:
         
         for key, value in kwargs.items():
             self.setOption(key, value)
+    
+    def __str__(self):
+        return self.text()
 
     def _add_command(self, option, value):
 
