@@ -17,7 +17,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import datetime, sys
-from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
 
 if __name__ == "__main__":
@@ -31,7 +30,6 @@ if __name__ == "__main__":
     input_path = sys.argv[2]
     output_path = sys.argv[3]
     
-    app = QApplication(sys.argv)
     bdiana = BDiana()
     
     if not bdiana.setup(setup_path):

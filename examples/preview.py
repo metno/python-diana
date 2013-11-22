@@ -36,10 +36,10 @@ class Window(QMainWindow):
     def createImage(self):
 
         inp = bdiana.InputFile()
-        inp.fromString(str(self.editor.toPlainText()))
+        inp.fromString(unicode(self.editor.toPlainText()).encode("latin1"))
         
         b = bdiana.BDiana()
-        b.setup("/etc/diana/diana.setup-COMMON")
+        b.setup()
         b.prepare(inp)
 
         times = b.getPlotTimes()

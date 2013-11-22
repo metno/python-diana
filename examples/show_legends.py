@@ -17,7 +17,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import datetime, sys
-from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
 
 if __name__ == "__main__":
@@ -37,8 +36,7 @@ if __name__ == "__main__":
         setup_path = sys.argv[1]
         input_path = sys.argv[2]
     
-    app = QApplication(sys.argv)
-    bdiana = BDiana()
+    bdiana = BDiana(log_level = 5)
     
     if not bdiana.setup(setup_path):
         print "Failed to parse", setup_path

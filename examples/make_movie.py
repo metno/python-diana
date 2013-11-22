@@ -17,7 +17,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import datetime, sys
-from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
 from metno.diana import MovieMaker
 
@@ -28,27 +27,24 @@ if __name__ == "__main__":
         sys.stderr.write("Usage: %s [setup file] <input file>\n" % sys.argv[0])
         sys.exit(1)
     
-    elif len(sys.argv) == 2:
+    b = BDiana()
     
-        setup_path = "/etc/diana/diana.setup-COMMON"
+    if len(sys.argv) == 2:
+        setup_path = b.default_setup_file()
         input_path = sys.argv[1]
-    
     else:
         setup_path = sys.argv[1]
         input_path = sys.argv[2]
     
-    app = QApplication(sys.argv)
-    bdiana = BDiana()
-    
-    if not bdiana.setup(setup_path):
+    if not b.setup(setup_path):
         print "Failed to parse", setup_path
         sys.exit(1)
     
     input_file = InputFile(input_path)
     width, height = input_file.getBufferSize()
-    bdiana.prepare(input_file)
+    b.prepare(input_file)
     
-    times = bdiana.getPlotTimes()
+    times = b.getPlotTimes()
     if not times:
         sys.stderr.write("No times found for the specified plot description.\n")
     
@@ -62,8 +58,8 @@ if __name__ == "__main__":
     for time in times:
     
         print "Plotting", time
-        bdiana.setPlotTime(time)
-        image = bdiana.plot(width, height)
+        b.setPlotTime(time)
+        image = b.plotImage(width, height)
         movie.addImage(image)
 
     sys.exit()

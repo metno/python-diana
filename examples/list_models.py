@@ -17,7 +17,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import datetime, sys
-from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
 
 def print_field_groups_and_fields(controller, model):
@@ -41,16 +40,18 @@ def print_field_groups_and_fields(controller, model):
 
 if __name__ == "__main__":
 
-    if not len(sys.argv) == 2:
+    if not 1 <= len(sys.argv) <= 2:
     
-        sys.stderr.write("Usage: %s <setup file>\n" % sys.argv[0])
-        sys.stderr.write("Writes the available fields described by the setup file.\n")
+        sys.stderr.write("Usage: %s [setup file]\n" % sys.argv[0])
+        sys.stderr.write("Writes the available fields described by the setup file, if specified.\n")
         sys.exit(1)
     
-    setup_path = sys.argv[1]
+    bdiana = BDiana(log_level = 5)
     
-    app = QApplication(sys.argv)
-    bdiana = BDiana()
+    if len(sys.argv) == 2:
+        setup_path = sys.argv[1]
+    else:
+        setup_path = bdiana.default_setup_file()
     
     if not bdiana.setup(setup_path):
         print "Failed to parse", setup_path

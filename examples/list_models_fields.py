@@ -17,21 +17,23 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import datetime, sys
-from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
 
 if __name__ == "__main__":
 
-    if not len(sys.argv) == 2:
+    if not 1 <= len(sys.argv) <= 2:
     
-        sys.stderr.write("Usage: %s <setup file>\n" % sys.argv[0])
-        sys.stderr.write("Writes the available models and fields described by the setup file.\n")
+        sys.stderr.write("Usage: %s [setup file]\n" % sys.argv[0])
+        sys.stderr.write("Writes the available models and fields described by the setup file, if specified;\n"
+                         "otherwise uses a default setup file.\n")
         sys.exit(1)
     
-    setup_path = sys.argv[1]
+    b = BDiana(log_level = 5)
     
-    app = QApplication(sys.argv)
-    b = BDiana()
+    if len(sys.argv) == 2:
+        setup_path = sys.argv[1]
+    else:
+        setup_path = b.default_setup_file()
     
     if not b.setup(setup_path):
         print "Failed to parse", setup_path

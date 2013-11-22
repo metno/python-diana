@@ -17,7 +17,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import datetime, sys
-from PyQt4.QtGui import QApplication
 from metno.bdiana import BDiana, InputFile
 
 if __name__ == "__main__":
@@ -28,17 +27,16 @@ if __name__ == "__main__":
         sys.stderr.write("Writes the available times for fields described in the input file.\n")
         sys.exit(1)
     
-    elif len(sys.argv) == 2:
+    bdiana = BDiana(log_level = 5)
     
-        setup_path = "/etc/diana/diana.setup-COMMON"
+    if len(sys.argv) == 2:
+    
+        setup_path = bdiana.default_setup_file()
         input_path = sys.argv[1]
     
     else:
         setup_path = sys.argv[1]
         input_path = sys.argv[2]
-    
-    app = QApplication(sys.argv)
-    bdiana = BDiana()
     
     if not bdiana.setup(setup_path):
         print "Failed to parse", setup_path
