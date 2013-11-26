@@ -91,7 +91,8 @@ if __name__ == "__main__":
         # Create the Makefile (within the diana directory).
         makefile = pyqtconfig.QtGuiModuleMakefile(
             config, build_file, dir=output_dir,
-            install_dir=dest_pkg_dir
+            install_dir=dest_pkg_dir,
+            qt=["QtCore", "QtGui", "QtXml", "QtXmlPatterns"]
             )
         
         if module == "diana":
@@ -99,9 +100,7 @@ if __name__ == "__main__":
                 diana_inc_dir,
                 os.path.join(diana_inc_dir, "PaintGL"),
                 "/usr/include/metlibs",
-                qt_pkg_dir+"/include",
-                qt_pkg_dir+"/include/QtCore",
-                qt_pkg_dir+"/include/QtGui"
+                qt_pkg_dir+"/include"
                 ]
             
             makefile.extra_lib_dirs += [diana_lib_dir, qt_pkg_dir+"/lib"]

@@ -37,6 +37,8 @@ public:
   ObsPlot();
   ~ObsPlot();
 
+  std::string getInfoStr();
+      
   const std::vector<std::string>& dataTypes() const;
   miutil::miTime getObsTime();
   void setObsTime(const miutil::miTime& t);

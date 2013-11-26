@@ -60,6 +60,10 @@ class BDiana:
         self.spectrumManager = None
         self.renderHints = QPainter.RenderHints()
     
+    def default_setup_file(self):
+
+        return "/etc/diana/%s/diana.setup-COMMON" % diana_version
+
     def setup(self, setup_path = None):
     
         """Parses the setup file specified by setup_path, returning True if
@@ -71,7 +75,7 @@ class BDiana:
             self.application = QApplication([])
         
         if not setup_path:
-            setup_path = "/etc/diana/%s/diana.setup-COMMON" % diana_version
+            setup_path = self.default_setup_file()
 
         if not LocalSetupParser.parse(setup_path):
             return False
