@@ -1,3 +1,10 @@
+python-diana (0.5.8-1) unstable; urgency=low
+
+  * Fixed unit handling in the plotPDF method.
+  * Added a safety check to the workarea example.
+
+ -- David Boddie <david.boddie@met.no>  Wed, 04 Dec 2013 18:05:27 +0100
+
 python-diana (0.5.7-1) unstable; urgency=low
 
   * Rebuilt against the current Diana version, updating build dependencies.
