@@ -328,7 +328,7 @@ class BDiana:
         elif units == "mm":
             width = pdf.logicalDpiX() * (width / 25.4)
             height = pdf.logicalDpiY() * (height / 25.4)
-        else:
+        elif units != "pixels":
             raise BDianaError, "Unknown units specified to plotPDF: %s" % units
 
         pdf.setPaperSize(QSizeF(width, height), QPrinter.DevicePixel)

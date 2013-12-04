@@ -81,6 +81,9 @@ class Window(QMainWindow):
     def readFields(self):
     
         refTimes = list(self.controller.getFieldReferenceTimes(self.model))
+        if not refTimes:
+            return
+
         refTimes.sort()
 
         model, fieldGroups = self.controller.getFieldGroups(self.model, refTimes[-1], False)
