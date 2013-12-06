@@ -31,6 +31,10 @@
 ### TODO: Obtain available options by parsing the relevant sections in a
 ### specified input file.
 
+"""The plotcommands module contains plot command classes that are used to
+describe details of a Diana plot.
+"""
+
 class ValueType:
     pass
 
@@ -99,6 +103,9 @@ class ChoiceValue(ValueType):
 
 class PlotCommand:
 
+    """Defines a generic plot command and contains functionality common to all
+    PlotCommand subclasses."""
+    
     hidden = []
 
     def __init__(self, **kwargs):
@@ -120,11 +127,13 @@ class PlotCommand:
         self.options[option] = value
     
     def getOptions(self):
-
+    
+        """Returns a list of available options for the plot command."""
         return self.available.keys()
 
     def getAvailable(self, option):
     
+        """Returns a list of values that can be used with the specified option."""
         a = self.available.get(option)
         if isinstance(a, ChoiceValue):
             return a.choices
@@ -133,6 +142,8 @@ class PlotCommand:
     
     def setOption(self, option, value = None):
     
+        """Sets the option to the specified value."""
+        
         Available = self.available.get(option, AnyValue)
         
         # If the available value type is described by a value type class then
@@ -152,6 +163,9 @@ class PlotCommand:
 
     def text(self):
     
+        """Returns a textual representation of the option for use in an input
+        file."""
+        
         pieces = [self.command]
         for option in self.order:
             if self.available.get(option) != NoValue:
@@ -167,6 +181,14 @@ class PlotCommand:
 
 class Field(PlotCommand):
 
+    """The Field plot command describes how fields are represented in a Diana
+    plot.
+    
+    Common options include model (the name of the model to use), plot (the
+    parameter or predefined plot to show), plottype (contour, wind, vector,
+    etc.) and frame (whether to show a frame around the model area).
+    """
+    
     command = "FIELD"
 
     available = {"model": AnyValue,
@@ -182,6 +204,13 @@ class Field(PlotCommand):
 
 class Map(PlotCommand):
 
+    """The Map plot command describes the background map that is used in a
+    Diana plot.
+    
+    Common options for the map include backcolour (background colour), map (map
+    dataset), land (whether the land areas are filled) and land.colour (the
+    colour to use)."""
+    
     command = "MAP"
 
     available = {"backcolour": AnyValue,
@@ -200,6 +229,14 @@ class Map(PlotCommand):
 
 class Area(PlotCommand):
 
+    """The Area plot command describes the geographic area to include in the
+    Diana plot.
+    
+    Common options include name (a predefined area name), proj4string (a
+    description of the projection to use) and rectangle (the size of the
+    projected region to show, measured in projection units).
+    """
+    
     command = "AREA"
     
     available = {"name": ("Europa", "Norge", "Trøndelag", "N-Norge",
@@ -221,6 +258,13 @@ class Area(PlotCommand):
 
 class Label(PlotCommand):
 
+    """The Label plot command describes a decorative label in a Diana plot.
+    
+    Common options include data (which is used on its own to show the source
+    of field data), text (for user-defined strings), font (the font family to
+    use), halign and valign (for horizontal and vertical alignment).
+    """
+    
     command = "LABEL"
 
     available = {"data": NoValue,
@@ -247,6 +291,14 @@ class Label(PlotCommand):
 
 class Observations(PlotCommand):
 
+    """The Observations plot command describes a collection of observations
+    in a Diana plot.
+    
+    Common options include data and plot (the type of observations to show),
+    parameter (a comma-separated list of observation parameters) and density
+    (how many observations to show in a given plot area).
+    """
+    
     command = "OBS"
 
     available = {"data": ("Synop", "Metar", "List", "Pressure", "Ocean",
@@ -259,6 +311,7 @@ class Observations(PlotCommand):
 
     def setOption(self, option, value = None):
     
+        """Sets the option to the specified value."""
         if option == "density" and str(value).startswith("all"):
             self._add_command(option, value)
         else:
@@ -267,6 +320,14 @@ class Observations(PlotCommand):
 
 class Satellite(PlotCommand):
 
+    """The Satellite plot command describes satellite data in a Diana plot.
+    
+    Common options include product, subproduct, channel (describing the
+    source and type of data), alpha (allowing the data to be shown as a
+    partially-transparent image) and mosaic (which combines multiple images
+    to cover larger map areas).
+    """
+    
     command = "SAT"
 
     available = {"product": AnyValue,
@@ -279,4 +340,9 @@ class Satellite(PlotCommand):
 
 
 class Radar(Satellite):
+
+    """The Radar plot command is an alias of the Satellite plot command, and
+    is used for convenience and improved readability in programs that handle
+    radar data.
+    """
     pass

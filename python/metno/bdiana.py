@@ -15,6 +15,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+"""The bdiana module provides a class that can be used to access plotting
+functionality of the Diana meteorological visualisation tool.
+"""
+
 from datetime import datetime
 import os, sys
 
@@ -53,6 +57,11 @@ class BDiana:
 
     def __init__(self, log_level = 2, file_name = "", object_name = ""):
     
+        """Creates a BDiana instance, optionally specifying the level of
+        logging to be used, the file to use for logging output, and the name
+        to use for the instance in the log.
+        """
+
         self.logHandler = milogger.LogHandler.initLogHandler(log_level, file_name)
         self.logHandler.setObjectName(object_name or sys.argv[0])
 
