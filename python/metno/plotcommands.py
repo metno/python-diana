@@ -33,6 +33,9 @@
 
 """The plotcommands module contains plot command classes that are used to
 describe details of a Diana plot.
+
+Instances of each class are used with the BDiana class (see the bdiana
+module) where they are passed in a list to the setPlotCommands() method.
 """
 
 class ValueType:
