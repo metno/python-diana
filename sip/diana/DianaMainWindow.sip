@@ -36,8 +36,7 @@ class DianaMainWindow : public QMainWindow
 public:
   DianaMainWindow(Controller*, const std::string ver_str,
                                const std::string buils_str,
-                               const std::string dianaTitle="Diana",
-                               bool profetEnabled=false);
+                               const std::string dianaTitle="Diana");
   ~DianaMainWindow();
 
   void checkNews();

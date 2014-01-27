@@ -42,6 +42,7 @@ public:
     bool isPainting() const;
     void end();
 
+    QPainter *painter;
     QTransform transform;
     QRect viewport;
 };
