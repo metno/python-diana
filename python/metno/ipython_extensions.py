@@ -33,6 +33,10 @@ from IPython.core.display import Image
 
 def embed(im):
 
+    """Converts a QImage or QPicture object into an ipython Image object for
+    embedding into an ipython notebook.
+    """
+
     if isinstance(im, QPicture):
         pic = im
         im = QImage(im.width(), im.height(), QImage.Format_ARGB32_Premultiplied)

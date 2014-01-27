@@ -237,8 +237,11 @@ class BDiana:
     
     def setPlotCommands(self, plot_commands):
     
-        """Sets the commands to be used for plotting. A call to this method
-        must be followed by a call to setPlotTime() with an appropriate time."""
+        """Sets a list of plot commands to be used for plotting. These are
+        defined in the plotcommands module.
+
+        A call to this method must be followed by a call to setPlotTime() with
+        an appropriate time."""
 
         inp = InputFile()
         inp.lines = ["PLOT"] + map(str, plot_commands) + ["ENDPLOT"]
