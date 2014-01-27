@@ -2,7 +2,8 @@ from datetime import datetime
 from OpenGL.GL import *
 from metno.diana import *
 
-from PyQt4.QtCore import QEvent
+from PyQt4.QtCore import QEvent, QPointF
+from PyQt4.QtGui import QPolygonF
 
 class TestManager(Manager):
 
@@ -12,16 +13,21 @@ class TestManager(Manager):
         self.enabled = False
         TestManager.instance = self
 
-        self.points = []
+        self.points = [QPointF(0, 0), QPointF(10, 10), QPointF(-10, 20)]
 
     def parseSetup(self):
 
         #print "parseSetup", self
         return True
+    
+    def processInput(self, lines):
+
+        print "processInput", lines
+        return True
 
     def sendMouseEvent(self, event, res):
 
-        #print "sendMouseEvent", self, event, res
+        print "sendMouseEvent", self, event, res
 
         if event.type() == QEvent.MouseButtonPress:
             xmap, ymap = self.plotm.PhysToMap(event.x(), event.y())
@@ -31,7 +37,7 @@ class TestManager(Manager):
 
     def sendKeyboardEvent(self, event, res):
 
-        #print "sendKeyboardEvent", self, event, res
+        print "sendKeyboardEvent", self, event, res
         pass
     
     def getTimes(self):
@@ -55,12 +61,14 @@ class TestManager(Manager):
     
         if not under:
             return
-
-        glColor3i(0, 0, 0)
-        glBegin(GL_POLYGON)
-        for point in self.points:
-            glVertex2f(*point)
-        glEnd()
+        
+        ctx = PaintGL.instance().currentContext
+        painter = ctx.painter
+        
+        painter.save()
+        polygon = QPolygonF(self.points)
+        painter.drawPolygon(polygon)
+        painter.restore()
     
     def setPlotModule(self, pm):
 

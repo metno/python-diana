@@ -34,3 +34,8 @@ class TestDialog(DataDialog):
         tm = TestManager.instance
         times = tm.getTimes()
         self.emitTimes.emit("test", times)
+
+    def getOKString(self):
+
+        return []
+
