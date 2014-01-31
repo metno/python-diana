@@ -2,8 +2,8 @@ from datetime import datetime
 from OpenGL.GL import *
 from metno.diana import *
 
-from PyQt4.QtCore import QEvent, QPointF
-from PyQt4.QtGui import QColor, QPolygonF
+from PyQt4.QtCore import QEvent, QPointF, QRectF, Qt
+from PyQt4.QtGui import QColor, QFont, QFontMetricsF, QPolygonF
 
 class TestManager(Manager):
 
@@ -12,7 +12,9 @@ class TestManager(Manager):
         Manager.__init__(self)
         TestManager.instance = self
         
-        self.points = [QPointF(60, 10), QPointF(65, 15), QPointF(70, 10), QPointF(65, 5)]
+        # Define locations of labels in geographic coordinates using data from Wikipedia.
+        self.points = [(QPointF(59 + 57/60.0, 10 + 45/60.0), "Oslo"),
+                       (QPointF(60 + 23/60.0 + 22/3600.0, 5 + 19/60.0 + 48/3600.0), "Bergen")]
         self.area = None
 
     def parseSetup(self):
@@ -68,15 +70,21 @@ class TestManager(Manager):
         plot_size = plotm.getPlotSize()
         plot_width, plot_height = plotm.getPlotWindow()
         
+        metrics = QFontMetricsF(QFont())
+
         painter.save()
-        painter.setBrush(QColor(160, 240, 160))
-        points = []
-        for point in self.points:
+        painter.setPen(QColor(0, 0, 160))
+        painter.setBrush(QColor(255, 255, 255, 192))
+        painter.setCompositionMode(painter.CompositionMode_SourceOver)
+
+        for point, label in self.points:
             ok, x, y = plotm.GeoToPhys(point.x(), point.y(), area, plot_size)
+            y = plot_height - y
             if ok:
-                points.append(QPointF(x, plot_height - y))
-        polygon = QPolygonF(points)
-        painter.drawPolygon(polygon)
+                rect = QRectF(x, y, metrics.width(label) + 8, metrics.height() + 8)
+                painter.drawRect(rect)
+                painter.drawText(rect, Qt.AlignCenter, label)
+
         painter.restore()
     
     def setPlotModule(self, pm):
