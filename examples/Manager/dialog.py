@@ -15,10 +15,13 @@ class TestDialog(DataDialog):
         self._action.setCheckable(True)
         self._action.toggled.connect(TestManager.instance.setEnabled)
 
+        editButton = QPushButton(self.tr("&Edit"))
+        editButton.clicked.connect(self.toggleEditing)
         updateButton = QPushButton(self.tr("&Update times"))
         updateButton.clicked.connect(self.updateTimes)
 
         layout = QVBoxLayout(self)
+        layout.addWidget(editButton)
         layout.addWidget(updateButton)
     
     def name(self):
@@ -38,4 +41,8 @@ class TestDialog(DataDialog):
     def getOKString(self):
 
         return []
+    
+    def toggleEditing(self):
 
+        tm = TestManager.instance
+        tm.setEditing(not tm.isEditing())

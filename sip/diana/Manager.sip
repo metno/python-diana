@@ -47,8 +47,10 @@ public:
   virtual void plot(bool under, bool over) = 0;
   virtual bool processInput(const std::vector<std::string>& inp) = 0;
 
-  virtual bool isEnabled() const = 0;
-  virtual void setEnabled(bool enable) = 0;
+  virtual bool isEnabled() const;
+  virtual void setEnabled(bool enable);
+  virtual bool isEditing() const;
+  virtual void setEditing(bool enable);
 
 signals:
   void timesUpdated();
