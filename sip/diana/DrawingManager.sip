@@ -38,8 +38,6 @@ public:
   ~DrawingManager();
 
 /*
-  void setPlotModule(PlotModule *pm);
-
   bool parseSetup();
 
   void sendMouseEvent(QMouseEvent* event, EventResult& res);
