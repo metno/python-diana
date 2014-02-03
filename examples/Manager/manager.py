@@ -13,8 +13,7 @@ class TestManager(Manager):
         TestManager.instance = self
         
         # Define locations of labels in geographic coordinates using data from Wikipedia.
-        self.points = [(QPointF(59 + 57/60.0, 10 + 45/60.0), "Oslo"),
-                       (QPointF(60 + 23/60.0 + 22/3600.0, 5 + 19/60.0 + 48/3600.0), "Bergen")]
+        self.locations = []
         self.area = None
 
     def parseSetup(self):
@@ -23,8 +22,23 @@ class TestManager(Manager):
         return True
     
     def processInput(self, lines):
-
-        print "processInput", lines
+    
+        self.locations = []
+        for line in lines:
+        
+            if not line.startswith("PLACES "):
+                return False
+            
+            line = line[7:].strip()
+            lat, lon, name = line.split(",")
+            try:
+                lat = float(lat)
+                lon = float(lon)
+            except ValueError:
+                return False
+            
+            self.locations.append((QPointF(lat, lon), name))
+        
         return True
 
     def sendMouseEvent(self, event, res):
@@ -34,7 +48,7 @@ class TestManager(Manager):
         if event.type() == QEvent.MouseButtonPress:
             xmap, ymap = self.plotm.PhysToMap(event.x(), event.y())
             print xmap, ymap
-            self.points.append((xmap, ymap))
+            self.locations.append((QPointF(xmap, ymap), "X"))
             res.repaint = True
 
     def sendKeyboardEvent(self, event, res):
@@ -42,6 +56,10 @@ class TestManager(Manager):
         print "sendKeyboardEvent", self, event, res
         pass
     
+    def getAnnotations(self):
+    
+        return ["Towns and Cities"]
+
     def getTimes(self):
     
         today = datetime.today()
@@ -77,7 +95,7 @@ class TestManager(Manager):
         painter.setBrush(QColor(255, 255, 255, 192))
         painter.setCompositionMode(painter.CompositionMode_SourceOver)
 
-        for point, label in self.points:
+        for point, label in self.locations:
             ok, x, y = plotm.GeoToPhys(point.x(), point.y(), area, plot_size)
             y = plot_height - y
             if ok:
@@ -86,8 +104,3 @@ class TestManager(Manager):
                 painter.drawText(rect, Qt.AlignCenter, label)
 
         painter.restore()
-    
-    def setPlotModule(self, pm):
-
-        self.plotm = pm
-

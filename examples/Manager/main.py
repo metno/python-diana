@@ -17,8 +17,8 @@ if __name__ == "__main__":
     c = Controller()
 
     m = TestManager()
-    c.addManager("test", m)
-    c.addManager("drawing", DrawingManager.instance())
+    # Define a manager that can handle PLACES plot commands.
+    c.addManager("PLACES", m)
 
     if not c.parseSetup():
         sys.exit(1)
