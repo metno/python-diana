@@ -19,10 +19,8 @@ build:
 
 clean:
 	
-	if [ ! -f Makefile ]; then qt_pkg_dir=$(qt_pkg_dir) \
-        python_diana_pkg_dir=$(python_diana_pkg_dir) \
-        PYTHONPATH=$(pyqt_pkg_dir)/dist-packages python configure.py; fi
-	$(MAKE) clean
+	if [ -f Makefile ]; then \
+        rm Makefile; fi
 	rm -rf $(CURDIR)/modules $(CURDIR)/debian/python-diana $(CURDIR)/debian/python-diana-examples $(CURDIR)/debian/files Makefile
 
 install:
