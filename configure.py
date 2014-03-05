@@ -105,7 +105,7 @@ if __name__ == "__main__":
             
             makefile.extra_lib_dirs += [diana_lib_dir, qt_pkg_dir+"/lib"]
             
-            makefile.extra_lflags += ["-Wl,-rpath="+qt_pkg_dir+"/lib/python-diana"]
+            makefile.extra_lflags += ["-Wl,-rpath="+qt_pkg_dir+"/lib/python-diana", "-Wl,-fPIC"]
             makefile.extra_libs += ["diana"]
         
         if module == "metlibs":
@@ -114,7 +114,7 @@ if __name__ == "__main__":
             
             makefile.extra_lib_dirs += [diana_lib_dir, qt_pkg_dir+"/lib"]
 
-            makefile.extra_lflags += ["-Wl,-rpath="+qt_pkg_dir+"/lib/python-diana"]
+            makefile.extra_lflags += ["-Wl,-rpath="+qt_pkg_dir+"/lib/python-diana", "-Wl,-fPIC"]
             makefile.extra_libs += ["diana"]
         
         makefile.generate()
