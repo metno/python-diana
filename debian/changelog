@@ -1,3 +1,10 @@
+python-diana (0.5.8-2) unstable; urgency=low
+
+  * Updated the build dependencies to specify minimum versions of
+    metlibs libraries.
+
+ -- David Boddie <david.boddie@met.no>  Wed, 05 Mar 2014 15:19:33 +0100
+
 python-diana (0.5.8-1) unstable; urgency=low
 
   * Fixed unit handling in the plotPDF method.
