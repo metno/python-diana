@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: David Boddie <david.boddie@met.no>
 Build-Depends: diana-nogl-dev, libqt4-dev, python-sip-dev,
   metlibs-difield-dev, metlibs-milogger-dev, metlibs-putools-dev,
-  python-qt4-dev
+  python-qt4, python-qt4-dev
 Standards-Version: 3.9.3
 Homepage: http://diana.met.no
 
