@@ -51,8 +51,9 @@ class BDiana:
     these must be passed to the setPlotTime() method.
 
     Once the plot time has been defined, an image of the plot can be
-    produced by calling the plot() method with the desired width and
-    height values, measured in pixels.
+    produced by calling the plotImage() method with the desired width and
+    height values, measured in pixels. Alternatively, the plotPDF() and
+    plotSVG() methods can be used to create PDF and SVG files respectively.
     """
 
     def __init__(self, log_level = 2, file_name = "", object_name = ""):

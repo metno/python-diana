@@ -1,3 +1,9 @@
+python-diana (0.5.8-3) unstable; urgency=low
+
+  * Updated dependencies.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 02 May 2014 15:07:40 +0200
+
 python-diana (0.5.8-2) unstable; urgency=low
 
   * Updated the build dependencies to specify minimum versions of
