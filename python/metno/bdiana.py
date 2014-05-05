@@ -24,7 +24,7 @@ import os, sys
 
 from metlibs import FieldRequest, milogger
 from diana import Colour, Controller, LocalSetupParser, ObsPlot, PaintGL, \
-                  PaintGLContext, SpectrumManager
+                  PaintGLContext, PlotModule, SpectrumManager
 
 from metno.versions import diana_version, python_diana_version
 
@@ -279,6 +279,15 @@ class BDiana:
 
         return self.controller.getMapArea()
     
+    def getPlotSize(self):
+
+        """Returns the exact rectangle that will be displayed in the plot.
+        Note that this may be different to the rectangle supplied by getPlotArea()
+        since Diana adjusts the plot extent to preserve the aspect ratio of the
+        map data."""
+
+        return PlotModule.instance().getPlotSize()
+
     def _plot(self, width, height, paint_device, plot_object = None, plot_method = None):
     
         if not plot_object:

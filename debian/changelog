@@ -1,3 +1,9 @@
+python-diana (0.5.9-1) unstable; urgency=low
+
+  * Added a helper function to provide the plot size.
+
+ -- David Boddie <david.boddie@met.no>  Mon, 05 May 2014 18:09:39 +0200
+
 python-diana (0.5.8-3) unstable; urgency=low
 
   * Updated dependencies.
