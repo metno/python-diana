@@ -41,7 +41,7 @@ class Window(QMainWindow):
     
         if message.command == qmstrings.positions:
 
-            # Receive positions from Diana and send the 
+            # Receive positions from Diana.
             lat, lon = map(float, message.data[0].split(":"))
             self.latitudeEdit.setValue(lat)
             self.longitudeEdit.setValue(lon)
