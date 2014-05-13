@@ -92,7 +92,7 @@ if __name__ == "__main__":
         makefile = pyqtconfig.QtGuiModuleMakefile(
             config, build_file, dir=output_dir,
             install_dir=dest_pkg_dir,
-            qt=["QtCore", "QtGui", "QtXml", "QtXmlPatterns"]
+            qt=["QtCore", "QtGui", "QtNetwork", "QtXml", "QtXmlPatterns"]
             )
         
         if module == "diana":
