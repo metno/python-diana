@@ -4,14 +4,14 @@ version = $(shell dpkg-parsechangelog | awk '/^Version/{print $$2}')
 python_version = "2.7"
 qt_pkg_dir = "/opt/qt4-headless"
 pyqt_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)
-python_diana_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)"/dist-packages"
+python_diana_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)"/site-packages"
 
 build:
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib/python-diana
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/share/doc
 	qt_pkg_dir=$(qt_pkg_dir) python_diana_pkg_dir=$(python_diana_pkg_dir) \
-        PYTHONPATH=$(pyqt_pkg_dir)/dist-packages python configure.py -x Diana_GUI
+        PYTHONPATH=$(pyqt_pkg_dir)/site-packages python configure.py -x Diana_GUI
 	$(MAKE)
 
 clean:
