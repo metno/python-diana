@@ -13,7 +13,7 @@ def get_diana_version():
         pieces = line.split()
         for piece in pieces:
             name_pieces = piece.strip(",").split("-")
-            if len(name_pieces) == 2 and name_pieces[0] == "diana":
+            if len(name_pieces) == 2 and name_pieces[0] in ("bdiana", "diana"):
                 return name_pieces[1]
     return None
 
