@@ -86,14 +86,15 @@ if __name__ == "__main__":
                         "-I"+qt_pkg_dir+"/include",
                         "-I"+qt_pkg_dir+"/share/sip/PyQt4",
                         "-Isip",
-                        config.pyqt_sip_flags,
-                        "-w",
-                        "-o", # generate docstrings for signatures
-                        sip_file]
-
+                        config.pyqt_sip_flags]
+		
         for x in exclude:
             command_list += ["-x", x]
         
+        command_list += ["-w",
+                         "-o", # generate docstrings for signatures
+                         sip_file]
+
         command = " ".join(command_list)
         sys.stdout.write(command+"\n")
         sys.stdout.flush()
