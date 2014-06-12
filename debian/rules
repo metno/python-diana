@@ -23,7 +23,7 @@ clean:
 install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/python-diana-headless install
 	cp -a /usr/lib/libdiana.so* $(CURDIR)/debian/python-diana-headless$(qt_pkg_dir)/lib/python-diana
-	cp -a doc/python-diana-headless $(CURDIR)/debian/python-diana$(qt_pkg_dir)/share/doc
+	cp -a doc/python-diana $(CURDIR)/debian/python-diana-headless$(qt_pkg_dir)/share/doc
 
 binary: binary-arch binary-indep
 
