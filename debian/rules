@@ -7,6 +7,10 @@ pyqt_pkg_dir = "/usr/lib/python"$(python_version)
 python_diana_pkg_dir = "/usr/lib/python"$(python_version)"/dist-packages"
 examples_pkg_dir = "/usr/share/python-diana-examples"
 
+qt_headless_pkg_dir = "/opt/qt4-headless"
+pyqt_headless_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)
+python_diana_headless_pkg_dir = "/opt/qt4-headless/lib/python"$(python_version)"/dist-packages"
+
 build:
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib/python-diana
@@ -15,6 +19,13 @@ build:
 	mkdir -p $(CURDIR)/debian/python-diana-examples$(examples_pkg_dir)
 	qt_pkg_dir=$(qt_pkg_dir) python_diana_pkg_dir=$(python_diana_pkg_dir) \
         PYTHONPATH=$(pyqt_pkg_dir)/dist-packages python configure.py
+	$(MAKE)
+	mkdir -p $(CURDIR)/debian/python-diana-headless/opt/qt4-headless/lib
+	mkdir -p $(CURDIR)/debian/python-diana-headless/opt/qt4-headless/lib/python-diana
+	mkdir -p $(CURDIR)/debian/python-diana-headless/opt/qt4-headless/share/doc
+	mkdir -p $(CURDIR)/debian/python-diana-examples/opt/qt4-headless/share/doc
+	qt_pkg_dir=$(qt_headless_pkg_dir) python_diana_pkg_dir=$(python_diana_headless_pkg_dir) \
+        PYTHONPATH=$(pyqt_headless_pkg_dir)/dist-packages python configure.py -x Diana_GUI
 	$(MAKE)
 
 clean:
