@@ -43,7 +43,6 @@
 %Include Colour.sip
 %Include CommonTypes.sip
 %Include Controller.sip
-%Include DrawingManager.sip
 %Include FieldPlot.sip
 %Include FieldPlotManager.sip
 %Include LocalSetupParser.sip
@@ -66,6 +65,7 @@
 %If (Diana_GUI)
   %Include DataDialog.sip
   %Include DianaMainWindow.sip
+  %Include DrawingManager.sip
   %Include GLwidget.sip
   %Include WorkArea.sip
 %End
