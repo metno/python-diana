@@ -31,7 +31,7 @@ binary-indep:
 
 binary-arch: install
 	mkdir $(CURDIR)/debian/python-diana-headless/DEBIAN
-	dpkg-gencontrol -ppython-diana-headless -P$(CURDIR)/debian/python-diana
+	dpkg-gencontrol -ppython-diana-headless -P$(CURDIR)/debian/python-diana-headless
 	dpkg --build debian/python-diana-headless ..
 
 .PHONY: build clean binary-indep binary-arch binary install configure
