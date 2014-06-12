@@ -21,7 +21,7 @@ Description: Python language bindings to Diana
 
 Package: python-diana-headless
 Architecture: any
-Depends: python-sip-headless, bdiana-3.35, libqtcore4-headless,
+Depends: python-sip-headless, libqtcore4-headless,
   libqtgui4-headless, libqt4-svg-headless, python-qt4-headless,
   python2.7
 Recommends: diana-3.35-common, dianaconfig-3.35, dianamaps
