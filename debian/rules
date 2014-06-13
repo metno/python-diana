@@ -11,7 +11,7 @@ build:
 	mkdir -p $(CURDIR)/debian/python-diana-headless$(qt_pkg_dir)/lib/python-diana
 	mkdir -p $(CURDIR)/debian/python-diana-headless$(qt_pkg_dir)/share/doc
 	qt_pkg_dir=$(qt_pkg_dir) python_diana_pkg_dir=$(python_diana_pkg_dir) \
-        PYTHONPATH=$(pyqt_pkg_dir)/site-packages python configure.py -x Diana_GUI
+        PYTHONPATH=$(pyqt_pkg_dir)/site-packages python configure.py -x Diana_GUI -x Metlibs_GUI
 	$(MAKE)
 
 clean:
