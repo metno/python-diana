@@ -6,15 +6,14 @@ Build-Depends: python-sip-dev,
   metlibs-difield-dev (>= 5.0.0), metlibs-milogger-dev (>= 5.0.0),
   metlibs-putools-dev (>= 5.0.0), metlibs-coserver-dev (>= 1.1.0),
   libavformat-dev, bdiana-dev, libqt4-headless-dev,
-  python-qt4-headless, python-qt4-headless-dev
+  python-qt4-headless, python-qt4-headless-dev, bdiana-dev
 Standards-Version: 3.9.3
 Homepage: http://diana.met.no
 
 Package: python-diana-headless
 Architecture: any
 Depends: python-sip, libqtcore4-headless, libqtgui4-headless,
-  libqt4-svg-headless, python-qt4-headless, python2.7,
-  libfimex-0.51-0
+  libqt4-svg-headless, python-qt4-headless, python2.7
 Recommends: diana-3.35-common, dianaconfig-3.35, dianamaps
 Description: Python language bindings to the headless version of Diana
  A set of Python language bindings to Diana, exposing an API that
