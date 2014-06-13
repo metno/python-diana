@@ -6,7 +6,7 @@ Build-Depends: python-sip-dev,
   metlibs-difield-dev (>= 5.0.0), metlibs-milogger-dev (>= 5.0.0),
   metlibs-putools-dev (>= 5.0.0), metlibs-coserver-dev (>= 1.1.0),
   libavformat-dev, bdiana-dev, libqt4-headless-dev,
-  python-qt4-headless, python-qt4-headless-dev
+  python-qt4-headless, python-qt4-headless-dev, libfimex-dev (= 0.51)
 Standards-Version: 3.9.3
 Homepage: http://diana.met.no
 
