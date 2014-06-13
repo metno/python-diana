@@ -29,8 +29,12 @@
 
 %Module(name=metno.metlibs, keyword_arguments="Optional")
 
+%Feature(name = Metlibs_GUI)
+
 %Import std/std.sip
 %Include diField.sip
 %Include milogger.sip
 %Include miutil.sip
-%Include coserver.sip
+%If (Metlibs_GUI)
+  %Include coserver.sip
+%End
