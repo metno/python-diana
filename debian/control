@@ -12,9 +12,8 @@ Homepage: http://diana.met.no
 
 Package: python-diana-headless
 Architecture: any
-Depends: python-sip-headless, libqtcore4-headless,
-  libqtgui4-headless, libqt4-svg-headless, python-qt4-headless,
-  python2.7
+Depends: python-sip, libqtcore4-headless, libqtgui4-headless,
+  libqt4-svg-headless, python-qt4-headless, python2.7
 Recommends: diana-3.35-common, dianaconfig-3.35, dianamaps
 Description: Python language bindings to the headless version of Diana
  A set of Python language bindings to Diana, exposing an API that
