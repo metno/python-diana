@@ -27,22 +27,14 @@ def get_python_diana_version():
 
 if __name__ == "__main__":
 
-    exclude = []
-    args = sys.argv[:]
-
-    while "-x" in args:
-        index = args.index("-x")
-        exclude.append(args[index + 1])
-        args = args[:index] + args[index + 2:]
-    
-    if not 1 <= len(args) <= 3:
+    if not 1 <= len(sys.argv) <= 3:
     
         sys.stderr.write("Usage: %s [<directory containing diana headers> <directory containing libdiana>]\n" % sys.argv[0])
         sys.exit(1)
     
-    if len(args) == 3:
-        diana_inc_dir = args[1]
-        diana_lib_dir = args[2]
+    if len(sys.argv) == 3:
+        diana_inc_dir = sys.argv[1]
+        diana_lib_dir = sys.argv[2]
     else:
         diana_inc_dir = "/usr/include/diana"
         diana_lib_dir = "/usr/lib"
@@ -75,26 +67,21 @@ if __name__ == "__main__":
         
         sip_file = os.path.join("sip", module, module+".sip")
         
-        command_list = [config.sip_bin,
-                        "-c", output_dir,
-                        "-b", build_path,
-                        "-I"+config.sip_inc_dir,
-                        "-I"+config.pyqt_sip_dir,
-                        "-I"+diana_inc_dir,
-                        "-I/usr/include",
-                        "-I/usr/include/metlibs",
-                        "-I"+qt_pkg_dir+"/include",
-                        "-I"+qt_pkg_dir+"/share/sip/PyQt4",
-                        "-Isip",
-                        config.pyqt_sip_flags,
-                        "-w",
-                        "-o", # generate docstrings for signatures
-                        sip_file]
-
-        for x in exclude:
-            command_list += ["-x", x]
-        
-        command = " ".join(command_list)
+        command = " ".join([config.sip_bin,
+                            "-c", output_dir,
+                            "-b", build_path,
+                            "-I"+config.sip_inc_dir,
+                            "-I"+config.pyqt_sip_dir,
+                            "-I"+diana_inc_dir,
+                            "-I/usr/include",
+                            "-I/usr/include/metlibs",
+                            "-I"+qt_pkg_dir+"/include",
+                            "-I"+qt_pkg_dir+"/share/sip/PyQt4",
+                            "-Isip",
+                            config.pyqt_sip_flags,
+                            "-w",
+                            "-o", # generate docstrings for signatures
+                            sip_file])
         sys.stdout.write(command+"\n")
         sys.stdout.flush()
         

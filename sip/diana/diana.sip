@@ -29,8 +29,6 @@
 
 %Module(name=metno.diana, keyword_arguments="Optional")
 
-%Feature(name = Diana_GUI)
-
 %Import QtGui/QtGuimod.sip
 %Import metlibs/metlibs.sip
 %Import std/std.sip
@@ -43,9 +41,12 @@
 %Include Colour.sip
 %Include CommonTypes.sip
 %Include Controller.sip
+%Include DataDialog.sip
+%Include DianaMainWindow.sip
 %Include DrawingManager.sip
 %Include FieldPlot.sip
 %Include FieldPlotManager.sip
+%Include GLwidget.sip
 %Include LocalSetupParser.sip
 %Include Manager.sip
 %Include MapMode.sip
@@ -62,10 +63,4 @@
 %Include SatPlot.sip
 %Include SpectrumManager.sip
 %Include SpectrumOptions.sip
-
-%If (Diana_GUI)
-  %Include DataDialog.sip
-  %Include DianaMainWindow.sip
-  %Include GLwidget.sip
-  %Include WorkArea.sip
-%End
+%Include WorkArea.sip
