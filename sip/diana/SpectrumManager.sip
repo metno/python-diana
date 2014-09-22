@@ -58,10 +58,8 @@ public:
   std::vector<std::string> getModelNames();
   std::vector<std::string> getModelFiles();
   void setFieldModels(const std::vector<std::string>& fieldmodels);
-  void setSelectedModels(const std::vector<std::string>& models,
-			 bool obs, bool field);
-  void setSelectedFiles(const std::vector<std::string>& files,
-			bool obs, bool field);
+  void setSelectedModels(const std::vector<std::string>& models, bool field);
+  void setSelectedFiles(const std::vector<std::string>& files, bool field);
 
   std::vector<std::string> getSelectedModels();
 
