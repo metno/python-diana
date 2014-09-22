@@ -61,10 +61,6 @@ public:
                                                      int index=-1);
     bool isMosaic(const std::string &satellite, const std::string & file);
 
-    void cutImageRGBA(Sat* satdata, unsigned char *image, float cut, int *index);
-    int getFileName(Sat* satdata, std::string &);
-    int getFileName(Sat* satdata, const miutil::miTime&);
-
     SIP_PYDICT getProductsInfo() const [std::map<std::string, std::map<std::string,SatManager::subProdInfo> > ()];
     %MethodCode
     std::map<std::string, std::map<std::string,SatManager::subProdInfo> > m = sipCpp->getProductsInfo();
