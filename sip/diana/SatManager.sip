@@ -48,9 +48,8 @@ public:
     };
 
     SatManager();
-    bool init(std::vector<SatPlot*>&, const std::vector<std::string>&);
-    bool setData(SatPlot *);
-    std::vector<miutil::miTime> getSatTimes(const std::vector<std::string>&, bool updateFileList=false, bool openFiles=false);
+    bool init(const std::vector<std::string>&);
+    std::vector<miutil::miTime> getSatTimes(bool updateFileList=false, bool openFiles=false);
 
     const std::vector<SatFileInfo> & getFiles(const std::string &,
                                               const std::string &,
@@ -62,9 +61,9 @@ public:
                                                      int index=-1);
     bool isMosaic(const std::string &satellite, const std::string & file);
 
-    void cutImageRGBA(unsigned char *image, float cut, int *index);
-    int getFileName(std::string &);
-    int getFileName(const miutil::miTime&);
+    void cutImageRGBA(Sat* satdata, unsigned char *image, float cut, int *index);
+    int getFileName(Sat* satdata, std::string &);
+    int getFileName(Sat* satdata, const miutil::miTime&);
 
     SIP_PYDICT getProductsInfo() const [std::map<std::string, std::map<std::string,SatManager::subProdInfo> > ()];
     %MethodCode
