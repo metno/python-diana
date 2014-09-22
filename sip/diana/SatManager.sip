@@ -48,7 +48,6 @@ public:
     };
 
     SatManager();
-    bool init(const std::vector<std::string>&);
     std::vector<miutil::miTime> getSatTimes(bool updateFileList=false, bool openFiles=false);
 
     const std::vector<SatFileInfo> & getFiles(const std::string &,
