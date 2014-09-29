@@ -1,3 +1,9 @@
+python-diana (0.7.0-1) precise; urgency=low
+
+  * Updated to work with the latest upstream version of Diana (3.36).
+
+ -- David Boddie <david.boddie@met.no>  Mon, 29 Sep 2014 18:21:21 +0200
+
 python-diana (0.6.0-1) unstable; urgency=low
 
   * Added coserver to the metlibs module.
