@@ -27,7 +27,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class SatPlot : public Plot
+class SatPlot
 {
 %TypeHeaderCode
 #include "diSatPlot.h"
