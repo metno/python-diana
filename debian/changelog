@@ -1,3 +1,9 @@
+python-diana-headless (0.7.0-1) precise; urgency=low
+
+  * Updated to work with the latest upstream version of Diana (3.36).
+
+ -- David Boddie <david.boddie@met.no>  Mon, 29 Sep 2014 18:33:27 +0200
+
 python-diana-headless (0.6.0-1) unstable; urgency=low
 
   * Created a new package for a headless version of python-diana.
