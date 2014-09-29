@@ -54,7 +54,7 @@
 %Include ObsData.sip
 %Include ObsManager.sip
 %Include ObsPlot.sip
-%Include Plot.sip
+// %Include Plot.sip
 %Include PlotModule.sip
 %Include PlotOptions.sip
 %Include PaintGL.sip
