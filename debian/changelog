@@ -1,8 +1,8 @@
-python-diana-headless (0.6.0-1) unstable; urgency=low
+python-diana (0.7.0-1) precise; urgency=low
 
-  * Created a new package for a headless version of python-diana.
+  * Updated to work with the latest upstream version of Diana (3.36).
 
- -- David Boddie <david.boddie@met.no>  Thu, 12 Jun 2014 16:03:21 +0200
+ -- David Boddie <david.boddie@met.no>  Mon, 29 Sep 2014 18:21:21 +0200
 
 python-diana (0.6.0-1) unstable; urgency=low
 
