@@ -48,7 +48,7 @@ public:
   ~PlotModule();
 
   const Area& getCurrentArea();
-  Rectangle& getPlotSize();
+  const Rectangle& getPlotSize();
 
   SIP_PYTUPLE getPlotWindow() [void (int &width, int &height)];
   %MethodCode
