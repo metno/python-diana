@@ -201,8 +201,7 @@ class BDiana:
         observations of the given type for the specified time."""
 
         obs_manager = self.controller.getObservationManager()
-        op = ObsPlot()
-        obs_manager.init(op, "OBS data=" + type + " devfield=true")
+        op = obs_manager.createObsPlot("OBS data=" + type + " devfield=true")
         obs_manager.prepare(op, time)
         obs_manager.updateObsPositions([op])
         return obs_manager.getObsPositions()

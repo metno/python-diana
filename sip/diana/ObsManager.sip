@@ -71,6 +71,7 @@ public:
     };
 
     ObsManager();
+    ObsPlot* createObsPlot(const std::string&);
     bool prepare(ObsPlot *,miutil::miTime);
 
     std::vector<miutil::miTime> getObsTimes(const std::vector<std::string>& obsTypes);
