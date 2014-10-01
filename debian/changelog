@@ -1,4 +1,10 @@
-python-diana-headless (0.7.0-1) precise; urgency=low
+python-diana-headless (0.7.1-1) unstable; urgency=low
+
+  * Rebuilt with updated sources.
+
+ -- David Boddie <david.boddie@met.no>  Wed, 01 Oct 2014 16:10:00 +0200
+
+python-diana-headless (0.7.0-1) unstable; urgency=low
 
   * Updated to work with the latest upstream version of Diana (3.36).
 
