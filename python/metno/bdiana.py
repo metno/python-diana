@@ -220,7 +220,8 @@ class BDiana:
         and subproduct."""
 
         sat_manager = self.controller.getSatelliteManager()
-        return sat_manager.getSatTimes(["SAT " + product + " " + subproduct])
+        sat_manager.prepareSat(["SAT " + product + " " + subproduct])
+        return sat_manager.getSatTimes()
 
     def prepare(self, input_file, archive = False):
     
@@ -477,17 +478,17 @@ class BDiana:
 
         return self.spectrumManager.getModelNames()
 
-    def setSpectrumModel(self, model, observations = False, as_field = False):
+    def setSpectrumModel(self, model, as_field = False):
     
         """Sets a single wave spectrum model to use."""
 
-        self.setSpectrumModels([model], observations, as_field)
+        self.setSpectrumModels([model], as_field)
 
-    def setSpectrumModels(self, models, observations = False, as_field = False):
+    def setSpectrumModels(self, models, as_field = False):
     
         """Sets the wave spectrum models to use."""
 
-        self.spectrumManager.setSelectedModels(models, observations, as_field)
+        self.spectrumManager.setSelectedModels(models, as_field)
         self.spectrumManager.setModel()
     
     def getSpectrumStations(self):
