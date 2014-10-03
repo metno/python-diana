@@ -1,3 +1,9 @@
+python-diana (0.7.3-1) unstable; urgency=low
+
+  * Rebuilt with updated and rewrapped sources.
+
+ -- David Boddie <david.boddie@met.no>  Fri, 03 Oct 2014 14:23:21 +0200
+
 python-diana (0.7.2-1) unstable; urgency=low
 
   * Rebuilt with updated sources.

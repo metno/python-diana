@@ -287,7 +287,44 @@ class BDiana:
         map data."""
 
         return PlotModule.instance().getPlotSize()
+    
+    def getLatLonFromPlot(self, cx, cy):
+    
+        """Returns the latitude and longitude of a point in the current plot
+        specified by the point (cx, cy) where cx and cy are size-independent
+        horizontal and vertical coordinates measured from the bottom-left
+        corner of the plot. The values of cx and cy must be in the range
+        [0.0, 1.0]."""
 
+        area = self.getPlotArea()
+        p = area.P()
+        r = area.R()
+        pr = pyproj.Proj(p.getProjDefinition())
+        
+        x = r.x1 + (r.x2 - r.x1) * cx
+        y = r.y1 + (r.y2 - r.y1) * cy
+        lon, lat = pr(x, y, inverse = True)
+        return lat, lon
+    
+    def getXYFromLatLon(self, latitude, longitude):
+
+        """Returns the size-independent coordinates of a point in the current
+        plot that corresponds to the specified latitude and longitude, where a
+        coordinate of (0.0, 0.0) corresponds to the bottom-left corner of the
+        plot and (1.0, 1.0) corresponds to the top-right corner. The coordinate
+        may contain values outside the range [0.0, 1.0] if the latitude and
+        longitude specified do not lie within the current plot."""
+        
+        area = self.getPlotArea()
+        p = area.P()
+        r = area.R()
+        pr = pyproj.Proj(p.getProjDefinition())
+
+        x, y = pr(lon, lat)
+        cx = (x - r.x1)/(r.x2 - r.x1)
+        cy = (y - r.y1)/(r.y2 - r.y1)
+        return cx, cy
+    
     def _plot(self, width, height, paint_device, plot_object = None, plot_method = None):
     
         if not plot_object:
