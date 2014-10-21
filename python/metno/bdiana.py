@@ -21,6 +21,7 @@ functionality of the Diana meteorological visualisation tool.
 
 from datetime import datetime
 import os, sys
+import pyproj
 
 from metlibs import FieldRequest, milogger
 from diana import Colour, Controller, LocalSetupParser, ObsPlot, PaintGL, \
