@@ -288,7 +288,7 @@ class BDiana:
 
         return PlotModule.instance().getPlotSize()
     
-    def getLatLonFromPlot(self, cx, cy):
+    def getLatLonFromXY(self, cx, cy):
     
         """Returns the latitude and longitude of a point in the current plot
         specified by the point (cx, cy) where cx and cy are size-independent
