@@ -321,7 +321,7 @@ class BDiana:
         r = area.R()
         pr = pyproj.Proj(p.getProjDefinition())
 
-        x, y = pr(lon, lat)
+        x, y = pr(longitude, latitude)
         cx = (x - r.x1)/(r.x2 - r.x1)
         cy = (y - r.y1)/(r.y2 - r.y1)
         return cx, cy
