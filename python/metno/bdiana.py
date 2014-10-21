@@ -289,6 +289,15 @@ class BDiana:
 
         return PlotModule.instance().getPlotSize()
     
+    def getProjection(self):
+    
+        """Returns the projection used for the current plot."""
+        
+        area = self.getPlotArea()
+        p = area.P()
+        r = area.R()
+        return pyproj.Proj(p.getProjDefinition())
+
     def getLatLonFromXY(self, cx, cy):
     
         """Returns the latitude and longitude of a point in the current plot
@@ -296,12 +305,8 @@ class BDiana:
         horizontal and vertical coordinates measured from the bottom-left
         corner of the plot. The values of cx and cy must be in the range
         [0.0, 1.0]."""
-
-        area = self.getPlotArea()
-        p = area.P()
-        r = area.R()
-        pr = pyproj.Proj(p.getProjDefinition())
         
+        pr = self.getProjection()
         x = r.x1 + (r.x2 - r.x1) * cx
         y = r.y1 + (r.y2 - r.y1) * cy
         lon, lat = pr(x, y, inverse = True)
@@ -316,11 +321,8 @@ class BDiana:
         may contain values outside the range [0.0, 1.0] if the latitude and
         longitude specified do not lie within the current plot."""
         
-        area = self.getPlotArea()
-        p = area.P()
-        r = area.R()
-        pr = pyproj.Proj(p.getProjDefinition())
-
+        pr = self.getProjection()
+        
         x, y = pr(longitude, latitude)
         cx = (x - r.x1)/(r.x2 - r.x1)
         cy = (y - r.y1)/(r.y2 - r.y1)
