@@ -307,6 +307,9 @@ class BDiana:
         [0.0, 1.0]."""
         
         pr = self.getProjection()
+        area = self.getPlotArea()
+        r = area.R()
+
         x = r.x1 + (r.x2 - r.x1) * cx
         y = r.y1 + (r.y2 - r.y1) * cy
         lon, lat = pr(x, y, inverse = True)
@@ -322,6 +325,8 @@ class BDiana:
         longitude specified do not lie within the current plot."""
         
         pr = self.getProjection()
+        area = self.getPlotArea()
+        r = area.R()
         
         x, y = pr(longitude, latitude)
         cx = (x - r.x1)/(r.x2 - r.x1)
