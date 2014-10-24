@@ -5,25 +5,6 @@ The python-diana package contains a set of modules that can be used to access
 product creation features of the Diana meteorological visualisation tool.
 
 
-Specifying Paths
-----------------
-
-A library containing the functionality of Diana and a set of Qt libraries
-specifically built for use on headless (non-X11) systems are installed in
-/opt/qt4-headless/lib and the modules provided by this package are
-installed in the /opt/qt4-headless/lib/python2.7/site-packages directory.
-
-Therefore, to be able to use these modules, you need to ensure that this
-directory is on the Python path when you try to use them, either from
-scripts or from the interactive Python prompt. One way to do this is to
-set the PYTHONPATH environment variable to refer to the directory; this
-can be done in the bash shell by invoking the following:
-
-  export PYTHONPATH=/opt/qt4-headless/lib/python2.7/site-packages
-
-This also ensures that the correct PyQt4 modules are used.
-
-
 Importing and Using the Modules
 -------------------------------
 
