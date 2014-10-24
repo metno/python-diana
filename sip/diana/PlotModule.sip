@@ -80,4 +80,8 @@ public:
   bool GeoToPhys(const float, const float, float&, float&, Area area, Rectangle r);
 
   static PlotModule *instance();
+
+private:
+  PlotModule &operator=(PlotModule &);
+  PlotModule(PlotModule &);
 };
