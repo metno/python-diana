@@ -57,6 +57,9 @@
     %End
 };
 
+// It might be useful to see what can be used from the code posted here:
+// http://www.riverbankcomputing.com/pipermail/pyqt/2007-March/015780.html
+
 template<TYPE>
 %MappedType std::vector<TYPE>
 {
