@@ -54,5 +54,4 @@ public:
   %End
 
   std::vector<std::string> getFields();
-  std::vector<std::string> getPlotFields();
 };
