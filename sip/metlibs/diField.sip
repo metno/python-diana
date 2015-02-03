@@ -189,17 +189,18 @@ struct FieldRequest
   std::string refTime;
   miutil::miTime ptime;
   std::string unit;
+  std::string palette;
   int hourOffset;
   int minOffset;
   int time_tolerance;
   int refhour;
   int refoffset;
-  int      forecastSpec;
-  std::vector<int> forecast;
+  std::string output_time;
   bool allTimeSteps;
   bool standard_name;
   bool plotDefinition;
   bool checkSourceChanged;
+  bool flightlevel;
   FieldRequest();
 };
 
