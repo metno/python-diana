@@ -279,7 +279,7 @@ public:
   Returns the references time given by refOffset and refHour or the last reference time for the given model.
   %End
 
-  std::vector<std::string> getAllFieldNames() [void (std::vector<std::string>& fieldNames];
+  std::vector<std::string> getAllFieldNames() [void (std::vector<std::string>& fieldNames)];
   %MethodCode
   std::vector<std::string> a0;
   sipCpp->getAllFieldNames(a0);
