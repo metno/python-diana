@@ -283,7 +283,7 @@ public:
   %MethodCode
   std::vector<std::string> a0;
   sipCpp->getAllFieldNames(a0);
-  sipRes = a0;
+  sipRes = &a0;
   %End
 
   std::vector<miutil::miTime> getFieldTime(std::vector<FieldRequest>& request);
@@ -299,7 +299,7 @@ public:
   %MethodCode
   std::vector<FieldGroupInfo> vfgi;
   sipCpp->getFieldGroups(*a0, *a1, a2, vfgi);
-  sipRes = vfgi;
+  sipRes = &vfgi;
   %End
 
 //  std::vector<SatPlot*> getSatellitePlots() const;
