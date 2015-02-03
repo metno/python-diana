@@ -11,9 +11,9 @@ Homepage: http://diana.met.no
 
 Package: python-diana
 Architecture: any
-Depends: python-sip, diana-3.36, libqtcore4, libqtgui4, libqt4-svg,
+Depends: python-sip, diana-3.37, libqtcore4, libqtgui4, libqt4-svg,
   python-qt4, python2.7
-Recommends: diana-3.36-common, dianaconfig-3.36, dianamaps
+Recommends: diana-3.37-common, dianaconfig-3.36, dianamaps
 Description: Python language bindings to Diana
  A set of Python language bindings to Diana, exposing an API that
  can be used for batched generation of products.
