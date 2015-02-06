@@ -61,7 +61,7 @@ class Tile:
         
         if not hasattr(self, "api"):
             self.api = bdiana.BDiana()
-            if not self.api.setup():
+            if not self.api.setup(setup):
                 raise ValueError
         
         a = plotcommands.Area(proj4string = Projection,
@@ -125,5 +125,10 @@ class Handler(SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
 
+    if len(sys.argv) == 2:
+        setup = sys.argv[1]
+    else:
+        setup = None
+    
     server = HTTPServer(('', 8000), Handler)
     server.serve_forever()
