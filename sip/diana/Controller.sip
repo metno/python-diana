@@ -281,9 +281,9 @@ public:
 
   std::vector<std::string> getAllFieldNames() [void (std::vector<std::string>& fieldNames)];
   %MethodCode
-  std::vector<std::string> a0;
-  sipCpp->getAllFieldNames(a0);
-  sipRes = &a0;
+  std::vector<std::string> *a0 = new std::vector<std::string>();
+  sipCpp->getAllFieldNames(*a0);
+  sipRes = a0;
   %End
 
   std::vector<miutil::miTime> getFieldTime(std::vector<FieldRequest>& request);
@@ -297,9 +297,9 @@ public:
            bool plotGroups,
            std::vector<FieldGroupInfo>& vfgi)];
   %MethodCode
-  std::vector<FieldGroupInfo> vfgi;
-  sipCpp->getFieldGroups(*a0, *a1, a2, vfgi);
-  sipRes = &vfgi;
+  std::vector<FieldGroupInfo> *vfgi = new std::vector<FieldGroupInfo>();
+  sipCpp->getFieldGroups(*a0, *a1, a2, *vfgi);
+  sipRes = vfgi;
   %End
 
 //  std::vector<SatPlot*> getSatellitePlots() const;
