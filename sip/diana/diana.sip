@@ -29,6 +29,8 @@
 
 %Module(name=metno.diana, keyword_arguments="Optional")
 
+%Feature(name = Diana_GUI)
+
 %Import QtGui/QtGuimod.sip
 %Import metlibs/metlibs.sip
 %Import std/std.sip
@@ -43,7 +45,6 @@
 %Include Controller.sip
 %Include FieldPlot.sip
 %Include FieldPlotManager.sip
-%Include GLwidget.sip
 %Include LocalSetupParser.sip
 %Include Manager.sip
 %Include MapMode.sip
