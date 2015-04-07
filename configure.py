@@ -27,22 +27,14 @@ def get_python_diana_version():
 
 if __name__ == "__main__":
 
-    exclude = []
-    args = sys.argv[:]
-
-    while "-x" in args:
-        index = args.index("-x")
-        exclude.append(args[index + 1])
-        args = args[:index] + args[index + 2:]
-    
-    if not 1 <= len(args) <= 3:
+    if not 1 <= len(sys.argv) <= 3:
     
         sys.stderr.write("Usage: %s [<directory containing diana headers> <directory containing libdiana>]\n" % sys.argv[0])
         sys.exit(1)
     
-    if len(args) == 3:
-        diana_inc_dir = args[1]
-        diana_lib_dir = args[2]
+    if len(sys.argv) == 3:
+        diana_inc_dir = sys.argv[1]
+        diana_lib_dir = sys.argv[2]
     else:
         diana_inc_dir = "/usr/include/diana"
         diana_lib_dir = "/usr/lib"

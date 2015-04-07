@@ -149,7 +149,7 @@ class BDiana:
         refTimes = list(refTimes)
         refTimes.sort()
 
-        model, fieldGroups = self.controller.getFieldGroups(model, refTimes[-1], False)
+        fieldGroups = self.controller.getFieldGroups(model, refTimes[-1], False)
         
         for group in fieldGroups:
             for field in group.fieldNames:

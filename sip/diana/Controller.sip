@@ -279,22 +279,11 @@ public:
   Returns the references time given by refOffset and refHour or the last reference time for the given model.
   %End
 
-  SIP_PYTUPLE getAllFieldNames() [void (std::vector<std::string>& fieldNames,
-                                  std::set<std::string>& fieldprefixes,
-                                  std::set<std::string>& fieldsuffixes)];
+  std::vector<std::string> getAllFieldNames() [void (std::vector<std::string>& fieldNames)];
   %MethodCode
-  std::vector<std::string> a0;
-  std::set<std::string> a1;
-  std::set<std::string> a2;
-  sipCpp->getAllFieldNames(a0, a1, a2);
-  FILL_LIST_VALUES(a0, a0Wrapper, std::string, sipType_std_string)
-  FILL_SET_VALUES(a1, a1Wrapper, std::string, sipType_std_string)
-  FILL_SET_VALUES(a2, a2Wrapper, std::string, sipType_std_string)
-
-  sipRes = PyTuple_New(3);
-  PyTuple_SET_ITEM(sipRes, 0, a0Wrapper);
-  PyTuple_SET_ITEM(sipRes, 1, a1Wrapper);
-  PyTuple_SET_ITEM(sipRes, 2, a2Wrapper);
+  std::vector<std::string> *a0 = new std::vector<std::string>();
+  sipCpp->getAllFieldNames(*a0);
+  sipRes = a0;
   %End
 
   std::vector<miutil::miTime> getFieldTime(std::vector<FieldRequest>& request);
@@ -302,23 +291,15 @@ public:
   Returns available times for the requested fields.
   %End
 
-  SIP_PYTUPLE getFieldGroups(const std::string& modelNameRequest, std::string refTime, bool plotGroups)
-    [void (const std::string& modelNameRequest,
-           std::string& modelName,
+  std::vector<FieldGroupInfo> getFieldGroups(const std::string& modelName, std::string refTime, bool plotGroups)
+    [void (const std::string& modelName,
            std::string refTime,
            bool plotGroups,
            std::vector<FieldGroupInfo>& vfgi)];
   %MethodCode
-  std::string modelName;
-  std::vector<FieldGroupInfo> vfgi;
-  sipCpp->getFieldGroups(*a0, modelName, *a1, a2, vfgi);
-
-  CONVERT_TYPE(modelName, modelNameWrapper, std::string, sipType_std_string)
-  FILL_LIST_VALUES(vfgi, vfgiWrapper, FieldGroupInfo, sipType_FieldGroupInfo)
-  
-  sipRes = PyTuple_New(2);
-  PyTuple_SET_ITEM(sipRes, 0, modelNameWrapper);
-  PyTuple_SET_ITEM(sipRes, 1, vfgiWrapper);
+  std::vector<FieldGroupInfo> *vfgi = new std::vector<FieldGroupInfo>();
+  sipCpp->getFieldGroups(*a0, *a1, a2, *vfgi);
+  sipRes = vfgi;
   %End
 
 //  std::vector<SatPlot*> getSatellitePlots() const;
