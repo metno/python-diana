@@ -39,8 +39,7 @@ public:
 
     Sat *satdata;
 
-    bool plot();
-    bool plot(const int);
+    bool plot(PlotOrder zorder);
     void setData(Sat *);
     void clearData();
     Area& getSatArea();
