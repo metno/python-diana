@@ -36,4 +36,13 @@ class Plot
 public:
   Plot();
   virtual ~Plot();
+
+  enum PlotOrder {
+    BACKGROUND,
+    SHADE_BACKGROUND,
+    SHADE,
+    LINES_BACKGROUND,
+    LINES,
+    OVERLAY
+  };
 };
