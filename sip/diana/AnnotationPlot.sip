@@ -45,7 +45,7 @@ public:
   AnnotationPlot(const std::string&);
   ~AnnotationPlot();
 
-  bool plot();
+  void plot(PlotOrder zorder);
   bool prepare(const std::string&);
   const std::vector<AnnotationPlot::Annotation>& getAnnotations();
 
