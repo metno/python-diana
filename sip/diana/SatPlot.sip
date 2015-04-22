@@ -39,7 +39,7 @@ public:
 
     Sat *satdata;
 
-    bool plot(PlotOrder zorder);
+    void plot(PlotOrder zorder);
     void setData(Sat *);
     void clearData();
     Area& getSatArea();
