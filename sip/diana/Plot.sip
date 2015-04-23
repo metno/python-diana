@@ -35,7 +35,7 @@ class Plot
 
 public:
   Plot();
-  virtual ~Plot();
+  virtual ~Plot() = 0;
 
   enum PlotOrder {
     BACKGROUND,
@@ -45,4 +45,6 @@ public:
     LINES,
     OVERLAY
   };
+
+  virtual void plot(PlotOrder zorder) = 0;
 };
