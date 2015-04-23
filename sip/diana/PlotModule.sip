@@ -47,7 +47,6 @@ public:
   PlotModule();
   ~PlotModule();
 
-  const Area& getCurrentArea();
   const Rectangle& getPlotSize();
 
   SIP_PYTUPLE getPlotWindow() [void (int &width, int &height)];
@@ -76,8 +75,8 @@ public:
   PyTuple_SET_ITEM(sipRes, 1, ymapWrapper);
   %End
 
-  bool PhysToGeo(const float x, const float y, float& lat, float& lon, Area area, Rectangle r);
-  bool GeoToPhys(const float, const float, float&, float&, Area area, Rectangle r);
+  bool PhysToGeo(const float x, const float y, float& lat, float& lon);
+  bool GeoToPhys(const float, const float, float&, float&);
 
   static PlotModule *instance();
 
