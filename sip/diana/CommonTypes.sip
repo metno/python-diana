@@ -118,3 +118,16 @@ struct ObsPositions
     ObsPositions();
 };
 
+struct PlotElement
+{
+%TypeHeaderCode
+#include "diCommonTypes.h"
+%End
+  std::string type;
+  std::string str;
+  std::string icon;
+  bool enabled;
+  PlotElement();
+  PlotElement(std::string t,std::string s,std::string i,bool e);
+};
+
