@@ -27,7 +27,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class FieldPlot
+class FieldPlot : public Plot
 {
 %TypeHeaderCode
 #include "diFieldPlot.h"

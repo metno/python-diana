@@ -27,7 +27,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class AnnotationPlot
+class AnnotationPlot : public Plot
 {
 %TypeHeaderCode
 #include "diAnnotationPlot.h"
@@ -45,7 +45,7 @@ public:
   AnnotationPlot(const std::string&);
   ~AnnotationPlot();
 
-  bool plot();
+  void plot(PlotOrder zorder);
   bool prepare(const std::string&);
   const std::vector<AnnotationPlot::Annotation>& getAnnotations();
 
