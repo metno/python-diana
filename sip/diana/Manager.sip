@@ -48,6 +48,7 @@ public:
   virtual bool processInput(const std::vector<std::string>& inp) = 0;
 
   virtual std::vector<std::string> getAnnotations() const = 0;
+  virtual std::vector<PlotElement> getPlotElements() const = 0;
 
   virtual bool isEnabled() const;
   virtual void setEnabled(bool enable);
