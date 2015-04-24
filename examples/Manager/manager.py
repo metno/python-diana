@@ -84,8 +84,6 @@ class TestManager(Manager):
         ctx = PaintGL.instance().currentContext
         painter = ctx.painter
         plotm = PlotModule.instance()
-        area = plotm.getCurrentArea()
-        plot_size = plotm.getPlotSize()
         plot_width, plot_height = plotm.getPlotWindow()
         
         metrics = QFontMetricsF(QFont())
@@ -96,7 +94,7 @@ class TestManager(Manager):
         painter.setCompositionMode(painter.CompositionMode_SourceOver)
 
         for point, label in self.locations:
-            ok, x, y = plotm.GeoToPhys(point.x(), point.y(), area, plot_size)
+            ok, x, y = plotm.GeoToPhys(point.x(), point.y())
             y = plot_height - y
             if ok:
                 rect = QRectF(x, y, metrics.width(label) + 8, metrics.height() + 8)
