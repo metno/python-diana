@@ -9,7 +9,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     paintgl = PaintGL()
     
-    LocalSetupParser.parse("/etc/diana/3.35/diana.setup-COMMON")
+    LocalSetupParser.parse("/etc/diana/setup/diana.setup-COMMON")
 
     c = Controller()
     #c.addManager("drawing", DrawingManager.instance())
