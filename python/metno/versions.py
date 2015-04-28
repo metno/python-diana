@@ -1,3 +1,3 @@
 
-diana_version = "3.37"
+diana_version = "3.38"
 python_diana_version = "0.7.5-1"

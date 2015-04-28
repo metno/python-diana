@@ -12,9 +12,9 @@ Homepage: http://diana.met.no
 
 Package: python-diana-headless
 Architecture: any
-Depends: python-sip, bdiana-3.37, libqtcore4-headless, libqtgui4-headless,
+Depends: python-sip, bdiana-3.38, libqtcore4-headless, libqtgui4-headless,
   libqt4-svg-headless, python-qt4-headless, python2.7
-Recommends: diana-3.37-common, dianaconfig-3.37, dianamaps
+Recommends: diana-3.38-common, dianaconfig-3.38, dianamaps
 Description: Python language bindings to the headless version of Diana
  A set of Python language bindings to Diana, exposing an API that
  can be used for batched generation of products.      
