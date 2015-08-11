@@ -24,8 +24,8 @@ import os, sys
 import pyproj
 
 from metlibs import FieldRequest, milogger
-from diana import Colour, Controller, LocalSetupParser, ObsPlot, PaintGL, \
-                  PaintGLContext, PlotModule, SpectrumManager
+from diana import Colour, Controller, LocalSetupParser, ObsPlot, DiPaintGLCanvas, \
+                  DiPaintGLPainter, PlotModule, SpectrumManager
 
 from metno.versions import diana_version, python_diana_version
 
@@ -342,21 +342,20 @@ class BDiana:
 
         plot_object.setPlotWindow(width, height)
         
-        wrapper = PaintGL()
-        context = PaintGLContext()
-        context.makeCurrent()
+        canvas = DiPaintGLCanvas(paint_device)
+        glpainter = DiPaintGLPainter(canvas)
         
         painter = QPainter()
-        painter.begin(paint_device)
+        painter.begin(canvas.device())
+        glpainter.begin(painter)
         painter.setRenderHints(self.renderHints)
         painter.setClipRect(QRect(0, 0, width, height))
-        context.begin(painter)
-        context.viewport = QRect(0, 0, width, height)
+        glpainter.Viewport(0, 0, width, height)
 
-        value = plot_method()
-        transform = context.transform
+        value = plot_method(glpainter)
+        transform = glpainter.transform
         
-        context.end()
+        glpainter.end()
         painter.end()
 
         return paint_device, value, transform
@@ -523,17 +522,17 @@ class BDiana:
 
         return self.spectrumManager.getModelNames()
 
-    def setSpectrumModel(self, model, as_field = False):
+    def setSpectrumModel(self, model):
     
         """Sets a single wave spectrum model to use."""
 
-        self.setSpectrumModels([model], as_field)
+        self.setSpectrumModels([model])
 
-    def setSpectrumModels(self, models, as_field = False):
+    def setSpectrumModels(self, models):
     
         """Sets the wave spectrum models to use."""
 
-        self.spectrumManager.setSelectedModels(models, as_field)
+        self.spectrumManager.setSelectedModels(models)
         self.spectrumManager.setModel()
     
     def getSpectrumStations(self):

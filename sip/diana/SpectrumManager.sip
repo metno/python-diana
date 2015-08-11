@@ -59,5 +59,5 @@ public:
   std::vector<std::string> getModelFiles();
   void setSelectedModels(const std::vector<std::string>& models);
 
-  bool plot();
+  bool plot(DiGLPainter* gl);
 };

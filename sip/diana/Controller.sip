@@ -141,7 +141,7 @@ public:
   actually create the plot.
   %End
 
-  void plot(bool over =true, bool under =true);
+  void plot(DiGLPainter* gl, bool over =true, bool under =true);
   %Docstring
   Controller.plot(bool over=True, bool under=True)
 
@@ -150,7 +150,7 @@ public:
   the default values should be used.
   %End
 
-  std::vector<Rectangle> plotAnnotations();
+  std::vector<Rectangle> plotAnnotations(DiGLPainter* gl);
   %Docstring
   Plots the annotations associated with the product and returns a list of
   rectangles describing the regions of the product covered by them.

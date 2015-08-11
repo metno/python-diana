@@ -44,11 +44,11 @@ public:
   virtual std::vector<miutil::miTime> getTimes() const = 0;
   virtual bool changeProjection(const Area& newArea) = 0;
   virtual bool prepare(const miutil::miTime &time) = 0;
-  virtual void plot(bool under, bool over) = 0;
+  virtual void plot(DiGLPainter *gl, bool under, bool over) = 0;
   virtual bool processInput(const std::vector<std::string>& inp) = 0;
 
   virtual std::vector<std::string> getAnnotations() const = 0;
-  virtual std::vector<PlotElement> getPlotElements() const = 0;
+  virtual std::vector<PlotElement> getPlotElements() = 0;
 
   virtual bool isEnabled() const;
   virtual void setEnabled(bool enable);

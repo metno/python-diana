@@ -105,17 +105,17 @@ if __name__ == "__main__":
             
             makefile.extra_lib_dirs += [diana_lib_dir, qt_pkg_dir+"/lib"]
             
-            makefile.extra_lflags += ["-Wl,-rpath="+qt_pkg_dir+"/lib/python-diana", "-Wl,-fPIC"]
+            makefile.extra_lflags += ["-Wl,-rpath="+diana_lib_dir, "-Wl,-fPIC"]
             makefile.extra_libs += ["diana"]
         
         if module == "metlibs":
             makefile.extra_include_dirs.append(diana_inc_dir)
             makefile.extra_include_dirs.append("/usr/include/metlibs")
             
-            makefile.extra_lib_dirs += [diana_lib_dir, qt_pkg_dir+"/lib"]
+            makefile.extra_lib_dirs += [diana_lib_dir, "/usr/lib", qt_pkg_dir+"/lib"]
 
-            makefile.extra_lflags += ["-Wl,-rpath="+qt_pkg_dir+"/lib/python-diana", "-Wl,-fPIC"]
-            makefile.extra_libs += ["miLogger", "diana"]
+            makefile.extra_lflags += ["-Wl,-rpath="+diana_lib_dir, "-Wl,-fPIC"]
+            makefile.extra_libs += ["miLogger", "coserver", "diana"]
         
         makefile.generate()
         

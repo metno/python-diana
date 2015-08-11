@@ -45,7 +45,7 @@ public:
   AnnotationPlot(const std::string&);
   ~AnnotationPlot();
 
-  void plot(PlotOrder zorder);
+  void plot(DiGLPainter* gl, PlotOrder zorder);
   bool prepare(const std::string&);
   const std::vector<AnnotationPlot::Annotation>& getAnnotations();
 

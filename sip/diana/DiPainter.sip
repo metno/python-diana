@@ -1,7 +1,7 @@
 /*
  python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 
- Copyright (C) 2012 met.no
+ Copyright (C) 2015 met.no
 
  Contact information:
  Norwegian Meteorological Institute
@@ -27,24 +27,28 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class Plot
+class DiCanvas /Abstract/
 {
 %TypeHeaderCode
-#include "diPlot.h"
+#include "diPainter.h"
 %End
 
 public:
-  Plot();
-  virtual ~Plot() = 0;
-
-  enum PlotOrder {
-    BACKGROUND,
-    SHADE_BACKGROUND,
-    SHADE,
-    LINES_BACKGROUND,
-    LINES,
-    OVERLAY
-  };
-
-  virtual void plot(DiGLPainter* gl, PlotOrder zorder) = 0;
+  virtual ~DiCanvas();
 };
+
+class DiPainter /Abstract/
+{
+%TypeHeaderCode
+#include "diPainter.h"
+%End
+
+protected:
+  DiPainter(DiCanvas* canvas);
+
+public:
+  virtual ~DiPainter();
+
+  DiCanvas* canvas();
+};
+

@@ -1,7 +1,7 @@
 /*
  python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 
- Copyright (C) 2012 met.no
+ Copyright (C) 2015 met.no
 
  Contact information:
  Norwegian Meteorological Institute
@@ -27,37 +27,39 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class PaintGLContext
+class DiPaintGLCanvas : public DiGLCanvas
 {
-    %TypeHeaderCode
-    #include "PaintGL/paintgl.h"
-    %End
+%TypeHeaderCode
+#include "diPaintGLPainter.h"
+%End
 
 public:
-    PaintGLContext();
-    virtual ~PaintGLContext();
+  DiPaintGLCanvas(QPaintDevice* device);
+  ~DiPaintGLCanvas();
 
-    void makeCurrent();
-    void begin(QPainter *painter);
-    bool isPainting() const;
-    void end();
-
-    QPainter *painter;
-    QTransform transform;
-    QRect viewport;
+  QPaintDevice* device() const;
 };
 
-class PaintGL
+class DiPaintGLPainter : public DiGLPainter
 {
-    %TypeHeaderCode
-    #include "PaintGL/paintgl.h"
-    %End
+%TypeHeaderCode
+#include "diPaintGLPainter.h"
+%End
 
 public:
-    PaintGL();
-    ~PaintGL();
+  typedef int             GLint;      /* 4-byte signed */
+  typedef int             GLsizei;    /* 4-byte signed */
 
-    static PaintGL *instance();
-    PaintGLContext *currentContext;
+  DiPaintGLPainter(DiPaintGLCanvas* canvas);
+  ~DiPaintGLPainter();
+
+  void Viewport(GLint x, GLint y, GLsizei width, GLsizei height);
+
+  void begin(QPainter *painter);
+  bool isPainting() const;
+  void end();
+
+  QTransform transform;
+  QRect viewport;
 };
 

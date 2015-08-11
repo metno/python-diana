@@ -2,7 +2,7 @@ Source: python-diana
 Section: python
 Priority: extra
 Maintainer: David Boddie <david.boddie@met.no>
-Build-Depends: diana-nogl-dev, libqt4-dev, python-sip-dev,
+Build-Depends: diana-dev, libqt4-dev, python-sip-dev,
   metlibs-difield-dev (>= 5.0.0), metlibs-milogger-dev (>= 5.0.0),
   metlibs-putools-dev (>= 5.0.0), metlibs-coserver-dev (>= 1.1.0),
   python-qt4, python-qt4-dev, libavformat-dev
@@ -11,9 +11,9 @@ Homepage: http://diana.met.no
 
 Package: python-diana
 Architecture: any
-Depends: python-sip, diana-3.38, libqtcore4, libqtgui4, libqt4-svg,
+Depends: python-sip, diana-3.39, libqtcore4, libqtgui4, libqt4-svg,
   python-qt4, python2.7
-Recommends: diana-3.38-common, dianaconfig-3.38, dianamaps
+Recommends: diana-3.39-common, dianaconfig-3.39, dianamaps
 Description: Python language bindings to Diana
  A set of Python language bindings to Diana, exposing an API that
  can be used for batched generation of products.
