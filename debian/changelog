@@ -1,8 +1,9 @@
 python-diana (0.7.6-1) precise; urgency=low
 
   * Rebuilt with updated sources.
+  * Dropped dependency on metlibs-difield-dev.
 
- -- David Boddie <david.boddie@met.no>  Tue, 11 Aug 2015 15:27:46 +0200
+ -- David Boddie <david.boddie@met.no>  Tue, 11 Aug 2015 16:55:50 +0200
 
 python-diana (0.7.5-1) precise; urgency=low
 
