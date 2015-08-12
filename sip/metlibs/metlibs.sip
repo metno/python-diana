@@ -30,7 +30,6 @@
 %Module(name=metno.metlibs, keyword_arguments="Optional")
 
 %Import std/std.sip
-%Include diField.sip
 %Include milogger.sip
 %Include miutil.sip
 %Include coserver.sip

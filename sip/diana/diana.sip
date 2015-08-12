@@ -41,6 +41,7 @@
 %Include Colour.sip
 %Include CommonTypes.sip
 %Include Controller.sip
+%Include diField.sip
 %Include DiPainter.sip
 %Include DiGLPainter.sip
 %Include DrawingManager.sip
