@@ -23,9 +23,9 @@ from datetime import datetime
 import os, sys
 import pyproj
 
-from metlibs import FieldRequest, milogger
-from diana import Colour, Controller, LocalSetupParser, ObsPlot, DiPaintGLCanvas, \
-                  DiPaintGLPainter, PlotModule, SpectrumManager
+from metlibs import milogger
+from diana import Colour, Controller, FieldRequest, LocalSetupParser, ObsPlot, \
+                  DiPaintGLCanvas, DiPaintGLPainter, PlotModule, SpectrumManager
 
 from metno.versions import diana_version, python_diana_version
 

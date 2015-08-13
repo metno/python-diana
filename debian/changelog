@@ -1,3 +1,9 @@
+python-diana (0.7.7-1) precise; urgency=low
+
+  * Rebuilt with upstream fixes.
+
+ -- David Boddie <david.boddie@met.no>  Thu, 13 Aug 2015 16:00:01 +0200
+
 python-diana (0.7.6-1) precise; urgency=low
 
   * Rebuilt with updated sources.

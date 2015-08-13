@@ -1,5 +1,8 @@
 python-diana changelog
 ----------------------
 
+0.7.7 (2015-08-13)
+Fixed the bdiana module.
+
 0.7.6 (2015-08-11)
 Updated the sources to use the revised rendering API of Diana 3.39.
