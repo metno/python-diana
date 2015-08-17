@@ -12,7 +12,7 @@ Homepage: http://diana.met.no
 Package: python-diana
 Architecture: any
 Depends: python-sip, diana-3.39, libqtcore4, libqtgui4, libqt4-svg,
-  python-qt4, python2.7
+  python-qt4, python2.7, python-pyproj
 Recommends: diana-3.39-common, dianaconfig-3.39, dianamaps
 Description: Python language bindings to Diana
  A set of Python language bindings to Diana, exposing an API that
