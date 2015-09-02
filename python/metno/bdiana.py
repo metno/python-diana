@@ -116,6 +116,15 @@ class BDiana:
         if not fm.updateFileSetup([line], errors, clear, top):
             return errors
     
+    def getFieldFiles(self, model):
+
+        """Returns the locations of the files that provide the data for the specified
+        model. The locations may be file names, file patterns containing wildcards,
+        or URLs referring to online resources, such as a THREDDS server."""
+
+        fm = self.controller.getFieldManager()
+        return fm.getFileNames(model)
+    
     def getFieldModels(self):
     
         """Returns a list of objects describing the model groups and the

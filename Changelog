@@ -1,6 +1,9 @@
 python-diana changelog
 ----------------------
 
+0.7.8 (2015-09-02)
+Added a method to the BDiana class for obtaining the file names of model files.
+
 0.7.7 (2015-08-13)
 Fixed the bdiana module.
 
