@@ -30,6 +30,7 @@
 class SatPlot : public Plot
 {
 %TypeHeaderCode
+#include "diPoint.h"
 #include "diSatPlot.h"
 %End
 
@@ -58,6 +59,9 @@ public:
     %End
 
     void setSatAuto(bool, const std::string&, const std::string&);
+
+protected:
+    QImage rasterScaledImage(const GridArea&, int scale, const diutil::Rect& bbx, const diutil::Rect_v& cells);
 
 private:
     SatPlot(const SatPlot &rhs);

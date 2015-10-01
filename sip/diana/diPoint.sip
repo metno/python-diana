@@ -1,7 +1,7 @@
 /*
  python-diana - Python API for Diana - A Free Meteorological Visualisation Tool
 
- Copyright (C) 2012 met.no
+ Copyright (C) 2015 met.no
 
  Contact information:
  Norwegian Meteorological Institute
@@ -27,40 +27,20 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-%Module(name=metno.diana, keyword_arguments="Optional")
-
-%Import QtGui/QtGuimod.sip
-%Import metlibs/metlibs.sip
-%Import std/std.sip
-
-%ModuleHeaderCode
-#define USE_PAINTGL
+namespace diutil
+{
+%TypeHeaderCode
+#include <vector>
+#include "diPoint.h"
 %End
 
-%Include AnnotationPlot.sip
-%Include Colour.sip
-%Include CommonTypes.sip
-%Include Controller.sip
-%Include diField.sip
-%Include diPoint.sip
-%Include DiPainter.sip
-%Include DiGLPainter.sip
-%Include DrawingManager.sip
-%Include FieldPlot.sip
-%Include FieldPlotManager.sip
-%Include LocalSetupParser.sip
-%Include Manager.sip
-%Include MapMode.sip
-%Include MovieMaker.sip
-%Include ObsData.sip
-%Include ObsManager.sip
-%Include ObsPlot.sip
-%Include PaintGL.sip
-%Include Plot.sip
-%Include PlotModule.sip
-%Include PlotOptions.sip
-%Include Sat.sip
-%Include SatManager.sip
-%Include SatPlot.sip
-%Include SpectrumManager.sip
-%Include SpectrumOptions.sip
+    struct Rect {
+        Rect();
+        Rect(int x1_, int y1_, int x2_, int y2_);
+        int width() const;
+        int height() const;
+        bool empty() const;
+    };
+
+    typedef std::vector<diutil::Rect> Rect_v;
+};

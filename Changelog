@@ -1,6 +1,9 @@
 python-diana changelog
 ----------------------
 
+0.7.9 (2015-10-01)
+Fixed the wrappers to match the current Diana sources.
+
 0.7.8 (2015-09-02)
 Added a method to the BDiana class for obtaining the file names of model files.
 

@@ -131,27 +131,33 @@ public:
     std::string toString(bool fortranStyle=true) const;
 };
 
+struct FieldInfo
+{
+%TypeHeaderCode
+#include "diField/diCommonFieldTypes.h"
+%End
+    std::string fieldName;
+    std::string groupName;
+    std::string standard_name;
+    std::string units;
+    std::vector<std::string>  vlevels;
+    std::vector<std::string> elevels; //(EPS clusters, EPS single runs etc.)
+    std::string default_vlevel;
+    std::string default_elevel;
+    std::string vcoord;
+    std::string ecoord;
+};
+
 struct FieldGroupInfo
 {
 %TypeHeaderCode
 #include "diField/diCommonFieldTypes.h"
 %End
-  std::string modelName;
-  std::string groupName;
-  std::vector<std::string> fieldNames;
-  std::vector<std::string> standard_names;
-  std::vector<std::string> units;
-  std::vector<std::string> levelNames;
-  std::vector<std::string> idnumNames;
-  std::string defaultLevel;
-  std::string defaultIdnum;
-  std::string refTime;
-  std::string zaxis;
-  std::string extraaxis;
-  std::string grid;
-  bool cdmSyntax;
-  bool plotDefinitions;
-  FieldGroupInfo();
+    std::string groupName;
+    bool plotDefinitions;
+    std::vector<std::string> fieldNames;
+    std::map<std::string,FieldInfo> fields;
+    FieldGroupInfo();
 };
 
 
