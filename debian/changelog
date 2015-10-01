@@ -1,3 +1,9 @@
+python-diana (0.7.8-2) precise; urgency=low
+
+  * Rebuilt against the latest libdiana.
+
+ -- David Boddie <david.boddie@met.no>  Thu, 01 Oct 2015 12:57:36 +0200
+
 python-diana (0.7.8-1) precise; urgency=low
 
   * Rebuilt with updated sources.
