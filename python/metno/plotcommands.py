@@ -349,3 +349,14 @@ class Radar(Satellite):
     radar data.
     """
     pass
+
+
+class Drawing(PlotCommand):
+
+    """The Drawing plot command describes a collection of symbols, text,
+    polylines and other objects that are used to annotate a plot.
+    """
+
+    command = "DRAWING"
+
+    available = {"file": QuotedValue}
