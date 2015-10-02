@@ -47,6 +47,7 @@ if __name__ == "__main__":
     times = b.getPlotTimes()
     if not times:
         sys.stderr.write("No times found for the specified plot description.\n")
+        sys.exit(1)
     
     try:
         frameDelay = float(input_file.parameters["frameDelay"])
@@ -54,7 +55,7 @@ if __name__ == "__main__":
         frameDelay = 0.5
 
     print "Saving temp.avi"
-    movie = MovieMaker("temp.avi", "avi", frameDelay);
+    movie = MovieMaker("temp.avi", "avi", frameDelay)
     for time in times:
     
         print "Plotting", time
