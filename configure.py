@@ -27,12 +27,20 @@ def get_python_diana_version():
 
 if __name__ == "__main__":
 
-    if not 1 <= len(sys.argv) <= 3:
+    if len(sys.argv) not in (1, 3, 5):
     
-        sys.stderr.write("Usage: %s [<directory containing diana headers> <directory containing libdiana>]\n" % sys.argv[0])
+        sys.stderr.write("Usage: %s [<directory containing diana headers> <directory containing libdiana>] "
+                         "[<directory containing metlibs headers> <directory containing metlibs libraries>]\n" % sys.argv[0])
         sys.exit(1)
     
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 5:
+        metlibs_inc_dir = sys.argv[3]
+        metlibs_lib_dir = sys.argv[4]
+    else:
+        metlibs_inc_dir = "/usr/include/metlibs"
+        metlibs_lib_dir = "/usr/lib"
+    
+    if len(sys.argv) >= 3:
         diana_inc_dir = sys.argv[1]
         diana_lib_dir = sys.argv[2]
     else:
@@ -74,7 +82,7 @@ if __name__ == "__main__":
                             "-I"+config.pyqt_sip_dir,
                             "-I"+diana_inc_dir,
                             "-I/usr/include",
-                            "-I/usr/include/metlibs",
+                            "-I"+metlibs_inc_dir,
                             "-I"+qt_pkg_dir+"/include",
                             "-I"+qt_pkg_dir+"/share/sip/PyQt4",
                             "-Isip",
@@ -99,7 +107,7 @@ if __name__ == "__main__":
             makefile.extra_include_dirs += [
                 diana_inc_dir,
                 os.path.join(diana_inc_dir, "PaintGL"),
-                "/usr/include/metlibs",
+                metlibs_inc_dir,
                 qt_pkg_dir+"/include"
                 ]
             
@@ -112,7 +120,7 @@ if __name__ == "__main__":
             makefile.extra_include_dirs.append(diana_inc_dir)
             makefile.extra_include_dirs.append("/usr/include/metlibs")
             
-            makefile.extra_lib_dirs += [diana_lib_dir, "/usr/lib", qt_pkg_dir+"/lib"]
+            makefile.extra_lib_dirs += [diana_lib_dir, "/usr/lib", metlibs_lib_dir, qt_pkg_dir+"/lib"]
 
             makefile.extra_lflags += ["-Wl,-rpath="+diana_lib_dir, "-Wl,-fPIC"]
             makefile.extra_libs += ["miLogger", "coserver", "diana"]
