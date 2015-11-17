@@ -1,6 +1,9 @@
 python-diana changelog
 ----------------------
 
+0.8.0 (2015-11-17)
+Updated the EventResult wrapper.
+
 0.7.9 (2015-10-01)
 Fixed the wrappers to match the current Diana sources.
 

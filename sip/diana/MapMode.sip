@@ -63,8 +63,8 @@ struct EventResult {
 #include "diMapMode.h"
 %End
   bool repaint;
-  bool background;
-  bool savebackground;
+  bool enable_background_buffer;
+  bool update_background_buffer;
   cursortype newcursor;
   actiontype action;
   EventResult();
