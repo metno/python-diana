@@ -6,7 +6,7 @@ qt_pkg_dir = "/usr"
 pyqt_pkg_dir = "/usr/lib/python"$(python_version)
 python_diana_pkg_dir = "/usr/lib/python"$(python_version)"/dist-packages"
 examples_pkg_dir = "/usr/share/python-diana-examples"
-diana_version = 3.39
+diana_version = 3.40
 
 build:
 	mkdir -p $(CURDIR)/debian/python-diana$(qt_pkg_dir)/lib
