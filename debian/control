@@ -2,7 +2,7 @@ Source: python-diana
 Section: python
 Priority: extra
 Maintainer: David Boddie <david.boddie@met.no>
-Build-Depends: diana-dev (>= 3.40.0), libqt4-dev, python-sip-dev,
+Build-Depends: diana-dev (>> 3.39), libqt4-dev, python-sip-dev,
   metlibs-milogger-dev (>= 5.0.0), metlibs-putools-dev (>= 5.0.0),
   metlibs-coserver-dev (>= 1.1.0), metlibs-pudatatypes-dev (>= 5.0.0),
   python-qt4, python-qt4-dev, libavformat-dev, libproj-dev
