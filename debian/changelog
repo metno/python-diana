@@ -1,3 +1,9 @@
+python-diana (0.8.0-2) unstable; urgency=low
+
+  * Updated the build dependencies so that diana-dev 3.39 is used.
+
+ -- David Boddie <david.boddie@met.no>  Thu, 19 Nov 2015 16:00:56 +0100
+
 python-diana (0.8.0-1) unstable; urgency=low
 
   * Rebuilt with updated sources.
