@@ -1,6 +1,9 @@
 python-diana changelog
 ----------------------
 
+0.8.1 (2015-12-15)
+Updated the painting API.
+
 0.8.0 (2015-11-17)
 Updated the EventResult wrapper.
 
