@@ -35,6 +35,7 @@ class DiCanvas /Abstract/
 
 public:
   virtual ~DiCanvas();
+  void parseFontSetup();
 };
 
 class DiPainter /Abstract/
