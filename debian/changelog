@@ -1,3 +1,9 @@
+python-diana (0.8.2-1) precise; urgency=low
+
+  * Rebuilt with new examples.
+
+ -- David Boddie <david.boddie@met.no>  Tue, 15 Dec 2015 16:30:44 +0100
+
 python-diana (0.8.1-1) precise; urgency=low
 
   * Rebuilt against the latest sources. 
